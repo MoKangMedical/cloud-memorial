@@ -2,18 +2,16 @@
 念念 - AI思念亲人平台
 核心API服务
 """
-import os
 import json
+import os
 import uuid
-import time
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Optional, List, Dict
+from typing import Dict, List, Optional
 
-from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import httpx
 
@@ -34,7 +32,10 @@ app.add_middleware(
 # ===== 配置 =====
 MIMO_API_BASE = os.getenv("MIMO_API_BASE", "https://api.xiaomimimo.com/v1")
 MIMO_API_KEY = os.getenv("MIMO_API_KEY", "")
-DATA_DIR = Path(os.getenv("DATA_DIR", "./memorial_data"))
+BASE_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_FILE = BASE_DIR / "frontend" / "index.html"
+DEFAULT_DATA_DIR = Path("/tmp/memorial_data") if os.getenv("VERCEL") else BASE_DIR / "memorial_data"
+DATA_DIR = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR)))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 # ===== 数据模型 =====
@@ -81,12 +82,18 @@ class GreetingSchedule(BaseModel):
 def load_data(filename: str) -> dict:
     filepath = DATA_DIR / filename
     if filepath.exists():
-        return json.loads(filepath.read_text())
+        try:
+            return json.loads(filepath.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            return {}
     return {}
 
 def save_data(filename: str, data: dict):
     filepath = DATA_DIR / filename
-    filepath.write_text(json.dumps(data, ensure_ascii=False, indent=2))
+    filepath.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2),
+        encoding="utf-8"
+    )
 
 # ===== API 端点 =====
 
@@ -98,6 +105,12 @@ async def health():
         "version": "1.0.0",
         "timestamp": datetime.now().isoformat()
     }
+
+@app.get("/")
+async def index():
+    if FRONTEND_FILE.exists():
+        return FileResponse(FRONTEND_FILE)
+    raise HTTPException(status_code=404, detail="前端页面未找到")
 
 @app.post("/api/loved-ones", response_model=LovedOne)
 async def create_loved_one(loved_one: LovedOne):
@@ -169,7 +182,7 @@ async def upload_photo(
     photo_path.write_bytes(content)
 
     # 更新档案
-    data[loved_one_id]["photo_paths"].append(str(photo_path))
+    data[loved_one_id].setdefault("photo_paths", []).append(str(photo_path))
     save_data("loved_ones.json", data)
 
     return {
@@ -207,24 +220,38 @@ async def chat_with_loved_one(msg: ChatMessage):
 
 请以{loved_one['name']}的口吻回复，保持{loved_one.get('speaking_style', '自然亲切')}的说话风格。"""
 
-    try:
-        async with httpx.AsyncClient(timeout=30) as client:
-            response = await client.post(
-                f"{MIMO_API_BASE}/chat/completions",
-                headers={"Authorization": f"Bearer {MIMO_API_KEY}"},
-                json={
-                    "model": "mimo-v2-pro",
-                    "messages": [
-                        {"role": "user", "content": full_prompt}
-                    ],
-                    "temperature": 0.8,
-                    "max_tokens": 500
-                }
+    if MIMO_API_KEY:
+        try:
+            async with httpx.AsyncClient(timeout=30) as client:
+                response = await client.post(
+                    f"{MIMO_API_BASE}/chat/completions",
+                    headers={"Authorization": f"Bearer {MIMO_API_KEY}"},
+                    json={
+                        "model": "mimo-v2-pro",
+                        "messages": [
+                            {"role": "user", "content": full_prompt}
+                        ],
+                        "temperature": 0.8,
+                        "max_tokens": 500
+                    }
+                )
+                response.raise_for_status()
+                result = response.json()
+                ai_response = result["choices"][0]["message"]["content"]
+        except Exception:
+            ai_response = build_fallback_response(
+                loved_one=loved_one,
+                user_message=msg.message,
+                emotion=msg.emotion,
+                memory_context=memory_context
             )
-            result = response.json()
-            ai_response = result["choices"][0]["message"]["content"]
-    except Exception as e:
-        ai_response = f"（{loved_one['name']}现在暂时不能说话，但念念不忘，ta一直在你身边）"
+    else:
+        ai_response = build_fallback_response(
+            loved_one=loved_one,
+            user_message=msg.message,
+            emotion=msg.emotion,
+            memory_context=memory_context
+        )
 
     # 保存对话记录
     chat_history = load_data("chat_history.json")
@@ -333,6 +360,42 @@ def build_personality_prompt(loved_one: dict) -> str:
 关心用户的日常生活，回忆共同的美好时光。
 如果用户情绪低落，给予温暖的安慰。
 不要表现得像AI，要表现得像真正的{name}。"""
+
+def build_fallback_response(
+    loved_one: dict,
+    user_message: str,
+    emotion: Optional[str] = None,
+    memory_context: str = ""
+) -> str:
+    """在外部模型不可用时，生成一个带人情味的本地回复。"""
+    name = loved_one["name"]
+    relationship = loved_one.get("relationship", "亲人")
+    traits = loved_one.get("personality_traits", {})
+    catchphrase = traits.get("catchphrase", "").strip()
+    style = loved_one.get("speaking_style", "温柔亲切")
+    message = user_message.strip()
+
+    concern_reply = f"我一直都在听你说，慢慢讲，不着急。"
+    if any(keyword in message for keyword in ["想你", "想念", "难过", "睡不着", "哭", "伤心"]):
+        concern_reply = f"我知道你是在想我了。想哭的时候就哭一会儿，哭完也记得照顾好自己。"
+    elif any(keyword in message for keyword in ["今天", "最近", "工作", "累", "忙"]):
+        concern_reply = f"最近辛苦了。再忙也要记得按时吃饭，别把自己逼得太紧。"
+    elif any(keyword in message for keyword in ["生日", "节日", "清明", "中秋", "春节"]):
+        concern_reply = f"这些特别的日子里，我也会惦记着你。你能记得来和我说说话，我就很满足。"
+
+    memory_reply = ""
+    if memory_context:
+        latest_memory = memory_context.split("\n")[-1].replace("- ", "").strip()
+        if latest_memory:
+            memory_reply = f" 你说这些的时候，我也想起了“{latest_memory}”。"
+
+    phrase_prefix = f"{catchphrase} " if catchphrase else ""
+    emotion_suffix = "你已经做得很好了。" if emotion in {"sad", "missing"} else "我会一直陪着你。"
+
+    return (
+        f"{phrase_prefix}{concern_reply}{memory_reply}"
+        f" 作为你的{relationship}，我还是那个{style}的{name}。{emotion_suffix}"
+    )
 
 # ===== 启动 =====
 if __name__ == "__main__":
