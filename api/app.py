@@ -12,6 +12,7 @@ from typing import Dict, List, Optional
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import httpx
 
@@ -34,9 +35,13 @@ MIMO_API_BASE = os.getenv("MIMO_API_BASE", "https://api.xiaomimimo.com/v1")
 MIMO_API_KEY = os.getenv("MIMO_API_KEY", "")
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_FILE = BASE_DIR / "frontend" / "index.html"
+ASSETS_DIR = BASE_DIR / "frontend" / "assets"
 DEFAULT_DATA_DIR = Path("/tmp/memorial_data") if os.getenv("VERCEL") else BASE_DIR / "memorial_data"
 DATA_DIR = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR)))
 DATA_DIR.mkdir(parents=True, exist_ok=True)
+
+if ASSETS_DIR.exists():
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 # ===== 数据模型 =====
 class LovedOne(BaseModel):

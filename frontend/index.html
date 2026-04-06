@@ -375,6 +375,80 @@
             line-height: 1.8;
         }
 
+        .demo-stage {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+        .demo-video-card {
+            padding: 18px;
+        }
+
+        .demo-video-shell {
+            overflow: hidden;
+            border-radius: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(6, 10, 18, 0.78);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.24);
+        }
+
+        .demo-video-shell video {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            background: #050811;
+        }
+
+        .demo-meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 4px 2px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .demo-note {
+            padding: 28px 26px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .demo-note h3 {
+            font-size: 1.5rem;
+            line-height: 1.18;
+            letter-spacing: -0.03em;
+        }
+
+        .demo-note p {
+            color: var(--text-muted);
+            line-height: 1.82;
+        }
+
+        .story-beats {
+            display: grid;
+            gap: 12px;
+        }
+
+        .story-beats li {
+            list-style: none;
+            padding: 14px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            line-height: 1.72;
+            font-size: 0.95rem;
+        }
+
+        .story-beats strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 4px;
+            font-size: 0.98rem;
+        }
+
         .features {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -869,6 +943,7 @@
 
         @media (max-width: 1080px) {
             .hero,
+            .demo-stage,
             .experience-grid,
             .pricing {
                 grid-template-columns: 1fr 1fr;
@@ -899,6 +974,7 @@
             }
 
             .hero,
+            .demo-stage,
             .experience-grid,
             .features,
             .pricing {
@@ -1035,6 +1111,61 @@
                             每次回来，都能从上一次的情绪和记忆继续。
                         </div>
                     </div>
+                </div>
+            </section>
+
+            <section class="section reveal">
+                <div class="section-heading">
+                    <p class="eyebrow">剧情 Demo</p>
+                    <h2>24 秒，把产品拍成一段想念的日常</h2>
+                    <p>这不是一支只展示界面的功能片，而是一段有情绪起伏的小剧情：从没人回应的夜晚，到一句被重新接住的话，再到产品如何把纪念变成持续陪伴。</p>
+                </div>
+                <div class="demo-stage">
+                    <div class="demo-video-card glass-panel">
+                        <div class="demo-video-shell">
+                            <video
+                                id="demoVideo"
+                                poster="/assets/eterna-demo-poster.jpg"
+                                muted
+                                autoplay
+                                loop
+                                playsinline
+                                controls
+                                preload="metadata"
+                            >
+                                <source src="/assets/eterna-demo.mp4" type="video/mp4">
+                                你的浏览器暂不支持视频播放。
+                            </video>
+                        </div>
+                        <div class="demo-meta">
+                            <span>剧情线：失落夜晚 → 建档 → 对话 → 纪念延续</span>
+                            <span>时长：24 秒</span>
+                        </div>
+                    </div>
+
+                    <aside class="demo-note glass-panel">
+                        <p class="eyebrow">镜头结构</p>
+                        <h3>情真意切，但始终在讲产品。</h3>
+                        <p>我把情绪和产品能力绑在一起了，不是空拍回忆感。每个段落都对应主页上的一个真实功能入口，所以它既能打动人，也能解释产品。</p>
+                        <ul class="story-beats">
+                            <li>
+                                <strong>第一幕：没人回应的夜晚</strong>
+                                先让用户感到“失去回应”这件事，而不是直接推销 AI。
+                            </li>
+                            <li>
+                                <strong>第二幕：念念出现</strong>
+                                用提醒和建档流程，把产品定位成一个可以回来的入口。
+                            </li>
+                            <li>
+                                <strong>第三幕：一句话被接住</strong>
+                                通过“今天有点想你，也有点累”，把对话、口头禅和情绪回接演出来。
+                            </li>
+                            <li>
+                                <strong>第四幕：纪念可以继续发生</strong>
+                                展示生日祝福、声音相册和回忆影像，把单次对话提升成长期陪伴。
+                            </li>
+                        </ul>
+                    </aside>
                 </div>
             </section>
 
@@ -1274,6 +1405,7 @@
             restoreLovedOne();
             hydrateRuntimeState();
             refreshChatIntro();
+            setupDemoVideo();
         });
 
         function initReveal() {
@@ -1297,6 +1429,42 @@
             );
 
             revealNodes.forEach((node) => observer.observe(node));
+        }
+
+        function setupDemoVideo() {
+            const video = document.getElementById("demoVideo");
+            if (!video) {
+                return;
+            }
+
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            if (prefersReducedMotion) {
+                video.removeAttribute("autoplay");
+                video.pause();
+                return;
+            }
+
+            const tryPlay = () => {
+                const playPromise = video.play();
+                if (playPromise && typeof playPromise.catch === "function") {
+                    playPromise.catch(() => {});
+                }
+            };
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            tryPlay();
+                        } else {
+                            video.pause();
+                        }
+                    });
+                },
+                { threshold: 0.35 }
+            );
+
+            observer.observe(video);
         }
 
         async function hydrateRuntimeState() {
