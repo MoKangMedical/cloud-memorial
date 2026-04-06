@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+memorial_data/
+cloud_memorial.log
+*.pid
