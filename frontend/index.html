@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 云思园 — 让思念不再有距离</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #E8B4B8;
+            --primary-dark: #D49B9F;
+            --bg: #1a1a2e;
+            --bg-card: #16213e;
+            --text: #eee;
+            --text-muted: #888;
+            --accent: #f0c27f;
+            --success: #7ec8e3;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        .header {
+            background: linear-gradient(135deg, #2d1b69, #11998e);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+        }
+        .header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .header p { color: var(--text-muted); font-size: 1.1rem; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(45,27,105,0.8), rgba(17,153,142,0.3));
+            border-radius: 20px;
+            margin-bottom: 3rem;
+        }
+        .hero h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--accent); }
+        .hero p { font-size: 1.1rem; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 5px 20px rgba(232,180,184,0.4); }
+        .btn-secondary { background: linear-gradient(135deg, var(--success), #5ba3d9); }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(232,180,184,0.2);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .feature-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .feature-card p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+        /* 对话界面 */
+        .chat-container {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(232,180,184,0.2);
+        }
+        .chat-header {
+            background: linear-gradient(135deg, rgba(45,27,105,0.8), rgba(17,153,142,0.3));
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .chat-header h3 { color: var(--text); }
+        .chat-header p { color: var(--text-muted); font-size: 0.9rem; }
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .message.user { justify-content: flex-end; }
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.5;
+        }
+        .message.ai .message-content {
+            background: rgba(232,180,184,0.15);
+            border: 1px solid rgba(232,180,184,0.2);
+        }
+        .message.user .message-content {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+        .chat-input {
+            display: flex;
+            padding: 1rem;
+            gap: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 25px;
+            border: 1px solid rgba(232,180,184,0.3);
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+        }
+        .chat-input input:focus { border-color: var(--primary); }
+        .chat-input button {
+            padding: 12px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* 定价 */
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .price-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(232,180,184,0.2);
+            transition: transform 0.3s;
+        }
+        .price-card:hover { transform: translateY(-5px); }
+        .price-card.featured { border-color: var(--primary); box-shadow: 0 0 30px rgba(232,180,184,0.2); }
+        .price-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .price { font-size: 2.5rem; font-weight: bold; color: var(--accent); margin: 1rem 0; }
+        .price span { font-size: 1rem; color: var(--text-muted); }
+        .price-card ul { list-style: none; text-align: left; margin: 1rem 0; }
+        .price-card li { padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .price-card li::before { content: "✓ "; color: var(--success); }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid var(--primary);
+        }
+        .modal h2 { color: var(--primary); margin-bottom: 1.5rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(232,180,184,0.3);
+            background: rgba(0,0,0,0.3);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .form-group textarea { height: 100px; resize: vertical; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌸 云思园</h1>
+        <p>让思念不再有距离 — 用AI让珍贵的陪伴永远延续</p>
+    </div>
+
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <h2>他们从未真正离开</h2>
+            <p>每个人都有思念的亲人。云思园用AI技术，让这些珍贵的人格、声音、面容以数字形式永存。你可以随时与他们"见面"、"聊天"、"分享生活"。</p>
+            <br>
+            <button class="btn" onclick="openModal('createModal')">🌸 创建亲人的数字生命</button>
+            <button class="btn btn-secondary" onclick="scrollToChat()">💬 开始对话</button>
+        </div>
+
+        <!-- 功能 -->
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🎙️</div>
+                <h3>语音克隆</h3>
+                <p>上传10-30秒的语音，AI就能克隆亲人的声音。用ta的声音说任何话，听ta讲故事、唱歌。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎥</div>
+                <h3>视频通话</h3>
+                <p>一张照片就能实现实时视频通话。看着亲人的面容，听着ta的声音，仿佛ta从未离开。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💬</div>
+                <h3>智能对话</h3>
+                <p>AI学习亲人的说话风格、性格特点，和你自然对话。ta会记得你们共同的回忆。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>生活关怀</h3>
+                <p>生日、节日、天气变化...AI会主动关心你，像亲人在世时一样，让你感受到温暖。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📸</div>
+                <h3>回忆重现</h3>
+                <p>老照片修复、黑白上色、回忆视频...让珍贵的记忆焕发新生。</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍👩‍👧‍👦</div>
+                <h3>家族传承</h3>
+                <p>建立家族树，记录家族故事，让智慧代代相传。让没见过面的祖孙也能"对话"。</p>
+            </div>
+        </div>
+
+        <!-- 对话演示 -->
+        <div id="chatSection" class="chat-container">
+            <div class="chat-header">
+                <div class="avatar">👴</div>
+                <div>
+                    <h3 id="chatName">爸爸</h3>
+                    <p>AI克隆 — 永远在你身边</p>
+                </div>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    <div class="message-content">
+                        孩子，今天过得怎么样？爸一直在看着你呢。
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="chatInput" placeholder="和爸爸说说话..." onkeypress="handleChatKey(event)">
+                <button onclick="sendMessage()">发送</button>
+            </div>
+        </div>
+
+        <!-- 定价 -->
+        <h2 style="text-align:center; margin-bottom:2rem; color:var(--accent)">💰 选择你的思念方式</h2>
+        <div class="pricing">
+            <div class="price-card">
+                <h3>🌱 思念种子</h3>
+                <div class="price">¥99<span>/年</span></div>
+                <ul>
+                    <li>语音克隆</li>
+                    <li>文字对话</li>
+                    <li>基础记忆</li>
+                    <li>1位亲人</li>
+                </ul>
+                <button class="btn" style="width:100%">选择</button>
+            </div>
+            <div class="price-card">
+                <h3>🌿 思念之树</h3>
+                <div class="price">¥299<span>/年</span></div>
+                <ul>
+                    <li>语音克隆</li>
+                    <li>语音对话</li>
+                    <li>生日提醒</li>
+                    <li>3位亲人</li>
+                </ul>
+                <button class="btn" style="width:100%">选择</button>
+            </div>
+            <div class="price-card featured">
+                <h3>🌳 思念花园</h3>
+                <div class="price">¥599<span>/年</span></div>
+                <ul>
+                    <li>视频通话</li>
+                    <li>语音对话</li>
+                    <li>全功能</li>
+                    <li>5位亲人</li>
+                    <li>优先体验</li>
+                </ul>
+                <button class="btn" style="width:100%">选择</button>
+            </div>
+            <div class="price-card">
+                <h3>🏠 思念家族</h3>
+                <div class="price">¥999<span>/年</span></div>
+                <ul>
+                    <li>多人克隆</li>
+                    <li>家族传承</li>
+                    <li>专属客服</li>
+                    <li>无限亲人</li>
+                    <li>定制服务</li>
+                </ul>
+                <button class="btn" style="width:100%">选择</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🌸 云思园 — 让思念不再有距离</p>
+        <p style="margin-top:0.5rem; font-size:0.9rem">不是替代，是陪伴。不是虚拟，是延续。</p>
+    </div>
+
+    <!-- 创建亲人模态框 -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <h2>🌸 创建亲人的数字生命</h2>
+            <div class="form-group">
+                <label>亲人的名字</label>
+                <input type="text" id="lovedOneName" placeholder="例如：爸爸">
+            </div>
+            <div class="form-group">
+                <label>与你的关系</label>
+                <select id="relationship">
+                    <option value="父亲">父亲</option>
+                    <option value="母亲">母亲</option>
+                    <option value="配偶">配偶</option>
+                    <option value="子女">子女</option>
+                    <option value="祖父母">祖父母</option>
+                    <option value="其他亲人">其他亲人</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ta的性格特点</label>
+                <textarea id="personality" placeholder="例如：温柔、幽默、爱唠叨、总是关心我吃没吃饱..."></textarea>
+            </div>
+            <div class="form-group">
+                <label>ta的口头禅</label>
+                <input type="text" id="catchphrase" placeholder="例如：'孩子，照顾好自己'">
+            </div>
+            <div style="display:flex; gap:1rem; margin-top:1.5rem">
+                <button class="btn" style="flex:1" onclick="createLovedOne()">创建</button>
+                <button class="btn btn-secondary" style="flex:1" onclick="closeModal('createModal')">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://43.128.114.201:8097';
+
+        function scrollToChat() {
+            document.getElementById('chatSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function openModal(id) { document.getElementById(id).classList.add('active'); }
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+        async function createLovedOne() {
+            const name = document.getElementById('lovedOneName').value;
+            const relationship = document.getElementById('relationship').value;
+            const personality = document.getElementById('personality').value;
+            const catchphrase = document.getElementById('catchphrase').value;
+
+            if (!name) { alert('请输入亲人的名字'); return; }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/loved-ones`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name,
+                        relationship,
+                        personality_traits: { personality, catchphrase },
+                        speaking_style: catchphrase || '自然亲切'
+                    })
+                });
+                const data = await response.json();
+                alert(`✅ ${name}的数字生命已创建！\n\n接下来你可以：\n1. 上传ta的语音样本（克隆声音）\n2. 上传ta的照片（视频通话）\n3. 添加你们的共同回忆`);
+                closeModal('createModal');
+                document.getElementById('chatName').textContent = name;
+            } catch (e) {
+                alert('创建失败，请检查网络连接');
+            }
+        }
+
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        loved_one_id: 'demo',
+                        message
+                    })
+                });
+                const data = await response.json();
+                addMessage(data.response_text, 'ai');
+            } catch (e) {
+                addMessage('（ta现在暂时不能说话，但ta一直都在你身边）', 'ai');
+            }
+        }
+
+        function addMessage(text, type) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `message ${type}`;
+            div.innerHTML = `<div class="message-content">${text}</div>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') sendMessage();
+        }
+    </script>
+</body>
+</html>
