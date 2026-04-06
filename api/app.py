@@ -1,5 +1,5 @@
 """
-云思园 - AI思念亲人平台
+常在 - AI思念亲人平台
 核心API服务
 """
 import os
@@ -18,8 +18,8 @@ from pydantic import BaseModel
 import httpx
 
 app = FastAPI(
-    title="云思园 API",
-    description="AI思念亲人平台 - 让思念不再有距离",
+    title="常在 API",
+    description="AI思念亲人平台 - ta一直都在",
     version="1.0.0"
 )
 
@@ -94,7 +94,7 @@ def save_data(filename: str, data: dict):
 async def health():
     return {
         "status": "healthy",
-        "service": "云思园",
+        "service": "常在",
         "version": "1.0.0",
         "timestamp": datetime.now().isoformat()
     }
@@ -337,6 +337,6 @@ def build_personality_prompt(loved_one: dict) -> str:
 # ===== 启动 =====
 if __name__ == "__main__":
     import uvicorn
-    print("🌸 云思园启动中...")
-    print("📍 让思念不再有距离")
+    print("🌸 常在启动中...")
+    print("📍 ta一直都在")
     uvicorn.run(app, host="0.0.0.0", port=8097)
