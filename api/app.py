@@ -33,13 +33,50 @@ app.add_middleware(
 )
 
 # ===== 配置 =====
-MIMO_API_BASE = os.getenv("MIMO_API_BASE", "https://api.xiaomimimo.com/v1")
-MIMO_API_KEY = os.getenv("MIMO_API_KEY", "")
-MIMO_TTS_VOICE = os.getenv("MIMO_TTS_VOICE", "default_zh")
-PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", "").rstrip("/")
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_FILE = BASE_DIR / "frontend" / "index.html"
 ASSETS_DIR = BASE_DIR / "frontend" / "assets"
+
+
+def load_runtime_settings() -> Dict[str, str]:
+    settings: Dict[str, str] = {}
+    candidates = [
+        BASE_DIR / ".runtime-secrets.json",
+        BASE_DIR / ".env.local",
+    ]
+
+    for candidate in candidates:
+        if not candidate.exists():
+            continue
+        if candidate.suffix == ".json":
+            try:
+                raw = json.loads(candidate.read_text(encoding="utf-8"))
+                if isinstance(raw, dict):
+                    settings.update({str(key): str(value) for key, value in raw.items() if value is not None})
+            except json.JSONDecodeError:
+                continue
+            continue
+
+        for line in candidate.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#") or "=" not in stripped:
+                continue
+            key, value = stripped.split("=", 1)
+            settings[key.strip()] = value.strip().strip("'\"")
+    return settings
+
+
+RUNTIME_SETTINGS = load_runtime_settings()
+
+
+def runtime_config(name: str, default: str = "") -> str:
+    return os.getenv(name) or str(RUNTIME_SETTINGS.get(name, default))
+
+
+MIMO_API_BASE = runtime_config("MIMO_API_BASE", "https://api.xiaomimimo.com/v1")
+MIMO_API_KEY = runtime_config("MIMO_API_KEY", "")
+MIMO_TTS_VOICE = runtime_config("MIMO_TTS_VOICE", "default_zh")
+PUBLIC_BASE_URL = runtime_config("PUBLIC_BASE_URL", "").rstrip("/")
 DEFAULT_DATA_DIR = Path("/tmp/memorial_data") if os.getenv("VERCEL") else BASE_DIR / "memorial_data"
 DATA_DIR = Path(os.getenv("DATA_DIR", str(DEFAULT_DATA_DIR)))
 DATA_DIR.mkdir(parents=True, exist_ok=True)

@@ -3,3 +3,5 @@ __pycache__/
 memorial_data/
 cloud_memorial.log
 *.pid
+.env.local
+.runtime-secrets.json
