@@ -561,6 +561,47 @@
             padding: 16px 24px 0;
         }
 
+        .mode-row {
+            display: grid;
+            gap: 10px;
+            padding: 16px 24px 0;
+        }
+
+        .mode-switch {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .mode-pill {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(246, 244, 241, 0.84);
+            border-radius: 999px;
+            padding: 10px 14px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+        }
+
+        .mode-pill.active {
+            color: #16100b;
+            background: linear-gradient(135deg, #f5d2b8, #f0a777);
+            border-color: rgba(243, 196, 161, 0.3);
+        }
+
+        .mode-pill:disabled {
+            opacity: 0.42;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .mode-availability {
+            color: rgba(246, 244, 241, 0.48);
+            font-size: 0.84rem;
+            line-height: 1.65;
+        }
+
         .prompt-chip {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -650,6 +691,56 @@
             display: grid;
             gap: 10px;
             padding: 0 24px 24px;
+        }
+
+        .response-media {
+            display: none;
+            gap: 12px;
+            padding: 0 24px 16px;
+        }
+
+        .response-media.active {
+            display: grid;
+        }
+
+        .response-media-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .response-media-card {
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .response-media-card span {
+            font-size: 0.84rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(246, 244, 241, 0.56);
+        }
+
+        .response-media audio,
+        .response-media video {
+            width: 100%;
+        }
+
+        .response-media video {
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+        }
+
+        .mode-note {
+            color: rgba(246, 244, 241, 0.52);
+            font-size: 0.84rem;
+            line-height: 1.7;
         }
 
         .composer-row {
@@ -755,6 +846,10 @@
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 12px;
+        }
+
+        .twin-stats {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
         .twin-preview-grid,
@@ -1147,6 +1242,10 @@
                 align-items: flex-start;
             }
 
+            .response-media-grid {
+                grid-template-columns: 1fr;
+            }
+
             .message-body {
                 max-width: 88%;
             }
@@ -1329,13 +1428,13 @@
                 <div class="features">
                     <article class="feature-card">
                         <span>🎙️</span>
-                        <h3>语音克隆</h3>
-                        <p>上传一段录音，就能把熟悉的音色、节奏和停顿感保留下来，让一句普通的问候重新有了温度。</p>
+                        <h3>语音电话</h3>
+                        <p>上传一段录音后，系统会提炼说话节奏和情绪风格，再把回复合成为更适合通话场景的语音陪伴。</p>
                     </article>
                     <article class="feature-card">
                         <span>🎥</span>
-                        <h3>视频通话</h3>
-                        <p>从静态照片出发，逐步扩展到可互动的视频形象，让“见面”变成一件可以发生的事。</p>
+                        <h3>视频陪伴</h3>
+                        <p>当照片和视频素材足够时，页面会进入更强在场感的影像陪伴模式，让“见面”这件事更接近真实。</p>
                     </article>
                     <article class="feature-card">
                         <span>💬</span>
@@ -1373,7 +1472,7 @@
                                 <div class="avatar" id="chatAvatar">👴</div>
                                 <div class="chat-title">
                                     <h3 id="chatName">爸爸</h3>
-                                    <p id="chatSubtitle">AI 克隆会在这里保留熟悉的口气与记忆感。</p>
+                                    <p id="chatSubtitle">AI 分身会在这里保留熟悉的口气与记忆感。</p>
                                 </div>
                             </div>
                             <div id="chatMode" class="status-pill demo">
@@ -1386,6 +1485,14 @@
                             <button type="button" class="prompt-chip" onclick="seedConversation('最近工作有点累')">最近工作有点累</button>
                             <button type="button" class="prompt-chip" onclick="seedConversation('想和你说说今天的好消息')">想和你说说今天的好消息</button>
                         </div>
+                        <div class="mode-row">
+                            <div class="mode-switch" role="tablist" aria-label="互动模式">
+                                <button type="button" id="modeText" class="mode-pill active" onclick="setInteractionMode('text')">文字陪伴</button>
+                                <button type="button" id="modeVoice" class="mode-pill" onclick="setInteractionMode('voice')">语音电话</button>
+                                <button type="button" id="modeVideo" class="mode-pill" onclick="setInteractionMode('video')">视频陪伴</button>
+                            </div>
+                            <div id="modeAvailability" class="mode-availability">创建档案后，素材越完整，可用模式越多。</div>
+                        </div>
                         <div class="chat-messages" id="chatMessages" aria-live="polite">
                             <div class="message ai">
                                 <div class="message-body">
@@ -1393,6 +1500,19 @@
                                     <div class="message-meta">刚刚</div>
                                 </div>
                             </div>
+                        </div>
+                        <div id="responseMedia" class="response-media">
+                            <div class="response-media-grid">
+                                <div id="audioCard" class="response-media-card" hidden>
+                                    <span>语音电话</span>
+                                    <audio id="responseAudio" controls preload="none"></audio>
+                                </div>
+                                <div id="videoCard" class="response-media-card" hidden>
+                                    <span>视频陪伴</span>
+                                    <video id="responseVideo" playsinline controls preload="metadata"></video>
+                                </div>
+                            </div>
+                            <div id="modeNote" class="mode-note"></div>
                         </div>
                         <div class="chat-composer">
                             <div class="composer-row">
@@ -1428,9 +1548,13 @@
                             <div class="twin-panel-copy">
                                 <p class="eyebrow">数字分身</p>
                                 <h4 id="twinStatusTitle">先把 ta 的声音、面容和神态留住</h4>
-                                <p id="twinStatusText">语音会决定口气，照片会决定面容，视频会让动态和眼神更接近 ta。</p>
+                                <p id="twinStatusText">文字回忆会补足经历，语音会决定口气，照片和视频会让面容与神态更接近 ta。</p>
                             </div>
                             <div class="twin-stats">
+                                <div class="twin-stat">
+                                    <strong id="memoryCount">0</strong>
+                                    <span>文字回忆</span>
+                                </div>
                                 <div class="twin-stat">
                                     <strong id="voiceCount">0</strong>
                                     <span>语音片段</span>
@@ -1473,7 +1597,8 @@
                         <h3>思念种子</h3>
                         <div class="price">¥99<span>/年</span></div>
                         <ul>
-                            <li>语音克隆</li>
+                            <li>声音风格建模</li>
+                            <li>语音电话</li>
                             <li>文字对话</li>
                             <li>基础记忆归档</li>
                             <li>1 位亲人</li>
@@ -1495,7 +1620,7 @@
                         <h3>思念花园</h3>
                         <div class="price">¥599<span>/年</span></div>
                         <ul>
-                            <li>视频通话</li>
+                            <li>视频陪伴</li>
                             <li>完整纪念能力</li>
                             <li>5 位亲人</li>
                             <li>优先体验新功能</li>
@@ -1506,7 +1631,7 @@
                         <h3>思念家族</h3>
                         <div class="price">¥999<span>/年</span></div>
                         <ul>
-                            <li>多人克隆</li>
+                            <li>多人分身档案</li>
                             <li>家族传承</li>
                             <li>无限亲人</li>
                             <li>定制化服务</li>
@@ -1550,6 +1675,11 @@
                 <div class="form-group">
                     <label for="catchphrase">ta 的口头禅</label>
                     <input type="text" id="catchphrase" placeholder="例如：孩子，照顾好自己。">
+                </div>
+                <div class="form-group">
+                    <label for="coreMemories">代表性回忆</label>
+                    <textarea id="coreMemories" placeholder="每行写一段。比如：&#10;你总是先问我今天有没有好好吃饭。&#10;下雨天你会站在门口等我回家。"></textarea>
+                    <div class="field-note">这些文字会成为最早的人格材料，让文字陪伴不只是会说话，而是真的认识 ta。</div>
                 </div>
             </div>
             <div class="form-divider">
@@ -1600,6 +1730,10 @@
                 catchphrase: "孩子，照顾好自己。"
             },
             speaking_style: "温柔踏实",
+            memories: [
+                "你总会先问我今天有没有按时吃饭。",
+                "小时候放学下雨，你常常站在校门口等我。"
+            ],
             voice_sample_paths: [],
             voice_sample_urls: [],
             photo_paths: [],
@@ -1612,6 +1746,7 @@
         let serviceOnline = false;
         let chatBusy = false;
         let toastTimer = null;
+        let selectedChatMode = "text";
 
         document.addEventListener("DOMContentLoaded", () => {
             bindModalEvents();
@@ -1725,64 +1860,248 @@
             );
         }
 
+        function resolveMediaUrl(url) {
+            if (!url) {
+                return "";
+            }
+            if (/^(https?:|blob:|data:)/.test(url)) {
+                return url;
+            }
+            return `${API_BASE}${url}`;
+        }
+
+        function getAvailableModes(profile) {
+            return profile?.digital_twin_profile?.available_modes || ["text"];
+        }
+
+        function formatAvailableModes(modes) {
+            const labels = {
+                text: "文字陪伴",
+                voice: "语音电话",
+                video: "视频陪伴"
+            };
+            return modes.map((mode) => labels[mode] || mode).join(" / ");
+        }
+
+        function collectMemoryDrafts(rawValue) {
+            return rawValue
+                .split(/\n+/)
+                .map((line) => line.replace(/^[•*\-\d.、\s]+/, "").trim())
+                .filter(Boolean);
+        }
+
+        function setInteractionMode(mode, force = false) {
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
+            const availableModes = getAvailableModes(profile);
+            if (!force && mode !== "text" && !availableModes.includes(mode)) {
+                showToast(
+                    mode === "voice"
+                        ? "先上传语音素材，才能开启语音电话。"
+                        : "先补充语音和照片或视频，才能进入视频陪伴。",
+                    "error"
+                );
+                return;
+            }
+
+            selectedChatMode = availableModes.includes(mode) ? mode : "text";
+            updateModeControls(profile);
+        }
+
+        function updateModeControls(profile) {
+            const availableModes = getAvailableModes(profile);
+            const buttons = {
+                text: document.getElementById("modeText"),
+                voice: document.getElementById("modeVoice"),
+                video: document.getElementById("modeVideo")
+            };
+
+            if (!availableModes.includes(selectedChatMode)) {
+                selectedChatMode = availableModes.includes("voice") ? "voice" : "text";
+            }
+
+            Object.entries(buttons).forEach(([mode, button]) => {
+                if (!button) {
+                    return;
+                }
+                button.disabled = mode !== "text" && !availableModes.includes(mode);
+                button.classList.toggle("active", mode === selectedChatMode);
+            });
+
+            const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
+            document.getElementById("modeAvailability").textContent =
+                `当前可用：${formatAvailableModes(availableModes)}。${twin.summary}`;
+        }
+
+        function clearResponseMedia() {
+            const responseMedia = document.getElementById("responseMedia");
+            const audioCard = document.getElementById("audioCard");
+            const videoCard = document.getElementById("videoCard");
+            const responseAudio = document.getElementById("responseAudio");
+            const responseVideo = document.getElementById("responseVideo");
+            const modeNote = document.getElementById("modeNote");
+
+            responseMedia.classList.remove("active");
+            audioCard.hidden = true;
+            videoCard.hidden = true;
+            responseAudio.pause();
+            responseAudio.removeAttribute("src");
+            responseAudio.load();
+            responseVideo.pause();
+            responseVideo.removeAttribute("src");
+            responseVideo.load();
+            modeNote.textContent = "";
+        }
+
+        function renderResponseMedia(response, profile) {
+            const activeMode = response?.interaction_mode || selectedChatMode;
+            const responseMedia = document.getElementById("responseMedia");
+            const audioCard = document.getElementById("audioCard");
+            const videoCard = document.getElementById("videoCard");
+            const responseAudio = document.getElementById("responseAudio");
+            const responseVideo = document.getElementById("responseVideo");
+            const modeNote = document.getElementById("modeNote");
+
+            const audioUrl = resolveMediaUrl(response?.response_audio_url);
+            const videoUrl = resolveMediaUrl(response?.response_video_url);
+            const fallbackVideoUrl =
+                activeMode === "video" && !videoUrl && profile?.video_urls?.[0]
+                    ? resolveMediaUrl(profile.video_urls[0])
+                    : "";
+
+            audioCard.hidden = !audioUrl;
+            videoCard.hidden = !(videoUrl || fallbackVideoUrl);
+
+            if (audioUrl) {
+                responseAudio.src = audioUrl;
+                responseAudio.load();
+                responseAudio.play().catch(() => {});
+            } else {
+                responseAudio.pause();
+                responseAudio.removeAttribute("src");
+                responseAudio.load();
+            }
+
+            const finalVideoUrl = videoUrl || fallbackVideoUrl;
+            if (finalVideoUrl) {
+                responseVideo.src = finalVideoUrl;
+                responseVideo.load();
+            } else {
+                responseVideo.pause();
+                responseVideo.removeAttribute("src");
+                responseVideo.load();
+            }
+
+            modeNote.textContent =
+                response?.mode_note ||
+                (activeMode === "video" && profile?.video_urls?.[0]
+                    ? "当前是本地视频陪伴预览；接入 Mimo 后会结合上传影像和语音素材增强在场感。"
+                    : activeMode === "voice"
+                        ? "当前语音电话模式会优先生成陪伴式语音回复。"
+                        : "当前是文字陪伴模式。");
+
+            if (audioUrl || finalVideoUrl || modeNote.textContent) {
+                responseMedia.classList.add("active");
+            } else {
+                responseMedia.classList.remove("active");
+            }
+        }
+
         function buildClientTwinProfile(lovedOne) {
+            const memoryCount = (lovedOne.memories || []).filter((item) => String(item || "").trim()).length;
             const voiceCount = (lovedOne.voice_sample_paths || []).length;
             const photoCount = (lovedOne.photo_paths || []).length;
             const videoCount = (lovedOne.video_paths || []).length;
-            const coverage = [voiceCount, photoCount, videoCount].filter((count) => count > 0).length;
+            const coverage = [memoryCount, voiceCount, photoCount, videoCount].filter((count) => count > 0).length;
+            const profileSignalCount = [
+                lovedOne.name,
+                lovedOne.relationship,
+                lovedOne.speaking_style,
+                Object.keys(lovedOne.personality_traits || {}).length ? "traits" : ""
+            ].filter(Boolean).length;
+            const coverageScore = (coverage / 4) * 0.55;
+            const depthScore =
+                (Math.min(memoryCount, 8) / 8) * 0.15 +
+                (Math.min(voiceCount, 3) / 3) * 0.12 +
+                (Math.min(photoCount, 4) / 4) * 0.08 +
+                (Math.min(videoCount, 2) / 2) * 0.06 +
+                (profileSignalCount / 4) * 0.04;
+            const completionPercent = Math.round((coverageScore + depthScore) * 100);
+            const availableModes = ["text"];
+            if (voiceCount > 0) {
+                availableModes.push("voice");
+            }
+            if (voiceCount > 0 && (photoCount > 0 || videoCount > 0)) {
+                availableModes.push("video");
+            }
 
             if (coverage === 0) {
                 return {
+                    memory_count: memoryCount,
                     voice_count: voiceCount,
                     photo_count: photoCount,
                     video_count: videoCount,
+                    has_memory: false,
                     has_voice: false,
                     has_photo: false,
                     has_video: false,
                     coverage,
+                    completion_percent: completionPercent,
                     completeness_label: "待补充分身素材",
-                    summary: "先留下语音、照片和视频，数字分身才会逐渐像 ta。"
+                    summary: "先留下几段文字记忆，再补充语音、照片和视频，数字分身才会逐渐像 ta。",
+                    available_modes: availableModes
                 };
             }
 
-            if (coverage === 1) {
+            if (completionPercent < 55) {
                 return {
+                    memory_count: memoryCount,
                     voice_count: voiceCount,
                     photo_count: photoCount,
                     video_count: videoCount,
+                    has_memory: memoryCount > 0,
                     has_voice: voiceCount > 0,
                     has_photo: photoCount > 0,
                     has_video: videoCount > 0,
                     coverage,
+                    completion_percent: completionPercent,
                     completeness_label: "分身轮廓已开始成形",
-                    summary: "已经留住了一部分辨识度，继续补充声音或影像会更像 ta。"
+                    summary: "已经留住了一部分辨识度，继续补充回忆、声音和影像，这个分身会更接近 ta。",
+                    available_modes: availableModes
                 };
             }
 
-            if (coverage === 2) {
+            if (completionPercent < 82) {
                 return {
+                    memory_count: memoryCount,
                     voice_count: voiceCount,
                     photo_count: photoCount,
                     video_count: videoCount,
+                    has_memory: memoryCount > 0,
                     has_voice: voiceCount > 0,
                     has_photo: photoCount > 0,
                     has_video: videoCount > 0,
                     coverage,
+                    completion_percent: completionPercent,
                     completeness_label: "立体分身正在成形",
-                    summary: "声音和影像已经开始互相校准，这个数字分身会越来越接近 ta。"
+                    summary: "文字记忆、声音和影像已经开始互相校准，这个数字分身会越来越接近 ta。",
+                    available_modes: availableModes
                 };
             }
 
             return {
+                memory_count: memoryCount,
                 voice_count: voiceCount,
                 photo_count: photoCount,
                 video_count: videoCount,
+                has_memory: memoryCount > 0,
                 has_voice: voiceCount > 0,
                 has_photo: photoCount > 0,
                 has_video: videoCount > 0,
                 coverage,
+                completion_percent: completionPercent,
                 completeness_label: "完整数字分身已就绪",
-                summary: "声音、照片和动态影像都已具备，这个数字分身已经有了更完整的在场感。"
+                summary: "文字、声音、照片和动态影像都已具备，这个数字分身已经有了更完整的在场感。",
+                available_modes: availableModes
             };
         }
 
@@ -1794,6 +2113,9 @@
             }
 
             profile.personality_traits = profile.personality_traits || {};
+            profile.memories = Array.isArray(profile.memories)
+                ? profile.memories.map((item) => String(item || "").trim()).filter(Boolean)
+                : [];
             profile.voice_sample_paths = voicePaths.filter(Boolean);
             profile.voice_sample_urls = Array.isArray(profile.voice_sample_urls) ? profile.voice_sample_urls : [];
             profile.photo_paths = Array.isArray(profile.photo_paths) ? profile.photo_paths : [];
@@ -1810,11 +2132,15 @@
         function updateTwinPanel(lovedOne) {
             const profile = normalizeLovedOne(lovedOne);
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
+            document.getElementById("memoryCount").textContent = twin.memory_count || 0;
             document.getElementById("voiceCount").textContent = twin.voice_count || 0;
             document.getElementById("photoCount").textContent = twin.photo_count || 0;
             document.getElementById("videoCount").textContent = twin.video_count || 0;
             document.getElementById("twinStatusTitle").textContent = twin.completeness_label || "待补充分身素材";
-            document.getElementById("twinStatusText").textContent = twin.summary || "继续补充分身素材，这个数字人会更接近 ta。";
+            document.getElementById("twinStatusText").textContent =
+                twin.summary
+                    ? `${twin.summary} 当前建模完整度约 ${twin.completion_percent || 0}%。`
+                    : "继续补充文字、语音和影像，这个数字人会更接近 ta。";
 
             const photoPreview = document.getElementById("photoPreview");
             const photoPlaceholder = document.getElementById("photoPlaceholder");
@@ -1848,7 +2174,7 @@
 
         function buildTwinStatusLine(profile) {
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
-            return `已收集 ${twin.voice_count || 0} 段语音 / ${twin.photo_count || 0} 张照片 / ${twin.video_count || 0} 段视频。`;
+            return `已收集 ${twin.memory_count || 0} 条回忆 / ${twin.voice_count || 0} 段语音 / ${twin.photo_count || 0} 张照片 / ${twin.video_count || 0} 段视频。`;
         }
 
         async function uploadSelectedMedia(lovedOneId) {
@@ -1890,6 +2216,7 @@
             return normalizeLovedOne({
                 ...payload,
                 id: `local-${Date.now()}`,
+                memories: payload.memories || [],
                 voice_sample_paths: voiceFiles.map((file) => file.name),
                 photo_paths: photoFiles.map((file) => file.name),
                 photo_urls: photoFiles[0] ? [URL.createObjectURL(photoFiles[0])] : [],
@@ -2051,6 +2378,8 @@
             }
 
             updateTwinPanel(profile);
+            updateModeControls(profile);
+            clearResponseMedia();
             refreshChatIntro();
             updateStatusPill(
                 document.getElementById("chatMode"),
@@ -2066,7 +2395,7 @@
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
             document.getElementById("initialMessage").textContent =
                 twin.coverage > 0
-                    ? `${profile.name}会在这里等你。现在已经留住了 ${twin.voice_count} 段语音、${twin.photo_count} 张照片和 ${twin.video_count} 段视频，你每次回来，都可以继续把 ta 补得更完整。`
+                    ? `${profile.name}会在这里等你。现在已经留住了 ${twin.memory_count || 0} 条回忆、${twin.voice_count} 段语音、${twin.photo_count} 张照片和 ${twin.video_count} 段视频，你每次回来，都可以继续把 ta 补得更完整。`
                     : `${profile.name}会在这里等你。你每次回来，都可以从一句近况、一段想念，或者一个好消息开始。`;
         }
 
@@ -2076,6 +2405,7 @@
             const relationship = document.getElementById("relationship").value;
             const personality = document.getElementById("personality").value.trim();
             const catchphrase = document.getElementById("catchphrase").value.trim();
+            const memories = collectMemoryDrafts(document.getElementById("coreMemories").value);
             const voiceFiles = getSelectedFiles("voiceFiles");
             const photoFiles = getSelectedFiles("photoFiles");
             const videoFiles = getSelectedFiles("videoFiles");
@@ -2095,7 +2425,8 @@
                     personality,
                     catchphrase
                 },
-                speaking_style: catchphrase || "温柔亲切"
+                speaking_style: catchphrase || "温柔亲切",
+                memories
             };
 
             try {
@@ -2148,6 +2479,7 @@
             document.getElementById("relationship").value = "父亲";
             document.getElementById("personality").value = "";
             document.getElementById("catchphrase").value = "";
+            document.getElementById("coreMemories").value = "";
             document.getElementById("voiceFiles").value = "";
             document.getElementById("photoFiles").value = "";
             document.getElementById("videoFiles").value = "";
@@ -2190,6 +2522,7 @@
             addMessage(message, "user");
             input.value = "";
             input.focus();
+            clearResponseMedia();
 
             chatBusy = true;
             setButtonLoading(sendButton, true, "回应中...");
@@ -2198,6 +2531,7 @@
             try {
                 let replyText = "";
                 const isLocalProfile = String(profile.id || "").startsWith("local-") || profile.id === demoProfile.id;
+                let responsePayload = null;
 
                 if (!isLocalProfile) {
                     const response = await fetch(`${API_BASE}/api/chat`, {
@@ -2206,7 +2540,8 @@
                         body: JSON.stringify({
                             loved_one_id: profile.id,
                             message,
-                            emotion: inferEmotion(message)
+                            emotion: inferEmotion(message),
+                            mode: selectedChatMode
                         })
                     });
 
@@ -2214,18 +2549,39 @@
                         throw new Error("chat failed");
                     }
 
-                    const data = await response.json();
-                    replyText = data.response_text;
+                    responsePayload = await response.json();
+                    if (responsePayload.interaction_mode && responsePayload.interaction_mode !== selectedChatMode) {
+                        selectedChatMode = responsePayload.interaction_mode;
+                        updateModeControls(profile);
+                    }
+                    replyText = responsePayload.response_text;
                 } else {
                     await wait(720);
                     replyText = buildDemoReply(message, profile);
+                    responsePayload = {
+                        interaction_mode: selectedChatMode,
+                        mode_note:
+                            selectedChatMode === "video"
+                                ? "当前是本地素材演示；接入 Mimo 后会结合上传影像和语音素材做视频陪伴。"
+                                : selectedChatMode === "voice"
+                                    ? "当前是本地演示；接入 Mimo 后会生成陪伴式语音电话回复。"
+                                    : "当前是文字陪伴演示。"
+                    };
                 }
 
                 typingNode.remove();
                 addMessage(replyText, "ai");
+                renderResponseMedia(responsePayload, profile);
             } catch (error) {
                 typingNode.remove();
                 addMessage(buildDemoReply(message, profile), "ai");
+                renderResponseMedia(
+                    {
+                        interaction_mode: "text",
+                        mode_note: "当前请求失败，已回退到本地文字演示。",
+                    },
+                    profile
+                );
             } finally {
                 chatBusy = false;
                 setButtonLoading(sendButton, false, "发送");
