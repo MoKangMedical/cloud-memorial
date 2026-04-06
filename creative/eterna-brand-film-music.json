@@ -8,7 +8,11 @@
   "bar_duration_seconds": 3.0,
   "music_direction": {
     "genre": "ambient piano",
-    "mood": ["restrained", "intimate", "warm after sadness"],
+    "mood": [
+      "restrained",
+      "intimate",
+      "warm after sadness"
+    ],
     "instrument_layers": [
       "felt piano",
       "soft pad",
@@ -21,89 +25,271 @@
       "bar": 1,
       "start": 0.0,
       "beats": [
-        {"beat": 1, "time": 0.0, "cue": "钢琴主音落下，人物剪影第一次呼吸起伏"},
-        {"beat": 2, "time": 0.75, "cue": "背景暖光轻微闪动"},
-        {"beat": 3, "time": 1.5, "cue": "主标题上行淡入"},
-        {"beat": 4, "time": 2.25, "cue": "雨痕与环境层纹理显现"}
+        {
+          "beat": 1,
+          "time": 0.0,
+          "cue": "钢琴主音落下，人物剪影第一次呼吸起伏"
+        },
+        {
+          "beat": 2,
+          "time": 0.75,
+          "cue": "背景暖光轻微闪动"
+        },
+        {
+          "beat": 3,
+          "time": 1.5,
+          "cue": "主标题上行淡入"
+        },
+        {
+          "beat": 4,
+          "time": 2.25,
+          "cue": "雨痕与环境层纹理显现"
+        }
       ]
     },
     {
       "bar": 2,
       "start": 3.0,
       "beats": [
-        {"beat": 1, "time": 3.0, "cue": "通知前预备音，镜头开始向手机过渡"},
-        {"beat": 2, "time": 3.75, "cue": "手机轮廓更亮"},
-        {"beat": 3, "time": 4.5, "cue": "通知卡完整下落，出现念念提醒"},
-        {"beat": 4, "time": 5.25, "cue": "文案停顿，给观众识别时间"}
+        {
+          "beat": 1,
+          "time": 3.0,
+          "cue": "通知前预备音，镜头开始向手机过渡"
+        },
+        {
+          "beat": 2,
+          "time": 3.75,
+          "cue": "手机轮廓更亮"
+        },
+        {
+          "beat": 3,
+          "time": 4.5,
+          "cue": "通知卡完整下落，出现念念提醒"
+        },
+        {
+          "beat": 4,
+          "time": 5.25,
+          "cue": "文案停顿，给观众识别时间"
+        }
       ]
     },
     {
       "bar": 3,
       "start": 6.0,
       "beats": [
-        {"beat": 1, "time": 6.0, "cue": "表单标题出现"},
-        {"beat": 2, "time": 6.75, "cue": "姓名字段进入"},
-        {"beat": 3, "time": 7.5, "cue": "关系字段进入"},
-        {"beat": 4, "time": 8.25, "cue": "口头禅字段进入"}
+        {
+          "beat": 1,
+          "time": 6.0,
+          "cue": "表单标题出现"
+        },
+        {
+          "beat": 2,
+          "time": 6.75,
+          "cue": "姓名字段进入"
+        },
+        {
+          "beat": 3,
+          "time": 7.5,
+          "cue": "关系字段进入"
+        },
+        {
+          "beat": 4,
+          "time": 8.25,
+          "cue": "口头禅字段进入"
+        }
       ]
     },
     {
       "bar": 4,
       "start": 9.0,
       "beats": [
-        {"beat": 1, "time": 9.0, "cue": "性格特点区域展开"},
-        {"beat": 2, "time": 9.75, "cue": "第一枚能力 chip 点亮"},
-        {"beat": 3, "time": 10.5, "cue": "第二枚能力 chip 点亮"},
-        {"beat": 4, "time": 11.25, "cue": "第三枚能力 chip 点亮"}
+        {
+          "beat": 1,
+          "time": 9.0,
+          "cue": "性格特点区域展开"
+        },
+        {
+          "beat": 2,
+          "time": 9.75,
+          "cue": "第一枚能力 chip 点亮"
+        },
+        {
+          "beat": 3,
+          "time": 10.5,
+          "cue": "第二枚能力 chip 点亮"
+        },
+        {
+          "beat": 4,
+          "time": 11.25,
+          "cue": "第三枚能力 chip 点亮"
+        }
       ]
     },
     {
       "bar": 5,
       "start": 12.0,
       "beats": [
-        {"beat": 1, "time": 12.0, "cue": "用户消息气泡出现"},
-        {"beat": 2, "time": 12.75, "cue": "镜头停顿给台词空间"},
-        {"beat": 3, "time": 13.5, "cue": "typing dots 第一轮闪动"},
-        {"beat": 4, "time": 14.25, "cue": "typing dots 第二轮闪动"}
+        {
+          "beat": 1,
+          "time": 12.0,
+          "cue": "用户消息气泡出现"
+        },
+        {
+          "beat": 2,
+          "time": 12.75,
+          "cue": "镜头停顿给台词空间"
+        },
+        {
+          "beat": 3,
+          "time": 13.5,
+          "cue": "typing dots 第一轮闪动"
+        },
+        {
+          "beat": 4,
+          "time": 14.25,
+          "cue": "typing dots 第二轮闪动"
+        }
       ]
     },
     {
       "bar": 6,
       "start": 15.0,
       "beats": [
-        {"beat": 1, "time": 15.0, "cue": "回复气泡展开，情绪进入最暖位置"},
-        {"beat": 2, "time": 15.75, "cue": "回复第二行显现"},
-        {"beat": 3, "time": 16.5, "cue": "声音纪念波形卡进入"},
-        {"beat": 4, "time": 17.25, "cue": "功能 chips 稳定停留"}
+        {
+          "beat": 1,
+          "time": 15.0,
+          "cue": "回复气泡展开，情绪进入最暖位置"
+        },
+        {
+          "beat": 2,
+          "time": 15.75,
+          "cue": "回复第二行显现"
+        },
+        {
+          "beat": 3,
+          "time": 16.5,
+          "cue": "声音纪念波形卡进入"
+        },
+        {
+          "beat": 4,
+          "time": 17.25,
+          "cue": "功能 chips 稳定停留"
+        }
       ]
     },
     {
       "bar": 7,
       "start": 18.0,
       "beats": [
-        {"beat": 1, "time": 18.0, "cue": "生日祝福卡出现"},
-        {"beat": 2, "time": 18.75, "cue": "声音相册卡出现"},
-        {"beat": 3, "time": 19.5, "cue": "回忆影像卡出现"},
-        {"beat": 4, "time": 20.25, "cue": "中心品牌核轻微发光"}
+        {
+          "beat": 1,
+          "time": 18.0,
+          "cue": "生日祝福卡出现"
+        },
+        {
+          "beat": 2,
+          "time": 18.75,
+          "cue": "声音相册卡出现"
+        },
+        {
+          "beat": 3,
+          "time": 19.5,
+          "cue": "回忆影像卡出现"
+        },
+        {
+          "beat": 4,
+          "time": 20.25,
+          "cue": "中心品牌核轻微发光"
+        }
       ]
     },
     {
       "bar": 8,
       "start": 21.0,
       "beats": [
-        {"beat": 1, "time": 21.0, "cue": "品牌名落版"},
-        {"beat": 2, "time": 21.75, "cue": "品牌句第一段显现"},
-        {"beat": 3, "time": 22.5, "cue": "CTA 按钮稳稳落下"},
-        {"beat": 4, "time": 23.25, "cue": "尾音拉长并自然收束"}
+        {
+          "beat": 1,
+          "time": 21.0,
+          "cue": "品牌名落版"
+        },
+        {
+          "beat": 2,
+          "time": 21.75,
+          "cue": "品牌句第一段显现"
+        },
+        {
+          "beat": 3,
+          "time": 22.5,
+          "cue": "CTA 按钮稳稳落下"
+        },
+        {
+          "beat": 4,
+          "time": 23.25,
+          "cue": "尾音拉长并自然收束"
+        }
       ]
     }
   ],
   "scene_alignment": [
-    {"scene": "Scene 1", "start": 0.0, "end": 4.0, "bars": [1, 2], "dominant_feel": "lonely silence"},
-    {"scene": "Scene 2", "start": 4.0, "end": 8.0, "bars": [2, 3], "dominant_feel": "the product enters life"},
-    {"scene": "Scene 3", "start": 8.0, "end": 12.0, "bars": [3, 4], "dominant_feel": "memory shaping"},
-    {"scene": "Scene 4", "start": 12.0, "end": 18.0, "bars": [5, 6], "dominant_feel": "emotional return"},
-    {"scene": "Scene 5", "start": 18.0, "end": 21.0, "bars": [7], "dominant_feel": "extended care"},
-    {"scene": "Scene 6", "start": 21.0, "end": 24.0, "bars": [8], "dominant_feel": "brand close"}
-  ]
+    {
+      "scene": "Scene 1",
+      "start": 0.0,
+      "end": 4.0,
+      "bars": [
+        1,
+        2
+      ],
+      "dominant_feel": "lonely silence"
+    },
+    {
+      "scene": "Scene 2",
+      "start": 4.0,
+      "end": 8.0,
+      "bars": [
+        2,
+        3
+      ],
+      "dominant_feel": "the product enters life"
+    },
+    {
+      "scene": "Scene 3",
+      "start": 8.0,
+      "end": 12.0,
+      "bars": [
+        3,
+        4
+      ],
+      "dominant_feel": "memory shaping"
+    },
+    {
+      "scene": "Scene 4",
+      "start": 12.0,
+      "end": 18.0,
+      "bars": [
+        5,
+        6
+      ],
+      "dominant_feel": "emotional return"
+    },
+    {
+      "scene": "Scene 5",
+      "start": 18.0,
+      "end": 21.0,
+      "bars": [
+        7
+      ],
+      "dominant_feel": "extended care"
+    },
+    {
+      "scene": "Scene 6",
+      "start": 21.0,
+      "end": 24.0,
+      "bars": [
+        8
+      ],
+      "dominant_feel": "brand close"
+    }
+  ],
+  "generated_music_asset": "eterna-demo-v2-music.wav",
+  "generated_video_asset": "eterna-demo-v2.mp4"
 }
