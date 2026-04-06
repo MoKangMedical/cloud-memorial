@@ -1,5 +1,5 @@
 """
-常在 - AI思念亲人平台
+念念 - AI思念亲人平台
 核心API服务
 """
 import os
@@ -18,8 +18,8 @@ from pydantic import BaseModel
 import httpx
 
 app = FastAPI(
-    title="常在 API",
-    description="AI思念亲人平台 - ta一直都在",
+    title="念念 API",
+    description="AI思念亲人平台 - 念念不忘，ta一直在",
     version="1.0.0"
 )
 
@@ -94,7 +94,7 @@ def save_data(filename: str, data: dict):
 async def health():
     return {
         "status": "healthy",
-        "service": "常在",
+        "service": "念念",
         "version": "1.0.0",
         "timestamp": datetime.now().isoformat()
     }
@@ -224,7 +224,7 @@ async def chat_with_loved_one(msg: ChatMessage):
             result = response.json()
             ai_response = result["choices"][0]["message"]["content"]
     except Exception as e:
-        ai_response = f"（{loved_one['name']}现在暂时不能说话，但ta一直都在你身边）"
+        ai_response = f"（{loved_one['name']}现在暂时不能说话，但念念不忘，ta一直在你身边）"
 
     # 保存对话记录
     chat_history = load_data("chat_history.json")
@@ -337,6 +337,6 @@ def build_personality_prompt(loved_one: dict) -> str:
 # ===== 启动 =====
 if __name__ == "__main__":
     import uvicorn
-    print("🌸 常在启动中...")
-    print("📍 ta一直都在")
+    print("🌸 念念启动中...")
+    print("📍 念念不忘，ta一直在")
     uvicorn.run(app, host="0.0.0.0", port=8097)
