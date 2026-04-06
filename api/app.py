@@ -6,6 +6,7 @@ import base64
 import json
 import mimetypes
 import os
+import shutil
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -155,6 +156,19 @@ def save_data(filename: str, data: dict):
         json.dumps(data, ensure_ascii=False, indent=2),
         encoding="utf-8"
     )
+
+
+def update_loved_one_memory_cache(loved_one_id: str):
+    loved_ones = load_data("loved_ones.json")
+    if loved_one_id not in loved_ones:
+        return
+    memories = load_data("memories.json")
+    loved_one = normalize_loved_one_record(loved_ones[loved_one_id])
+    loved_one["memories"] = unique_preserve_order(
+        [item.get("content", "").strip() for item in memories.get(loved_one_id, []) if item.get("content")]
+    )
+    loved_ones[loved_one_id] = normalize_loved_one_record(loved_one)
+    save_data("loved_ones.json", loved_ones)
 
 
 def get_memory_entries(loved_one_id: Optional[str]) -> List[dict]:
@@ -716,6 +730,42 @@ async def get_loved_one(loved_one_id: str):
         raise HTTPException(status_code=404, detail="亲人档案未找到")
     return serialize_loved_one(data[loved_one_id])
 
+
+@app.delete("/api/loved-ones/{loved_one_id}")
+async def delete_loved_one(loved_one_id: str):
+    """删除亲人档案及关联数据"""
+    loved_ones = load_data("loved_ones.json")
+    if loved_one_id not in loved_ones:
+        raise HTTPException(status_code=404, detail="亲人档案未找到")
+
+    removed = normalize_loved_one_record(loved_ones.pop(loved_one_id))
+    save_data("loved_ones.json", loved_ones)
+
+    for filename in ["memories.json", "chat_history.json"]:
+        bucket = load_data(filename)
+        if loved_one_id in bucket:
+            bucket.pop(loved_one_id, None)
+            save_data(filename, bucket)
+
+    greetings = load_data("greetings.json")
+    filtered_greetings = {
+        key: value for key, value in greetings.items()
+        if value.get("loved_one_id") != loved_one_id
+    }
+    if len(filtered_greetings) != len(greetings):
+        save_data("greetings.json", filtered_greetings)
+
+    for kind in ["voices", "photos", "videos", "generated_audio"]:
+        target = DATA_DIR / kind / loved_one_id
+        if target.exists():
+            shutil.rmtree(target, ignore_errors=True)
+
+    return {
+        "status": "deleted",
+        "loved_one_id": loved_one_id,
+        "name": removed.get("name", ""),
+    }
+
 @app.post("/api/loved-ones/{loved_one_id}/voice")
 async def upload_voice_sample(
     loved_one_id: str,
@@ -901,6 +951,13 @@ async def chat_with_loved_one(msg: ChatMessage, request: Request):
         memory_triggered=memory_context[:100] if memory_context else None
     )
 
+
+@app.get("/api/chat-history/{loved_one_id}")
+async def get_chat_history(loved_one_id: str, limit: int = 50):
+    """获取亲人的对话记录"""
+    chat_history = load_data("chat_history.json")
+    return chat_history.get(loved_one_id, [])[-limit:]
+
 @app.post("/api/memories")
 async def add_memory(memory: MemoryEntry):
     """添加回忆"""
@@ -913,6 +970,7 @@ async def add_memory(memory: MemoryEntry):
     memory_dict["created_at"] = datetime.now().isoformat()
     memories[memory.loved_one_id].append(memory_dict)
     save_data("memories.json", memories)
+    update_loved_one_memory_cache(memory.loved_one_id)
 
     return {"status": "saved", "memory_id": memory_dict["id"]}
 
@@ -922,6 +980,20 @@ async def get_memories(loved_one_id: str, limit: int = 50):
     memories = load_data("memories.json")
     loved_one_memories = memories.get(loved_one_id, [])
     return loved_one_memories[-limit:]
+
+
+@app.delete("/api/memories/{loved_one_id}/{memory_id}")
+async def delete_memory(loved_one_id: str, memory_id: str):
+    """删除一条回忆"""
+    memories = load_data("memories.json")
+    loved_one_memories = memories.get(loved_one_id, [])
+    filtered = [item for item in loved_one_memories if item.get("id") != memory_id]
+    if len(filtered) == len(loved_one_memories):
+        raise HTTPException(status_code=404, detail="回忆未找到")
+    memories[loved_one_id] = filtered
+    save_data("memories.json", memories)
+    update_loved_one_memory_cache(loved_one_id)
+    return {"status": "deleted", "memory_id": memory_id}
 
 @app.post("/api/greetings/schedule")
 async def schedule_greeting(greeting: GreetingSchedule):

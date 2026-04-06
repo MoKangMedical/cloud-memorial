@@ -919,6 +919,177 @@
             line-height: 1.65;
         }
 
+        .workbench-grid {
+            display: grid;
+            grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+            gap: 20px;
+            align-items: start;
+        }
+
+        .directory-panel,
+        .workbench-panel {
+            padding: 24px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .panel-heading,
+        .card-heading,
+        .entry-meta-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .panel-heading h3,
+        .card-heading strong {
+            font-size: 1.12rem;
+            letter-spacing: -0.02em;
+        }
+
+        .archive-list,
+        .entry-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .archive-item,
+        .entry-card {
+            width: 100%;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .archive-item {
+            cursor: pointer;
+            transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+        }
+
+        .archive-item:hover {
+            transform: translateY(-1px);
+            border-color: rgba(243, 196, 161, 0.22);
+        }
+
+        .archive-item.active {
+            border-color: rgba(243, 196, 161, 0.28);
+            background: linear-gradient(180deg, rgba(243, 196, 161, 0.11), rgba(255, 255, 255, 0.04));
+        }
+
+        .archive-item strong,
+        .entry-card strong {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .archive-item p,
+        .entry-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        .archive-item .status-detail,
+        .entry-card .status-detail {
+            font-size: 0.84rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .dashboard-card {
+            display: grid;
+            gap: 14px;
+            align-content: start;
+            padding: 18px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .memory-form {
+            display: grid;
+            gap: 12px;
+        }
+
+        .memory-form textarea,
+        .memory-actions select {
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            padding: 12px 14px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .memory-form textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .memory-actions {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .memory-actions > * {
+            flex: 1;
+        }
+
+        .inline-action {
+            border: 0;
+            background: transparent;
+            color: rgba(243, 196, 161, 0.88);
+            font-size: 0.86rem;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .inline-action.danger {
+            color: #ffb4b4;
+        }
+
+        .danger-ghost {
+            border-color: rgba(255, 180, 180, 0.22);
+            color: #ffd2d2;
+        }
+
+        .entry-list {
+            max-height: 420px;
+            overflow: auto;
+            padding-right: 4px;
+        }
+
+        .workbench-empty {
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            color: rgba(246, 244, 241, 0.5);
+            text-align: center;
+            line-height: 1.7;
+        }
+
+        .entry-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(243, 196, 161, 0.1);
+            color: rgba(246, 244, 241, 0.72);
+            font-size: 0.76rem;
+        }
+
         .pricing {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1178,12 +1349,17 @@
             .hero,
             .demo-stage,
             .experience-grid,
-            .pricing {
+            .pricing,
+            .workbench-grid {
                 grid-template-columns: 1fr 1fr;
             }
 
             .features {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
             }
 
             .hero {
@@ -1210,7 +1386,9 @@
             .demo-stage,
             .experience-grid,
             .features,
-            .pricing {
+            .pricing,
+            .workbench-grid,
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1260,7 +1438,8 @@
             }
 
             .form-actions,
-            .hero-actions {
+            .hero-actions,
+            .memory-actions {
                 flex-direction: column;
             }
 
@@ -1456,6 +1635,68 @@
                         <h3>家族传承</h3>
                         <p>让一段关系不只停留在当下，也能被下一代看见、听见，成为真正可传承的数字遗产。</p>
                     </article>
+                </div>
+            </section>
+
+            <section class="section reveal">
+                <div class="section-heading">
+                    <p class="eyebrow">档案工作台</p>
+                    <h2>把纪念做成真正可管理的日常</h2>
+                    <p>这里不是展示页，而是你每天会回来维护的地方。你可以切换亲人档案、补回忆、查看最近对话，逐步把这个数字分身养完整。</p>
+                </div>
+                <div class="workbench-grid">
+                    <aside class="directory-panel glass-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="eyebrow">亲人列表</p>
+                                <h3>切换正在陪伴的人</h3>
+                            </div>
+                            <button type="button" class="btn btn-secondary" onclick="openModal('createModal')">新建档案</button>
+                        </div>
+                        <div id="directorySummary" class="status-detail">正在读取档案目录。</div>
+                        <div id="lovedOneDirectory" class="archive-list"></div>
+                    </aside>
+
+                    <div class="workbench-panel glass-panel">
+                        <div class="panel-heading">
+                            <div>
+                                <p class="eyebrow">当前档案</p>
+                                <h3 id="workbenchName">爸爸</h3>
+                            </div>
+                            <button type="button" id="deleteLovedOneButton" class="btn btn-secondary danger-ghost" onclick="removeActiveLovedOne()">删除档案</button>
+                        </div>
+                        <div id="workbenchSummary" class="status-detail">当前档案会在这里展示可管理的数据状态。</div>
+
+                        <div class="dashboard-grid">
+                            <section class="dashboard-card">
+                                <div class="card-heading">
+                                    <strong>代表性回忆</strong>
+                                    <span id="memoryMeta" class="entry-badge">0 条</span>
+                                </div>
+                                <div class="memory-form">
+                                    <textarea id="newMemoryInput" placeholder="写下一段只属于你们的回忆，比如：下雨天 ta 总会站在门口等我。"></textarea>
+                                    <div class="memory-actions">
+                                        <select id="newMemoryType">
+                                            <option value="conversation">日常片段</option>
+                                            <option value="event">重要事件</option>
+                                            <option value="feeling">情感记忆</option>
+                                            <option value="photo">影像故事</option>
+                                        </select>
+                                        <button type="button" id="saveMemoryButton" class="btn btn-primary" onclick="saveMemory()">添加回忆</button>
+                                    </div>
+                                </div>
+                                <div id="memoryList" class="entry-list"></div>
+                            </section>
+
+                            <section class="dashboard-card">
+                                <div class="card-heading">
+                                    <strong>最近对话</strong>
+                                    <span id="historyMeta" class="entry-badge">0 条</span>
+                                </div>
+                                <div id="chatHistoryList" class="entry-list"></div>
+                            </section>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -1747,6 +1988,9 @@
         let chatBusy = false;
         let toastTimer = null;
         let selectedChatMode = "text";
+        let lovedOneDirectory = [];
+        let activeMemories = [];
+        let activeChatHistory = [];
 
         document.addEventListener("DOMContentLoaded", () => {
             bindModalEvents();
@@ -2217,6 +2461,7 @@
                 ...payload,
                 id: `local-${Date.now()}`,
                 memories: payload.memories || [],
+                local_chat_history: [],
                 voice_sample_paths: voiceFiles.map((file) => file.name),
                 photo_paths: photoFiles.map((file) => file.name),
                 photo_urls: photoFiles[0] ? [URL.createObjectURL(photoFiles[0])] : [],
@@ -2225,8 +2470,370 @@
             });
         }
 
+        function isLocalProfile(profile) {
+            return !profile || String(profile.id || "").startsWith("local-") || profile.id === demoProfile.id;
+        }
+
+        function formatTimeLabel(value) {
+            if (!value) {
+                return "刚刚";
+            }
+            const date = new Date(value);
+            if (Number.isNaN(date.getTime())) {
+                return "刚刚";
+            }
+            return date.toLocaleString("zh-CN", {
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+        }
+
+        function renderLovedOneDirectory() {
+            const container = document.getElementById("lovedOneDirectory");
+            const summary = document.getElementById("directorySummary");
+            const profiles = lovedOneDirectory.length ? lovedOneDirectory : [normalizeLovedOne(activeLovedOne || demoProfile)];
+            summary.textContent =
+                serviceOnline
+                    ? `当前已接入 ${profiles.length} 位亲人档案，随时可以切换和继续完善。`
+                    : "当前是本地演示目录；连接服务后会显示真实档案。";
+
+            container.innerHTML = "";
+            if (!profiles.length) {
+                container.innerHTML = '<div class="workbench-empty">还没有亲人档案，从第一位开始建立。</div>';
+                return;
+            }
+
+            profiles.forEach((profile) => {
+                const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
+                const button = document.createElement("button");
+                button.type = "button";
+                button.className = "archive-item";
+                if (activeLovedOne && profile.id === activeLovedOne.id) {
+                    button.classList.add("active");
+                }
+                button.addEventListener("click", () => {
+                    void selectLovedOneById(profile.id);
+                });
+
+                const title = document.createElement("strong");
+                title.textContent = profile.name || "未命名亲人";
+
+                const subtitle = document.createElement("p");
+                subtitle.textContent = `${profile.relationship || "亲人"} · ${twin.completeness_label}`;
+
+                const meta = document.createElement("div");
+                meta.className = "entry-meta-row";
+
+                const detail = document.createElement("span");
+                detail.className = "status-detail";
+                detail.textContent = `${twin.memory_count || 0} 条回忆 / ${formatAvailableModes(twin.available_modes || ["text"])}`;
+
+                const badge = document.createElement("span");
+                badge.className = "entry-badge";
+                badge.textContent = `${twin.completion_percent || 0}%`;
+
+                meta.append(detail, badge);
+                button.append(title, subtitle, meta);
+                container.append(button);
+            });
+        }
+
+        function renderMemoryList() {
+            const container = document.getElementById("memoryList");
+            const meta = document.getElementById("memoryMeta");
+            meta.textContent = `${activeMemories.length} 条`;
+            container.innerHTML = "";
+
+            if (!activeMemories.length) {
+                container.innerHTML = '<div class="workbench-empty">先写下一段你们之间真实发生过的事情，这会成为最早的人格材料。</div>';
+                return;
+            }
+
+            activeMemories.forEach((memory) => {
+                const card = document.createElement("div");
+                card.className = "entry-card";
+
+                const top = document.createElement("div");
+                top.className = "entry-meta-row";
+
+                const badge = document.createElement("span");
+                badge.className = "entry-badge";
+                badge.textContent = memory.memory_type || "conversation";
+
+                const remove = document.createElement("button");
+                remove.type = "button";
+                remove.className = "inline-action danger";
+                remove.textContent = "删除";
+                remove.addEventListener("click", () => {
+                    void removeMemory(memory.id);
+                });
+
+                const text = document.createElement("p");
+                text.textContent = memory.content;
+
+                const detail = document.createElement("div");
+                detail.className = "status-detail";
+                detail.textContent = formatTimeLabel(memory.created_at);
+
+                top.append(badge, remove);
+                card.append(top, text, detail);
+                container.append(card);
+            });
+        }
+
+        function renderChatHistory() {
+            const container = document.getElementById("chatHistoryList");
+            const meta = document.getElementById("historyMeta");
+            meta.textContent = `${activeChatHistory.length} 条`;
+            container.innerHTML = "";
+
+            if (!activeChatHistory.length) {
+                container.innerHTML = '<div class="workbench-empty">开始对话之后，这里会留下你们最近的聊天轨迹。</div>';
+                return;
+            }
+
+            activeChatHistory
+                .slice()
+                .reverse()
+                .forEach((entry) => {
+                    const card = document.createElement("div");
+                    card.className = "entry-card";
+
+                    const top = document.createElement("div");
+                    top.className = "entry-meta-row";
+
+                    const badge = document.createElement("span");
+                    badge.className = "entry-badge";
+                    badge.textContent = entry.mode || "text";
+
+                    const time = document.createElement("span");
+                    time.className = "status-detail";
+                    time.textContent = formatTimeLabel(entry.timestamp);
+
+                    const user = document.createElement("strong");
+                    user.textContent = `你：${entry.user_message}`;
+
+                    const ai = document.createElement("p");
+                    ai.textContent = `${activeLovedOne?.name || "ta"}：${entry.ai_response}`;
+
+                    top.append(badge, time);
+                    card.append(top, user, ai);
+                    container.append(card);
+                });
+        }
+
+        function updateWorkbenchSurface(profile) {
+            const current = normalizeLovedOne(profile || activeLovedOne || demoProfile);
+            const twin = current.digital_twin_profile || buildClientTwinProfile(current);
+            document.getElementById("workbenchName").textContent = current.name || "当前档案";
+            document.getElementById("workbenchSummary").textContent =
+                `${current.relationship || "亲人"} · ${twin.completeness_label} · 当前建模完整度约 ${twin.completion_percent || 0}%。`;
+
+            const deleteButton = document.getElementById("deleteLovedOneButton");
+            deleteButton.disabled = isLocalProfile(current);
+            deleteButton.textContent = isLocalProfile(current) ? "演示档案不可删除" : "删除档案";
+        }
+
+        async function loadActiveWorkbenchData(profile = activeLovedOne) {
+            const current = normalizeLovedOne(profile || demoProfile);
+            updateWorkbenchSurface(current);
+
+            if (!serviceOnline || isLocalProfile(current)) {
+                activeMemories = (current.memories || []).map((content, index) => ({
+                    id: `local-memory-${index}`,
+                    content,
+                    memory_type: "conversation",
+                    created_at: null,
+                }));
+                activeChatHistory = Array.isArray(current.local_chat_history) ? current.local_chat_history : [];
+                renderMemoryList();
+                renderChatHistory();
+                return;
+            }
+
+            try {
+                const [memoryResponse, historyResponse] = await Promise.all([
+                    fetch(`${API_BASE}/api/memories/${current.id}`),
+                    fetch(`${API_BASE}/api/chat-history/${current.id}`)
+                ]);
+
+                if (!memoryResponse.ok || !historyResponse.ok) {
+                    throw new Error("workbench failed");
+                }
+
+                activeMemories = await memoryResponse.json();
+                activeChatHistory = await historyResponse.json();
+            } catch (error) {
+                activeMemories = [];
+                activeChatHistory = [];
+            }
+
+            renderMemoryList();
+            renderChatHistory();
+        }
+
+        async function selectLovedOneById(lovedOneId) {
+            const target = lovedOneDirectory.find((item) => item.id === lovedOneId);
+            if (!target) {
+                return;
+            }
+            applyLovedOne(target, !isLocalProfile(target));
+            renderLovedOneDirectory();
+            await loadActiveWorkbenchData(target);
+        }
+
+        async function loadLovedOneDirectory() {
+            if (!serviceOnline) {
+                lovedOneDirectory = [normalizeLovedOne(activeLovedOne || demoProfile)];
+                renderLovedOneDirectory();
+                await loadActiveWorkbenchData(activeLovedOne || demoProfile);
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/loved-ones`);
+                if (!response.ok) {
+                    throw new Error("directory failed");
+                }
+
+                lovedOneDirectory = (await response.json()).map((item) => normalizeLovedOne(item));
+                if (!lovedOneDirectory.length) {
+                    lovedOneDirectory = [normalizeLovedOne(demoProfile)];
+                }
+
+                const selected =
+                    lovedOneDirectory.find((item) => item.id === activeLovedOne?.id) ||
+                    lovedOneDirectory[0];
+                applyLovedOne(selected, !isLocalProfile(selected));
+            } catch (error) {
+                lovedOneDirectory = [normalizeLovedOne(activeLovedOne || demoProfile)];
+            }
+
+            renderLovedOneDirectory();
+            await loadActiveWorkbenchData(activeLovedOne || lovedOneDirectory[0] || demoProfile);
+        }
+
+        async function saveMemory() {
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
+            const input = document.getElementById("newMemoryInput");
+            const memoryType = document.getElementById("newMemoryType").value;
+            const content = input.value.trim();
+            const saveButton = document.getElementById("saveMemoryButton");
+
+            if (!content) {
+                showToast("先写下一段回忆，再保存。", "error");
+                input.focus();
+                return;
+            }
+
+            if (!serviceOnline || isLocalProfile(profile)) {
+                const nextProfile = normalizeLovedOne({
+                    ...profile,
+                    memories: uniqueValues([content, ...(profile.memories || [])])
+                });
+                applyLovedOne(nextProfile);
+                lovedOneDirectory = [nextProfile];
+                renderLovedOneDirectory();
+                await loadActiveWorkbenchData(nextProfile);
+                input.value = "";
+                showToast("这段回忆已加入本地演示档案。", "success");
+                return;
+            }
+
+            setButtonLoading(saveButton, true, "保存中...");
+            try {
+                const response = await fetch(`${API_BASE}/api/memories`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        loved_one_id: profile.id,
+                        content,
+                        memory_type: memoryType,
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error("save memory failed");
+                }
+
+                input.value = "";
+                await loadLovedOneDirectory();
+                await loadStats();
+                showToast("回忆已保存，分身会把它记住。", "success");
+            } catch (error) {
+                showToast("回忆保存失败，请稍后再试。", "error");
+            } finally {
+                setButtonLoading(saveButton, false, "添加回忆");
+            }
+        }
+
+        async function removeMemory(memoryId) {
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
+            if (!memoryId) {
+                return;
+            }
+
+            if (!serviceOnline || isLocalProfile(profile)) {
+                const nextProfile = normalizeLovedOne({
+                    ...profile,
+                    memories: (profile.memories || []).filter((_, index) => `local-memory-${index}` !== memoryId)
+                });
+                applyLovedOne(nextProfile);
+                lovedOneDirectory = [nextProfile];
+                renderLovedOneDirectory();
+                await loadActiveWorkbenchData(nextProfile);
+                showToast("本地回忆已删除。", "success");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/memories/${profile.id}/${memoryId}`, {
+                    method: "DELETE"
+                });
+                if (!response.ok) {
+                    throw new Error("delete memory failed");
+                }
+                await loadLovedOneDirectory();
+                await loadStats();
+                showToast("回忆已删除。", "success");
+            } catch (error) {
+                showToast("删除回忆失败，请稍后再试。", "error");
+            }
+        }
+
+        async function removeActiveLovedOne() {
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
+            if (!serviceOnline || isLocalProfile(profile)) {
+                showToast("当前是演示档案，不执行删除。", "error");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/api/loved-ones/${profile.id}`, {
+                    method: "DELETE"
+                });
+                if (!response.ok) {
+                    throw new Error("delete loved one failed");
+                }
+                localStorage.removeItem(STORAGE_KEY);
+                activeLovedOne = normalizeLovedOne(demoProfile);
+                await loadLovedOneDirectory();
+                await loadStats();
+                showToast(`${profile.name} 的档案已删除。`, "success");
+            } catch (error) {
+                showToast("删除档案失败，请稍后再试。", "error");
+            }
+        }
+
+        function uniqueValues(values) {
+            return [...new Set(values.filter(Boolean))];
+        }
+
         async function hydrateRuntimeState() {
-            await Promise.allSettled([checkHealth(), loadStats()]);
+            await checkHealth();
+            await Promise.allSettled([loadStats(), loadLovedOneDirectory()]);
         }
 
         async function checkHealth() {
@@ -2379,8 +2986,10 @@
 
             updateTwinPanel(profile);
             updateModeControls(profile);
+            updateWorkbenchSurface(profile);
             clearResponseMedia();
             refreshChatIntro();
+            renderLovedOneDirectory();
             updateStatusPill(
                 document.getElementById("chatMode"),
                 serviceOnline && !String(profile.id).startsWith("local-") ? "online" : "demo",
@@ -2451,6 +3060,8 @@
                 }
 
                 applyLovedOne(lovedOne);
+                await loadLovedOneDirectory();
+                await loadStats();
                 showToast(
                     uploadedAssets > 0
                         ? `${name} 的数字分身档案已创建，已同步 ${uploadedAssets} 份素材。`
@@ -2460,6 +3071,8 @@
             } catch (error) {
                 const localProfile = buildLocalDraftProfile(payload);
                 applyLovedOne(localProfile, false);
+                lovedOneDirectory = [localProfile];
+                await loadActiveWorkbenchData(localProfile);
                 showToast(
                     hasMedia
                         ? `${name} 已在本地演示模式中创建，当前页面会先展示分身素材预览；连接服务后才能正式保存。`
@@ -2530,10 +3143,10 @@
 
             try {
                 let replyText = "";
-                const isLocalProfile = String(profile.id || "").startsWith("local-") || profile.id === demoProfile.id;
+                const localProfileMode = isLocalProfile(profile);
                 let responsePayload = null;
 
-                if (!isLocalProfile) {
+                if (!localProfileMode) {
                     const response = await fetch(`${API_BASE}/api/chat`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -2558,6 +3171,19 @@
                 } else {
                     await wait(720);
                     replyText = buildDemoReply(message, profile);
+                    const nextProfile = normalizeLovedOne({
+                        ...profile,
+                        local_chat_history: [
+                            ...(Array.isArray(profile.local_chat_history) ? profile.local_chat_history : []),
+                            {
+                                timestamp: new Date().toISOString(),
+                                user_message: message,
+                                ai_response: replyText,
+                                mode: selectedChatMode
+                            }
+                        ]
+                    });
+                    applyLovedOne(nextProfile, false);
                     responsePayload = {
                         interaction_mode: selectedChatMode,
                         mode_note:
@@ -2572,6 +3198,10 @@
                 typingNode.remove();
                 addMessage(replyText, "ai");
                 renderResponseMedia(responsePayload, profile);
+                await loadActiveWorkbenchData(activeLovedOne || profile);
+                if (!localProfileMode) {
+                    await loadStats();
+                }
             } catch (error) {
                 typingNode.remove();
                 addMessage(buildDemoReply(message, profile), "ai");
