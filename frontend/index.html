@@ -729,6 +729,101 @@
             line-height: 1.7;
         }
 
+        .twin-panel {
+            display: grid;
+            gap: 16px;
+            padding: 18px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .twin-panel h4 {
+            font-size: 1.18rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .twin-panel-copy p:last-child {
+            margin: 0;
+        }
+
+        .twin-stats,
+        .twin-preview-grid,
+        .upload-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .twin-preview-grid,
+        .upload-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .twin-stat,
+        .upload-card,
+        .twin-preview-card {
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .twin-stat {
+            padding: 14px;
+            display: grid;
+            gap: 6px;
+        }
+
+        .twin-stat strong {
+            font-size: 1.6rem;
+            letter-spacing: -0.04em;
+            color: var(--primary);
+        }
+
+        .twin-stat span {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .twin-preview-card {
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+            align-content: start;
+        }
+
+        .twin-preview-card > span {
+            font-size: 0.84rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(246, 244, 241, 0.56);
+        }
+
+        .twin-preview-card img,
+        .twin-preview-card video {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            object-fit: cover;
+            border-radius: 16px;
+            display: none;
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .preview-placeholder {
+            min-height: 108px;
+            padding: 16px;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            border-radius: 16px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.02));
+            color: rgba(246, 244, 241, 0.48);
+            font-size: 0.88rem;
+            line-height: 1.65;
+        }
+
         .pricing {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -818,7 +913,9 @@
         }
 
         .modal-card {
-            width: min(540px, 100%);
+            width: min(760px, 100%);
+            max-height: min(88vh, 980px);
+            overflow: auto;
             padding: 28px;
             border-radius: 30px;
             background: linear-gradient(180deg, rgba(14, 24, 41, 0.96), rgba(10, 17, 30, 0.98));
@@ -851,6 +948,47 @@
         .form-group label {
             color: rgba(246, 244, 241, 0.7);
             font-size: 0.92rem;
+        }
+
+        .field-note,
+        .file-meta {
+            color: rgba(246, 244, 241, 0.5);
+            font-size: 0.84rem;
+            line-height: 1.65;
+        }
+
+        .form-divider {
+            margin: 6px 0 2px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .form-divider strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .upload-card {
+            padding: 16px;
+            display: grid;
+            gap: 10px;
+        }
+
+        .upload-card input[type="file"] {
+            padding: 12px;
+            cursor: pointer;
+        }
+
+        .upload-card input[type="file"]::file-selector-button {
+            margin-right: 12px;
+            border: 0;
+            border-radius: 999px;
+            padding: 9px 14px;
+            color: #16100b;
+            background: linear-gradient(135deg, #f5d2b8, #f0a777);
+            cursor: pointer;
         }
 
         .form-group input,
@@ -1027,6 +1165,12 @@
                 flex-direction: column;
             }
 
+            .upload-grid,
+            .twin-stats,
+            .twin-preview-grid {
+                grid-template-columns: 1fr;
+            }
+
             .btn {
                 width: 100%;
             }
@@ -1073,7 +1217,7 @@
                 <div>
                     <p class="eyebrow">AI 思念亲人平台</p>
                     <h1>他们从未真正离开</h1>
-                    <p>把熟悉的称呼、说话方式和你们共享过的日常，留在一个可反复回来的空间里。念念把纪念做成温柔的持续体验，不只是一次性的“生成”。</p>
+                    <p>把熟悉的称呼、说话方式和你们共享过的日常，留在一个可反复回来的空间里。语音、照片、视频和回忆会一起组成一个越来越像 ta 的数字分身，而不是一次性的“生成”。</p>
                     <div class="hero-actions">
                         <button type="button" class="btn btn-primary" onclick="openModal('createModal')">创建亲人的数字生命</button>
                         <button type="button" class="btn btn-secondary" onclick="scrollToChat()">开始一段对话</button>
@@ -1205,8 +1349,8 @@
                     </article>
                     <article class="feature-card">
                         <span>📸</span>
-                        <h3>回忆重现</h3>
-                        <p>老照片修复、声音纪念和回忆影像，把零散素材变成有结构、可回看的个人记忆档案。</p>
+                        <h3>数字分身</h3>
+                        <p>语音、照片、视频和共同回忆会一起进入档案，让这个数字人不止会说话，也会越来越像 ta 本人。</p>
                     </article>
                     <article class="feature-card">
                         <span>👨‍👩‍👧‍👦</span>
@@ -1220,7 +1364,7 @@
                 <div class="section-heading">
                     <p class="eyebrow">对话体验</p>
                     <h2>从一句想念开始</h2>
-                    <p>先创建一个亲人档案，然后让聊天窗口真正以 ta 的身份回应你。如果后端不可用，页面也会切换到本地演示模式，不让流程断掉。</p>
+                    <p>先创建一个亲人档案，再把语音、照片和视频补进去，让聊天窗口不只是“会回复”，而是越来越像 ta 本人。如果后端不可用，页面也会切换到本地演示模式，不让流程断掉。</p>
                 </div>
                 <div class="experience-grid">
                     <div class="chat-container glass-panel">
@@ -1264,20 +1408,53 @@
 
                     <aside class="ritual-panel glass-panel">
                         <p class="eyebrow">纪念流程</p>
-                        <h3>先给 ta 一个能被记住的入口</h3>
-                        <p>名字、关系、口头禅和性格特点，是这段陪伴能否像 ta 的关键。你不需要一次性填很多内容，先把最有辨识度的部分写下来就够了。</p>
+                        <h3>先给 ta 一个能被重建的数字分身入口</h3>
+                        <p>名字、关系、口头禅决定人格轮廓；语音、照片、视频则决定这个分身像不像 ta。你不需要一次性准备完，但要让声音、面容和神态都慢慢回来。</p>
                         <div class="timeline">
                             <div class="timeline-item">
-                                <strong>1. 创建档案</strong>
-                                <span>记录名字、关系和熟悉的表达方式，让系统先建立一个可对话的人格轮廓。</span>
+                                <strong>1. 创建分身档案</strong>
+                                <span>先记录名字、关系和熟悉的表达方式，让系统建立一个可对话的人格轮廓。</span>
                             </div>
                             <div class="timeline-item">
-                                <strong>2. 上传语音与照片</strong>
-                                <span>之后可以继续补充录音和照片，把声音与面容慢慢补全到这个纪念入口里。</span>
+                                <strong>2. 上传语音、照片、视频</strong>
+                                <span>语音会校准说话方式，照片会还原面容，如果还有视频，分身会更接近 ta 的神态和动作。</span>
                             </div>
                             <div class="timeline-item">
-                                <strong>3. 留下共同回忆</strong>
-                                <span>从一段短短的故事开始，让回应不止“会说话”，而是能说出你们之间的事情。</span>
+                                <strong>3. 继续留下回忆</strong>
+                                <span>从一段短短的故事开始，让回应不止“会说话”，而是能说出你们之间真实发生过的事情。</span>
+                            </div>
+                        </div>
+                        <div class="twin-panel">
+                            <div class="twin-panel-copy">
+                                <p class="eyebrow">数字分身</p>
+                                <h4 id="twinStatusTitle">先把 ta 的声音、面容和神态留住</h4>
+                                <p id="twinStatusText">语音会决定口气，照片会决定面容，视频会让动态和眼神更接近 ta。</p>
+                            </div>
+                            <div class="twin-stats">
+                                <div class="twin-stat">
+                                    <strong id="voiceCount">0</strong>
+                                    <span>语音片段</span>
+                                </div>
+                                <div class="twin-stat">
+                                    <strong id="photoCount">0</strong>
+                                    <span>照片素材</span>
+                                </div>
+                                <div class="twin-stat">
+                                    <strong id="videoCount">0</strong>
+                                    <span>视频素材</span>
+                                </div>
+                            </div>
+                            <div class="twin-preview-grid">
+                                <div class="twin-preview-card">
+                                    <span>照片预览</span>
+                                    <img id="photoPreview" alt="亲人照片预览">
+                                    <div id="photoPlaceholder" class="preview-placeholder">上传照片后，会在这里形成面容参考。</div>
+                                </div>
+                                <div class="twin-preview-card">
+                                    <span>视频预览</span>
+                                    <video id="videoPreview" muted playsinline controls preload="metadata"></video>
+                                    <div id="videoPlaceholder" class="preview-placeholder">如果有视频，分身会更接近 ta 的神态和动作。</div>
+                                </div>
                             </div>
                         </div>
                         <button type="button" class="btn btn-primary" onclick="openModal('createModal')">现在就创建档案</button>
@@ -1349,7 +1526,7 @@
     <div id="createModal" class="modal" aria-hidden="true">
         <div class="modal-card">
             <h2>创建亲人的数字生命</h2>
-            <p>先留下最能代表 ta 的几件事：名字、关系、口头禅，以及你一想到 ta 就会浮现出的气质。</p>
+            <p>先留下最能代表 ta 的几件事：名字、关系、口头禅，以及你一想到 ta 就会浮现出的气质。再把语音、照片和视频补进去，这个数字人就会越来越像 ta 的分身。</p>
             <div class="form-grid">
                 <div class="form-group">
                     <label for="lovedOneName">亲人的名字</label>
@@ -1375,6 +1552,30 @@
                     <input type="text" id="catchphrase" placeholder="例如：孩子，照顾好自己。">
                 </div>
             </div>
+            <div class="form-divider">
+                <strong>分身素材</strong>
+                <p class="field-note">语音决定口气，照片决定面容，如果有视频，数字人会更接近 ta 的动态神态。</p>
+            </div>
+            <div class="upload-grid">
+                <div class="upload-card">
+                    <label for="voiceFiles">语音素材</label>
+                    <input type="file" id="voiceFiles" accept="audio/*" multiple>
+                    <div class="field-note">建议上传 1-3 段自然说话录音，越接近日常越像 ta。</div>
+                    <div id="voiceFilesMeta" class="file-meta">还没有选择语音文件。</div>
+                </div>
+                <div class="upload-card">
+                    <label for="photoFiles">照片素材</label>
+                    <input type="file" id="photoFiles" accept="image/*" multiple>
+                    <div class="field-note">建议至少 1 张清晰正脸照，也可以补充生活照。</div>
+                    <div id="photoFilesMeta" class="file-meta">还没有选择照片。</div>
+                </div>
+                <div class="upload-card">
+                    <label for="videoFiles">视频素材（可选）</label>
+                    <input type="file" id="videoFiles" accept="video/*" multiple>
+                    <div class="field-note">如果有家庭录像或短视频，分身会更接近 ta 的神态。</div>
+                    <div id="videoFilesMeta" class="file-meta">还没有选择视频。</div>
+                </div>
+            </div>
             <div class="form-actions">
                 <button type="button" id="createButton" class="btn btn-primary" onclick="createLovedOne()">立即创建</button>
                 <button type="button" class="btn btn-secondary" onclick="closeModal('createModal')">取消</button>
@@ -1398,7 +1599,13 @@
                 personality: "温柔、踏实、总会先问你今天累不累",
                 catchphrase: "孩子，照顾好自己。"
             },
-            speaking_style: "温柔踏实"
+            speaking_style: "温柔踏实",
+            voice_sample_paths: [],
+            voice_sample_urls: [],
+            photo_paths: [],
+            photo_urls: [],
+            video_paths: [],
+            video_urls: []
         };
 
         let activeLovedOne = null;
@@ -1408,11 +1615,13 @@
 
         document.addEventListener("DOMContentLoaded", () => {
             bindModalEvents();
+            bindMediaInputs();
             initReveal();
             restoreLovedOne();
             hydrateRuntimeState();
             refreshChatIntro();
             setupDemoVideo();
+            updateSelectedMediaMeta();
         });
 
         function initReveal() {
@@ -1472,6 +1681,221 @@
             );
 
             observer.observe(video);
+        }
+
+        function bindMediaInputs() {
+            ["voiceFiles", "photoFiles", "videoFiles"].forEach((id) => {
+                const input = document.getElementById(id);
+                if (!input) {
+                    return;
+                }
+                input.addEventListener("change", updateSelectedMediaMeta);
+            });
+        }
+
+        function getSelectedFiles(id) {
+            return Array.from(document.getElementById(id)?.files || []);
+        }
+
+        function summarizeSelection(files, emptyText, unit) {
+            if (!files.length) {
+                return emptyText;
+            }
+
+            const names = files.slice(0, 2).map((file) => file.name).join("、");
+            const suffix = files.length > 2 ? ` 等 ${files.length}${unit}` : ` · 共 ${files.length}${unit}`;
+            return `${names}${suffix}`;
+        }
+
+        function updateSelectedMediaMeta() {
+            document.getElementById("voiceFilesMeta").textContent = summarizeSelection(
+                getSelectedFiles("voiceFiles"),
+                "还没有选择语音文件。",
+                "段语音"
+            );
+            document.getElementById("photoFilesMeta").textContent = summarizeSelection(
+                getSelectedFiles("photoFiles"),
+                "还没有选择照片。",
+                "张照片"
+            );
+            document.getElementById("videoFilesMeta").textContent = summarizeSelection(
+                getSelectedFiles("videoFiles"),
+                "还没有选择视频。",
+                "段视频"
+            );
+        }
+
+        function buildClientTwinProfile(lovedOne) {
+            const voiceCount = (lovedOne.voice_sample_paths || []).length;
+            const photoCount = (lovedOne.photo_paths || []).length;
+            const videoCount = (lovedOne.video_paths || []).length;
+            const coverage = [voiceCount, photoCount, videoCount].filter((count) => count > 0).length;
+
+            if (coverage === 0) {
+                return {
+                    voice_count: voiceCount,
+                    photo_count: photoCount,
+                    video_count: videoCount,
+                    has_voice: false,
+                    has_photo: false,
+                    has_video: false,
+                    coverage,
+                    completeness_label: "待补充分身素材",
+                    summary: "先留下语音、照片和视频，数字分身才会逐渐像 ta。"
+                };
+            }
+
+            if (coverage === 1) {
+                return {
+                    voice_count: voiceCount,
+                    photo_count: photoCount,
+                    video_count: videoCount,
+                    has_voice: voiceCount > 0,
+                    has_photo: photoCount > 0,
+                    has_video: videoCount > 0,
+                    coverage,
+                    completeness_label: "分身轮廓已开始成形",
+                    summary: "已经留住了一部分辨识度，继续补充声音或影像会更像 ta。"
+                };
+            }
+
+            if (coverage === 2) {
+                return {
+                    voice_count: voiceCount,
+                    photo_count: photoCount,
+                    video_count: videoCount,
+                    has_voice: voiceCount > 0,
+                    has_photo: photoCount > 0,
+                    has_video: videoCount > 0,
+                    coverage,
+                    completeness_label: "立体分身正在成形",
+                    summary: "声音和影像已经开始互相校准，这个数字分身会越来越接近 ta。"
+                };
+            }
+
+            return {
+                voice_count: voiceCount,
+                photo_count: photoCount,
+                video_count: videoCount,
+                has_voice: voiceCount > 0,
+                has_photo: photoCount > 0,
+                has_video: videoCount > 0,
+                coverage,
+                completeness_label: "完整数字分身已就绪",
+                summary: "声音、照片和动态影像都已具备，这个数字分身已经有了更完整的在场感。"
+            };
+        }
+
+        function normalizeLovedOne(lovedOne) {
+            const profile = lovedOne ? { ...lovedOne } : { ...demoProfile };
+            const voicePaths = Array.isArray(profile.voice_sample_paths) ? [...profile.voice_sample_paths] : [];
+            if (profile.voice_sample_path && !voicePaths.includes(profile.voice_sample_path)) {
+                voicePaths.unshift(profile.voice_sample_path);
+            }
+
+            profile.personality_traits = profile.personality_traits || {};
+            profile.voice_sample_paths = voicePaths.filter(Boolean);
+            profile.voice_sample_urls = Array.isArray(profile.voice_sample_urls) ? profile.voice_sample_urls : [];
+            profile.photo_paths = Array.isArray(profile.photo_paths) ? profile.photo_paths : [];
+            profile.photo_urls = Array.isArray(profile.photo_urls) ? profile.photo_urls : [];
+            profile.video_paths = Array.isArray(profile.video_paths) ? profile.video_paths : [];
+            profile.video_urls = Array.isArray(profile.video_urls) ? profile.video_urls : [];
+            profile.digital_twin_profile =
+                profile.digital_twin_profile && Object.keys(profile.digital_twin_profile).length
+                    ? profile.digital_twin_profile
+                    : buildClientTwinProfile(profile);
+            return profile;
+        }
+
+        function updateTwinPanel(lovedOne) {
+            const profile = normalizeLovedOne(lovedOne);
+            const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
+            document.getElementById("voiceCount").textContent = twin.voice_count || 0;
+            document.getElementById("photoCount").textContent = twin.photo_count || 0;
+            document.getElementById("videoCount").textContent = twin.video_count || 0;
+            document.getElementById("twinStatusTitle").textContent = twin.completeness_label || "待补充分身素材";
+            document.getElementById("twinStatusText").textContent = twin.summary || "继续补充分身素材，这个数字人会更接近 ta。";
+
+            const photoPreview = document.getElementById("photoPreview");
+            const photoPlaceholder = document.getElementById("photoPlaceholder");
+            const photoUrl = profile.photo_urls?.[0];
+            if (photoUrl) {
+                photoPreview.src = photoUrl;
+                photoPreview.style.display = "block";
+                photoPlaceholder.style.display = "none";
+            } else {
+                photoPreview.removeAttribute("src");
+                photoPreview.style.display = "none";
+                photoPlaceholder.style.display = "grid";
+            }
+
+            const videoPreview = document.getElementById("videoPreview");
+            const videoPlaceholder = document.getElementById("videoPlaceholder");
+            const videoUrl = profile.video_urls?.[0];
+            if (videoUrl) {
+                videoPreview.src = videoUrl;
+                videoPreview.style.display = "block";
+                videoPreview.load();
+                videoPlaceholder.style.display = "none";
+            } else {
+                videoPreview.pause();
+                videoPreview.removeAttribute("src");
+                videoPreview.load();
+                videoPreview.style.display = "none";
+                videoPlaceholder.style.display = "grid";
+            }
+        }
+
+        function buildTwinStatusLine(profile) {
+            const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
+            return `已收集 ${twin.voice_count || 0} 段语音 / ${twin.photo_count || 0} 张照片 / ${twin.video_count || 0} 段视频。`;
+        }
+
+        async function uploadSelectedMedia(lovedOneId) {
+            const queue = [
+                ...getSelectedFiles("voiceFiles").map((file) => ({ type: "voice", file })),
+                ...getSelectedFiles("photoFiles").map((file) => ({ type: "photo", file })),
+                ...getSelectedFiles("videoFiles").map((file) => ({ type: "video", file }))
+            ];
+
+            let latestLovedOne = null;
+            let uploadCount = 0;
+
+            for (const item of queue) {
+                const formData = new FormData();
+                formData.append("file", item.file);
+
+                const response = await fetch(`${API_BASE}/api/loved-ones/${lovedOneId}/${item.type}`, {
+                    method: "POST",
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`${item.type} upload failed`);
+                }
+
+                const data = await response.json();
+                latestLovedOne = data.loved_one ? normalizeLovedOne(data.loved_one) : latestLovedOne;
+                uploadCount += 1;
+            }
+
+            return { lovedOne: latestLovedOne, uploadCount };
+        }
+
+        function buildLocalDraftProfile(payload) {
+            const voiceFiles = getSelectedFiles("voiceFiles");
+            const photoFiles = getSelectedFiles("photoFiles");
+            const videoFiles = getSelectedFiles("videoFiles");
+
+            return normalizeLovedOne({
+                ...payload,
+                id: `local-${Date.now()}`,
+                voice_sample_paths: voiceFiles.map((file) => file.name),
+                photo_paths: photoFiles.map((file) => file.name),
+                photo_urls: photoFiles[0] ? [URL.createObjectURL(photoFiles[0])] : [],
+                video_paths: videoFiles.map((file) => file.name),
+                video_urls: videoFiles[0] ? [URL.createObjectURL(videoFiles[0])] : []
+            });
         }
 
         async function hydrateRuntimeState() {
@@ -1582,21 +2006,22 @@
             try {
                 const saved = localStorage.getItem(STORAGE_KEY);
                 if (!saved) {
-                    activeLovedOne = demoProfile;
+                    activeLovedOne = normalizeLovedOne(demoProfile);
                     applyLovedOne(activeLovedOne, false);
                     return;
                 }
 
-                activeLovedOne = JSON.parse(saved);
+                activeLovedOne = normalizeLovedOne(JSON.parse(saved));
                 applyLovedOne(activeLovedOne, false);
             } catch (error) {
-                activeLovedOne = demoProfile;
+                activeLovedOne = normalizeLovedOne(demoProfile);
                 applyLovedOne(activeLovedOne, false);
             }
         }
 
         function applyLovedOne(lovedOne, persist = true) {
-            activeLovedOne = lovedOne;
+            const profile = normalizeLovedOne(lovedOne);
+            activeLovedOne = profile;
             const avatarMap = {
                 "父亲": "👨",
                 "母亲": "👩",
@@ -1604,40 +2029,45 @@
                 "子女": "🧒",
                 "祖父母": "🧓"
             };
-            const chatName = lovedOne?.name || demoProfile.name;
-            const relationship = lovedOne?.relationship || demoProfile.relationship;
-            const catchphrase = lovedOne?.personality_traits?.catchphrase || demoProfile.personality_traits.catchphrase;
+            const chatName = profile?.name || demoProfile.name;
+            const relationship = profile?.relationship || demoProfile.relationship;
+            const catchphrase = profile?.personality_traits?.catchphrase || demoProfile.personality_traits.catchphrase;
+            const twinProfile = profile.digital_twin_profile || buildClientTwinProfile(profile);
 
             document.getElementById("chatName").textContent = chatName;
             document.getElementById("chatAvatar").textContent = avatarMap[relationship] || "🕯️";
             document.getElementById("chatSubtitle").textContent =
                 catchphrase
                     ? `熟悉的话会从这里再次出现，比如：“${catchphrase}”`
-                    : `这里会逐渐学会 ${chatName} 最像 ta 的说话方式。`;
+                    : `${twinProfile.completeness_label}，这里会逐渐学会 ${chatName} 最像 ta 的说话方式。`;
             document.getElementById("chatInput").placeholder = `和${chatName}说说今天发生的事...`;
             document.getElementById("composerHint").textContent =
-                serviceOnline && !String(lovedOne.id).startsWith("local-")
-                    ? `当前已绑定 ${chatName} 的真实档案。`
-                    : `当前是 ${chatName} 的本地演示档案，也可以先体验对话。`;
+                serviceOnline && !String(profile.id).startsWith("local-")
+                    ? `当前已绑定 ${chatName} 的真实档案。${buildTwinStatusLine(profile)}`
+                    : `当前是 ${chatName} 的本地演示档案。${buildTwinStatusLine(profile)}`;
 
             if (persist) {
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(lovedOne));
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
             }
 
+            updateTwinPanel(profile);
             refreshChatIntro();
             updateStatusPill(
                 document.getElementById("chatMode"),
-                serviceOnline && !String(lovedOne.id).startsWith("local-") ? "online" : "demo",
-                serviceOnline && !String(lovedOne.id).startsWith("local-")
+                serviceOnline && !String(profile.id).startsWith("local-") ? "online" : "demo",
+                serviceOnline && !String(profile.id).startsWith("local-")
                     ? `${chatName} 的实时会话`
                     : `${chatName} 的演示会话`
             );
         }
 
         function refreshChatIntro() {
-            const profile = activeLovedOne || demoProfile;
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
+            const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
             document.getElementById("initialMessage").textContent =
-                `${profile.name}会在这里等你。你每次回来，都可以从一句近况、一段想念，或者一个好消息开始。`;
+                twin.coverage > 0
+                    ? `${profile.name}会在这里等你。现在已经留住了 ${twin.voice_count} 段语音、${twin.photo_count} 张照片和 ${twin.video_count} 段视频，你每次回来，都可以继续把 ta 补得更完整。`
+                    : `${profile.name}会在这里等你。你每次回来，都可以从一句近况、一段想念，或者一个好消息开始。`;
         }
 
         async function createLovedOne() {
@@ -1646,6 +2076,10 @@
             const relationship = document.getElementById("relationship").value;
             const personality = document.getElementById("personality").value.trim();
             const catchphrase = document.getElementById("catchphrase").value.trim();
+            const voiceFiles = getSelectedFiles("voiceFiles");
+            const photoFiles = getSelectedFiles("photoFiles");
+            const videoFiles = getSelectedFiles("videoFiles");
+            const hasMedia = voiceFiles.length > 0 || photoFiles.length > 0 || videoFiles.length > 0;
 
             if (!name) {
                 showToast("先填上 ta 的名字，再开始这段纪念。", "error");
@@ -1653,7 +2087,7 @@
                 return;
             }
 
-            setButtonLoading(button, true, "创建中...");
+            setButtonLoading(button, true, hasMedia ? "创建并上传中..." : "创建中...");
             const payload = {
                 name,
                 relationship,
@@ -1675,16 +2109,32 @@
                     throw new Error("create failed");
                 }
 
-                const lovedOne = await response.json();
+                let lovedOne = normalizeLovedOne(await response.json());
+                let uploadedAssets = 0;
+
+                if (hasMedia) {
+                    setButtonLoading(button, true, "正在补充分身素材...");
+                    const uploadResult = await uploadSelectedMedia(lovedOne.id);
+                    lovedOne = uploadResult.lovedOne || lovedOne;
+                    uploadedAssets = uploadResult.uploadCount;
+                }
+
                 applyLovedOne(lovedOne);
-                showToast(`${name} 的数字生命已创建，现在可以开始第一段对话。`, "success");
+                showToast(
+                    uploadedAssets > 0
+                        ? `${name} 的数字分身档案已创建，已同步 ${uploadedAssets} 份素材。`
+                        : `${name} 的数字生命已创建，现在可以开始第一段对话。`,
+                    "success"
+                );
             } catch (error) {
-                const localProfile = {
-                    ...payload,
-                    id: `local-${Date.now()}`
-                };
-                applyLovedOne(localProfile);
-                showToast(`${name} 已在本地演示模式中创建，你可以先继续体验。`, "success");
+                const localProfile = buildLocalDraftProfile(payload);
+                applyLovedOne(localProfile, false);
+                showToast(
+                    hasMedia
+                        ? `${name} 已在本地演示模式中创建，当前页面会先展示分身素材预览；连接服务后才能正式保存。`
+                        : `${name} 已在本地演示模式中创建，你可以先继续体验。`,
+                    "success"
+                );
             } finally {
                 setButtonLoading(button, false, "立即创建");
                 closeModal("createModal");
@@ -1698,6 +2148,10 @@
             document.getElementById("relationship").value = "父亲";
             document.getElementById("personality").value = "";
             document.getElementById("catchphrase").value = "";
+            document.getElementById("voiceFiles").value = "";
+            document.getElementById("photoFiles").value = "";
+            document.getElementById("videoFiles").value = "";
+            updateSelectedMediaMeta();
         }
 
         function seedConversation(text) {
@@ -1727,7 +2181,7 @@
             const input = document.getElementById("chatInput");
             const sendButton = document.getElementById("sendButton");
             const message = input.value.trim();
-            const profile = activeLovedOne || demoProfile;
+            const profile = normalizeLovedOne(activeLovedOne || demoProfile);
 
             if (!message) {
                 return;

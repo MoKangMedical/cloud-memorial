@@ -13,7 +13,7 @@ from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 import httpx
 
 app = FastAPI(
@@ -42,6 +42,7 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 
 if ASSETS_DIR.exists():
     app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
+app.mount("/media", StaticFiles(directory=DATA_DIR), name="media")
 
 # ===== 数据模型 =====
 class LovedOne(BaseModel):
@@ -50,11 +51,17 @@ class LovedOne(BaseModel):
     relationship: str  # 父亲/母亲/配偶/子女/...
     birth_date: Optional[str] = None
     pass_away_date: Optional[str] = None
-    personality_traits: Dict = {}
+    personality_traits: Dict = Field(default_factory=dict)
     speaking_style: str = ""
-    memories: List[str] = []
+    memories: List[str] = Field(default_factory=list)
     voice_sample_path: Optional[str] = None
-    photo_paths: List[str] = []
+    voice_sample_paths: List[str] = Field(default_factory=list)
+    voice_sample_urls: List[str] = Field(default_factory=list)
+    photo_paths: List[str] = Field(default_factory=list)
+    photo_urls: List[str] = Field(default_factory=list)
+    video_paths: List[str] = Field(default_factory=list)
+    video_urls: List[str] = Field(default_factory=list)
+    digital_twin_profile: Dict = Field(default_factory=dict)
 
 class ChatMessage(BaseModel):
     loved_one_id: str
@@ -100,6 +107,114 @@ def save_data(filename: str, data: dict):
         encoding="utf-8"
     )
 
+
+def unique_preserve_order(values: List[str]) -> List[str]:
+    seen = set()
+    normalized = []
+    for value in values:
+        if not value or value in seen:
+            continue
+        seen.add(value)
+        normalized.append(value)
+    return normalized
+
+
+def public_media_url(path_str: str) -> Optional[str]:
+    if not path_str:
+        return None
+
+    path = Path(path_str)
+    try:
+        relative = path.resolve().relative_to(DATA_DIR.resolve())
+    except ValueError:
+        return None
+    return f"/media/{relative.as_posix()}"
+
+
+def build_digital_twin_profile(loved_one: dict) -> dict:
+    voice_paths = loved_one.get("voice_sample_paths", [])
+    photo_paths = loved_one.get("photo_paths", [])
+    video_paths = loved_one.get("video_paths", [])
+
+    voice_count = len(voice_paths)
+    photo_count = len(photo_paths)
+    video_count = len(video_paths)
+    coverage = sum(1 for count in [voice_count, photo_count, video_count] if count > 0)
+
+    if coverage == 0:
+        label = "待补充分身素材"
+        summary = "先留下语音、照片和视频，数字分身才会逐渐像 ta。"
+    elif coverage == 1:
+        label = "分身轮廓已开始成形"
+        summary = "已经留住了一部分辨识度，继续补充声音或影像会更像 ta。"
+    elif coverage == 2:
+        label = "立体分身正在成形"
+        summary = "声音和影像已经开始互相校准，数字分身会更接近 ta 的真实感觉。"
+    else:
+        label = "完整数字分身已就绪"
+        summary = "声音、照片和动态影像都已具备，这个数字分身已经有了更完整的在场感。"
+
+    return {
+        "voice_count": voice_count,
+        "photo_count": photo_count,
+        "video_count": video_count,
+        "has_voice": voice_count > 0,
+        "has_photo": photo_count > 0,
+        "has_video": video_count > 0,
+        "coverage": coverage,
+        "completeness_label": label,
+        "summary": summary,
+    }
+
+
+def normalize_loved_one_record(record: dict) -> dict:
+    normalized = dict(record)
+    normalized.pop("voice_sample_urls", None)
+    normalized.pop("photo_urls", None)
+    normalized.pop("video_urls", None)
+    normalized.pop("digital_twin_profile", None)
+
+    normalized.setdefault("personality_traits", {})
+    normalized.setdefault("memories", [])
+    normalized.setdefault("photo_paths", [])
+    normalized.setdefault("video_paths", [])
+
+    voice_paths = normalized.get("voice_sample_paths", []) or []
+    primary_voice = normalized.get("voice_sample_path")
+    if primary_voice and primary_voice not in voice_paths:
+        voice_paths.insert(0, primary_voice)
+    voice_paths = unique_preserve_order(voice_paths)
+    normalized["voice_sample_paths"] = voice_paths
+    if voice_paths:
+        normalized["voice_sample_path"] = voice_paths[0]
+
+    normalized["photo_paths"] = unique_preserve_order(normalized.get("photo_paths", []))
+    normalized["video_paths"] = unique_preserve_order(normalized.get("video_paths", []))
+    return normalized
+
+
+def serialize_loved_one(record: dict) -> LovedOne:
+    normalized = normalize_loved_one_record(record)
+    normalized["voice_sample_urls"] = [
+        url for url in (public_media_url(path) for path in normalized.get("voice_sample_paths", [])) if url
+    ]
+    normalized["photo_urls"] = [
+        url for url in (public_media_url(path) for path in normalized.get("photo_paths", [])) if url
+    ]
+    normalized["video_urls"] = [
+        url for url in (public_media_url(path) for path in normalized.get("video_paths", [])) if url
+    ]
+    normalized["digital_twin_profile"] = build_digital_twin_profile(normalized)
+    return LovedOne(**normalized)
+
+
+def safe_upload_path(kind: str, loved_one_id: str, filename: Optional[str]) -> Path:
+    ext = Path(filename or "").suffix or ""
+    safe_name = f"{datetime.now().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}{ext}"
+    target_dir = DATA_DIR / kind / loved_one_id
+    target_dir.mkdir(parents=True, exist_ok=True)
+    return target_dir / safe_name
+
 # ===== API 端点 =====
 
 @app.get("/health")
@@ -122,15 +237,15 @@ async def create_loved_one(loved_one: LovedOne):
     """创建亲人档案"""
     loved_one.id = str(uuid.uuid4())
     data = load_data("loved_ones.json")
-    data[loved_one.id] = loved_one.dict()
+    data[loved_one.id] = normalize_loved_one_record(loved_one.model_dump())
     save_data("loved_ones.json", data)
-    return loved_one
+    return serialize_loved_one(data[loved_one.id])
 
 @app.get("/api/loved-ones", response_model=List[LovedOne])
 async def list_loved_ones():
     """列出所有亲人"""
     data = load_data("loved_ones.json")
-    return [LovedOne(**v) for v in data.values()]
+    return [serialize_loved_one(v) for v in data.values()]
 
 @app.get("/api/loved-ones/{loved_one_id}", response_model=LovedOne)
 async def get_loved_one(loved_one_id: str):
@@ -138,7 +253,7 @@ async def get_loved_one(loved_one_id: str):
     data = load_data("loved_ones.json")
     if loved_one_id not in data:
         raise HTTPException(status_code=404, detail="亲人档案未找到")
-    return LovedOne(**data[loved_one_id])
+    return serialize_loved_one(data[loved_one_id])
 
 @app.post("/api/loved-ones/{loved_one_id}/voice")
 async def upload_voice_sample(
@@ -151,21 +266,24 @@ async def upload_voice_sample(
         raise HTTPException(status_code=404, detail="亲人档案未找到")
 
     # 保存语音文件
-    voice_dir = DATA_DIR / "voices" / loved_one_id
-    voice_dir.mkdir(parents=True, exist_ok=True)
-    voice_path = voice_dir / file.filename
+    voice_path = safe_upload_path("voices", loved_one_id, file.filename)
 
     content = await file.read()
     voice_path.write_bytes(content)
 
     # 更新档案
-    data[loved_one_id]["voice_sample_path"] = str(voice_path)
+    loved_one = normalize_loved_one_record(data[loved_one_id])
+    loved_one["voice_sample_path"] = str(voice_path)
+    loved_one.setdefault("voice_sample_paths", []).append(str(voice_path))
+    data[loved_one_id] = normalize_loved_one_record(loved_one)
     save_data("loved_ones.json", data)
 
     return {
         "status": "uploaded",
         "path": str(voice_path),
-        "message": "语音样本已上传，正在进行声音克隆..."
+        "url": public_media_url(str(voice_path)),
+        "message": "语音样本已上传，正在为这个数字分身校准声音...",
+        "loved_one": serialize_loved_one(data[loved_one_id]).model_dump()
     }
 
 @app.post("/api/loved-ones/{loved_one_id}/photo")
@@ -179,21 +297,52 @@ async def upload_photo(
         raise HTTPException(status_code=404, detail="亲人档案未找到")
 
     # 保存照片
-    photo_dir = DATA_DIR / "photos" / loved_one_id
-    photo_dir.mkdir(parents=True, exist_ok=True)
-    photo_path = photo_dir / file.filename
+    photo_path = safe_upload_path("photos", loved_one_id, file.filename)
 
     content = await file.read()
     photo_path.write_bytes(content)
 
     # 更新档案
-    data[loved_one_id].setdefault("photo_paths", []).append(str(photo_path))
+    loved_one = normalize_loved_one_record(data[loved_one_id])
+    loved_one.setdefault("photo_paths", []).append(str(photo_path))
+    data[loved_one_id] = normalize_loved_one_record(loved_one)
     save_data("loved_ones.json", data)
 
     return {
         "status": "uploaded",
         "path": str(photo_path),
-        "message": "照片已上传"
+        "url": public_media_url(str(photo_path)),
+        "message": "照片已上传，分身的面容正在变得更清晰。",
+        "loved_one": serialize_loved_one(data[loved_one_id]).model_dump()
+    }
+
+
+@app.post("/api/loved-ones/{loved_one_id}/video")
+async def upload_video(
+    loved_one_id: str,
+    file: UploadFile = File(...)
+):
+    """上传亲人的视频（用于形成更完整的动态分身）"""
+    data = load_data("loved_ones.json")
+    if loved_one_id not in data:
+        raise HTTPException(status_code=404, detail="亲人档案未找到")
+
+    video_path = safe_upload_path("videos", loved_one_id, file.filename)
+
+    content = await file.read()
+    video_path.write_bytes(content)
+
+    loved_one = normalize_loved_one_record(data[loved_one_id])
+    loved_one.setdefault("video_paths", []).append(str(video_path))
+    data[loved_one_id] = normalize_loved_one_record(loved_one)
+    save_data("loved_ones.json", data)
+
+    return {
+        "status": "uploaded",
+        "path": str(video_path),
+        "url": public_media_url(str(video_path)),
+        "message": "视频已上传，分身开始拥有更完整的动态神态。",
+        "loved_one": serialize_loved_one(data[loved_one_id]).model_dump()
     }
 
 @app.post("/api/chat", response_model=ChatResponse)
@@ -355,11 +504,21 @@ def build_personality_prompt(loved_one: dict) -> str:
     relationship = loved_one.get("relationship", "亲人")
 
     traits_desc = "，".join([f"{k}：{v}" for k, v in traits.items()]) if traits else "温暖、关爱"
+    twin_profile = build_digital_twin_profile(normalize_loved_one_record(loved_one))
+    material_notes = []
+    if twin_profile["has_voice"]:
+        material_notes.append("已提供语音片段，请保持熟悉的口气和节奏")
+    if twin_profile["has_photo"]:
+        material_notes.append("已提供照片，请保持这个人的面容感与日常气质")
+    if twin_profile["has_video"]:
+        material_notes.append("已提供视频，请在表达时体现更自然的动态神态")
+    material_desc = "；".join(material_notes) if material_notes else "当前素材仍在补充中，请优先依据性格与回忆保持真实感"
 
     return f"""你是{name}，是用户的{relationship}。
 
 性格特点：{traits_desc}
 说话风格：{style}
+分身素材：{material_desc}
 
 请始终保持{name}的个性，用ta的方式说话。
 关心用户的日常生活，回忆共同的美好时光。
