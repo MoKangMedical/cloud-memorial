@@ -1,0 +1,17 @@
+[Unit]
+Description=Eterna NianNian FastAPI service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/eterna-niannian
+EnvironmentFile=/opt/eterna-niannian/.env.local
+ExecStart=/opt/eterna-niannian/.venv/bin/python -m uvicorn api.app:app --host 127.0.0.1 --port 8102
+Restart=always
+RestartSec=3
+StandardOutput=append:/var/log/eterna-niannian.log
+StandardError=append:/var/log/eterna-niannian.log
+
+[Install]
+WantedBy=multi-user.target
