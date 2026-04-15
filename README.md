@@ -206,3 +206,17 @@
 
 *念念 Eterna v1.0 | 2026年4月*
 *念念不忘，ta一直在*
+
+---
+
+## ⭐ Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=MoKangMedical/cloud-memorial&type=Date)](https://star-history.com/#MoKangMedical/cloud-memorial&Date)
+
+## 🤝 Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+## 📄 License
+
+MIT License
