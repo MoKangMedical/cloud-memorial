@@ -30,6 +30,14 @@ from fastapi.responses import FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
+# 导入新增的增强系统
+from api.emotion_analysis import EnhancedEmotionAnalyzer, EmotionAnalysis
+from api.memory_system import EnhancedMemorySystem, MemoryContext
+from api.personality_system import EnhancedPersonalityModeling, PersonalityProfile
+from api.proactive_care_system import EnhancedProactiveCareSystem, CarePlan
+from api.dialogue_naturalness import NaturalDialogueSystem, DialogueState, DialogueContext
+from api.emotional_expression import EmotionalExpressionSystem
+
 try:
     import stripe
 except ImportError:  # pragma: no cover - graceful fallback when dependency is not installed yet
@@ -89,6 +97,36 @@ RUNTIME_SETTINGS = load_runtime_settings()
 
 def runtime_config(name: str, default: str = "") -> str:
     return os.getenv(name) or str(RUNTIME_SETTINGS.get(name, default))
+
+
+# ===== 初始化增强系统 =====
+print("正在初始化念念增强系统...")
+
+# 初始化情感感知系统
+emotion_analyzer = EnhancedEmotionAnalyzer()
+print("✅ 情感感知系统初始化完成")
+
+# 初始化记忆系统
+memory_system = EnhancedMemorySystem()
+print("✅ 记忆系统初始化完成")
+
+# 初始化人格建模系统
+personality_modeling = EnhancedPersonalityModeling()
+print("✅ 人格建模系统初始化完成")
+
+# 初始化主动关怀系统
+proactive_care = EnhancedProactiveCareSystem()
+print("✅ 主动关怀系统初始化完成")
+
+# 初始化对话自然度系统
+dialogue_naturalness = NaturalDialogueSystem()
+print("✅ 对话自然度系统初始化完成")
+
+# 初始化情感表达系统
+emotional_expression = EmotionalExpressionSystem()
+print("✅ 情感表达系统初始化完成")
+
+print("🎉 所有增强系统初始化完成！")
 
 
 MIMO_API_BASE = runtime_config("MIMO_API_BASE", "https://api.xiaomimimo.com/v1")
@@ -5613,40 +5651,106 @@ async def chat_with_loved_one(
         elif requested_mode == "voice" and "voice" not in available_modes:
             interaction_mode = "text"
 
+        # 使用增强的情感感知系统分析用户消息
+        print(f"正在分析用户情感: {msg.message}")
+        emotion_analysis = emotion_analyzer.analyze_emotion(
+            text=msg.message,
+            conversation_history=[]  # 可以从数据库加载历史对话
+        )
+        detected_emotion = emotion_analysis.primary_emotion
+        emotion_intensity = emotion_analysis.intensity.value / 5.0  # 转换为0-1范围
+        print(f"情感分析结果: {detected_emotion}, 强度: {emotion_intensity:.2f}")
+
+        # 使用增强的记忆系统选择相关记忆
+        print("正在选择相关记忆...")
         memory_rows = conn.execute(
-            "SELECT content FROM memories WHERE loved_one_id = ? ORDER BY created_at DESC LIMIT 10",
+            "SELECT content, memory_type, memory_date, importance FROM memories WHERE loved_one_id = ? ORDER BY created_at DESC LIMIT 20",
             (msg.loved_one_id,),
         ).fetchall()
-        memory_values = [row["content"] for row in reversed(memory_rows)]
-        memory_context = "\n".join([f"- {value}" for value in memory_values])
-        memory_refs = [value for value in memory_values if value][:3]
+        
+        # 转换为记忆系统需要的格式
+        all_memories = []
+        for row in memory_rows:
+            memory_dict = {
+                "content": row["content"],
+                "memory_type": row["memory_type"] if "memory_type" in row.keys() else "shared",
+                "date": row["memory_date"] if "memory_date" in row.keys() else None,
+                "importance": row["importance"] if "importance" in row.keys() else 5,
+            }
+            all_memories.append(memory_dict)
+        
+        # 使用增强的记忆系统选择相关记忆
+        memory_context = memory_system.select_relevant_memories(
+            current_message=msg.message,
+            current_emotion=detected_emotion,
+            all_memories=all_memories,
+            conversation_history=[],
+            limit=3
+        )
+        
+        # 构建记忆上下文字符串
+        memory_values = [mem.content for mem in memory_context.relevant_memories]
+        memory_text = "\\n".join([f"- {value}" for value in memory_values])
+        memory_refs = [value[:50] for value in memory_values if value][:3]
+        
+        print(f"选择的相关记忆: {len(memory_context.relevant_memories)}条")
+        print(f"情感共鸣度: {memory_context.emotional_resonance:.2f}")
 
+        # 使用丰富的人格建模系统构建人格画像
+        print("正在构建人格画像...")
+        personality_traits = loved_one.get("personality_traits", {})
+        personality_profile = personality_modeling.build_personality_profile(
+            name=loved_one["name"],
+            relationship=loved_one.get("relationship", "亲人"),
+            personality_traits_dict=personality_traits,
+            speaking_style=loved_one.get("speaking_style", "温柔亲切"),
+            additional_info=loved_one.get("additional_info")
+        )
+        
+        # 构建增强的提示
+        enhanced_prompt = personality_modeling.generate_personality_prompt(personality_profile)
+        
+        # 添加记忆上下文
+        if memory_context.relevant_memories:
+            memory_text_for_prompt = "\\n".join([f"- {mem.content}" for mem in memory_context.relevant_memories])
+            enhanced_prompt += f"\\n\\n相关记忆：\\n{memory_text_for_prompt}"
+        
+        # 添加情感分析结果
+        enhanced_prompt += f"\\n\\n用户当前情感：{detected_emotion}（强度：{emotion_intensity:.1f}）"
+        enhanced_prompt += f"\\n建议回应风格：{emotion_analysis.suggested_response_style}"
+        enhanced_prompt += f"\\n情感共鸣度：{memory_context.emotional_resonance:.2f}"
+
+        # 生成AI回应
         if MIMO_API_KEY:
             try:
+                # 使用增强的提示生成回应
                 ai_response = await generate_text_response_with_mimo(
                     loved_one=loved_one,
                     user_message=msg.message,
-                    emotion=msg.emotion,
-                    memory_context=memory_context,
+                    emotion=detected_emotion,  # 使用检测到的情感
+                    memory_context=memory_text_for_prompt if memory_context.relevant_memories else "",
                     request=request,
                     mode=interaction_mode,
-                    intensity=msg.intensity,
+                    intensity=msg.intensity or int(emotion_intensity * 5),  # 使用情感强度
                 )
-            except Exception:
+                print(f"使用MIMO API生成回应成功")
+            except Exception as e:
+                print(f"MIMO API调用失败，使用回退回应: {e}")
                 ai_response = build_fallback_response(
                     loved_one=loved_one,
                     user_message=msg.message,
-                    emotion=msg.emotion,
-                    memory_context=memory_context,
-                    intensity=msg.intensity,
+                    emotion=detected_emotion,
+                    memory_context=memory_text_for_prompt if memory_context.relevant_memories else "",
+                    intensity=msg.intensity or int(emotion_intensity * 5),
                 )
         else:
+            print("MIMO API未配置，使用回退回应")
             ai_response = build_fallback_response(
                 loved_one=loved_one,
                 user_message=msg.message,
-                emotion=msg.emotion,
-                memory_context=memory_context,
-                intensity=msg.intensity,
+                emotion=detected_emotion,
+                memory_context=memory_text_for_prompt if memory_context.relevant_memories else "",
+                intensity=msg.intensity or int(emotion_intensity * 5),
             )
 
         response_audio_url = None
@@ -5720,17 +5824,49 @@ async def chat_with_loved_one(
         )
         conn.execute("UPDATE loved_ones SET updated_at = ? WHERE id = ?", (now_iso(), msg.loved_one_id))
 
+    # 使用对话自然度系统调整回应
+    print("正在调整对话自然度...")
+    dialogue_context = DialogueContext(
+        current_state=DialogueState.DEEP_CONVERSATION,  # 可以根据实际情况调整
+        state_turns=1,  # 可以从数据库加载
+        conversation_history=[],  # 可以从数据库加载
+        user_intent="general_chat",  # 可以从情感分析中获取
+        emotional_tone=detected_emotion,
+        topics_discussed=[],
+        memory_references=[mem.content[:20] for mem in memory_context.relevant_memories],
+        last_response_time=datetime.now()
+    )
+    
+    natural_response = dialogue_naturalness.generate_natural_response(
+        dialogue_context=dialogue_context,
+        ai_response=ai_response,
+        user_emotion=detected_emotion,
+        personality_profile=personality_profile
+    )
+    
+    # 使用情感表达系统增强回应
+    print("正在添加情感表达细节...")
+    enhanced_response = emotional_expression.add_emotional_expressions(
+        text=natural_response,
+        emotion=detected_emotion,
+        intensity=emotion_intensity,
+        personality_traits=personality_traits,
+        context={}
+    )
+    
+    print(f"最终回应: {enhanced_response[:100]}...")
+
     return ChatResponse(
         loved_one_id=msg.loved_one_id,
         loved_one_name=loved_one["name"],
-        response_text=ai_response,
+        response_text=enhanced_response,  # 使用增强后的回应
         response_audio_url=response_audio_url,
         response_video_url=response_video_url,
         interaction_mode=interaction_mode,
         mode_note=video_mode_note or build_mode_note(requested_mode, available_modes),
         available_modes=available_modes,
-        emotion_detected=msg.emotion or "neutral",
-        memory_triggered=memory_context[:100] if memory_context else None,
+        emotion_detected=detected_emotion,  # 使用检测到的情感
+        memory_triggered=memory_context.relevant_memories[0].content[:100] if memory_context.relevant_memories else None,
         memory_refs=memory_refs,
     )
 

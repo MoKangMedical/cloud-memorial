@@ -1,0 +1,114 @@
+{
+  "story_prompts": [
+    {
+      "id": "childhood",
+      "category": "成长",
+      "prompt": "请描述{deceased_name}的童年时光，TA小时候是什么样的？",
+      "follow_ups": [
+        "TA小时候最喜欢做什么？",
+        "有没有什么有趣的童年故事？",
+        "TA的童年在哪里度过的？"
+      ],
+      "icon": "👶"
+    },
+    {
+      "id": "youth",
+      "category": "成长",
+      "prompt": "{deceased_name}的青年时代是怎样的？TA有什么梦想？",
+      "follow_ups": [
+        "TA年轻时做过什么工作？",
+        "TA有没有什么特别的经历？",
+        "TA是怎么遇到另一半的？"
+      ],
+      "icon": "🧑"
+    },
+    {
+      "id": "family",
+      "category": "家庭",
+      "prompt": "在家庭中，{deceased_name}是一个怎样的人？",
+      "follow_ups": [
+        "TA最重视什么？",
+        "TA和家人的关系如何？",
+        "有什么家庭传统是TA创造的？"
+      ],
+      "icon": "👨‍👩‍👧‍👦"
+    },
+    {
+      "id": "hobby",
+      "category": "爱好",
+      "prompt": "{deceased_name}有什么爱好或特长？",
+      "follow_ups": [
+        "TA最擅长什么？",
+        "TA平时喜欢做什么消遣？",
+        "有没有什么特别的技艺？"
+      ],
+      "icon": "🎨"
+    },
+    {
+      "id": "food",
+      "category": "生活",
+      "prompt": "{deceased_name}最喜欢吃什么？有没有拿手菜？",
+      "follow_ups": [
+        "TA做的最好吃的菜是什么？",
+        "有没有什么特别的饮食习惯？",
+        "全家人最喜欢的一道菜是什么？"
+      ],
+      "icon": "🍜"
+    },
+    {
+      "id": "wisdom",
+      "category": "智慧",
+      "prompt": "{deceased_name}说过什么让你印象深刻的话？",
+      "follow_ups": [
+        "TA有什么人生哲理？",
+        "TA给过你什么建议？",
+        "TA最喜欢的一句话是什么？"
+      ],
+      "icon": "💡"
+    },
+    {
+      "id": "travel",
+      "category": "旅行",
+      "prompt": "{deceased_name}去过哪些地方？有什么旅行故事？",
+      "follow_ups": [
+        "TA最喜欢的地方是哪里？",
+        "有没有什么难忘的旅行经历？",
+        "TA最想去但没去成的地方？"
+      ],
+      "icon": "✈️"
+    },
+    {
+      "id": "kindness",
+      "category": "品格",
+      "prompt": "{deceased_name}做过什么让你感动的事？",
+      "follow_ups": [
+        "TA帮助过什么人？",
+        "TA最让你敬佩的品质是什么？",
+        "TA是怎么对待陌生人的？"
+      ],
+      "icon": "💝"
+    },
+    {
+      "id": "festival",
+      "category": "节日",
+      "prompt": "和{deceased_name}一起过节是什么样的？",
+      "follow_ups": [
+        "春节/中秋节是怎么过的？",
+        "TA最喜欢的节日是哪个？",
+        "有什么节日传统？"
+      ],
+      "icon": "🎊"
+    },
+    {
+      "id": "legacy",
+      "category": "传承",
+      "prompt": "{deceased_name}留下了什么宝贵的遗产？",
+      "follow_ups": [
+        "TA的精神如何影响了你？",
+        "你想传承TA的什么品质？",
+        "TA最希望后辈怎么做？"
+      ],
+      "icon": "🌟"
+    }
+  ]
+}

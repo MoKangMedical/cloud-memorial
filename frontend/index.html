@@ -4,18 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>念念 Eterna | 念念不忘，ta一直在</title>
-    <meta name="description" content="念念 Eterna — 用AI留住你思念的人。视频通话、语音聊天、回忆重现，让爱延续。">
-    <meta property="og:title" content="念念 Eterna | 念念不忘，ta一直在">
-    <meta property="og:description" content="用AI留住你思念的人——语音、面容、性格、记忆。视频通话 / 语音聊天 / 回忆重现">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://eterna-niannian.cloud">
-    <meta property="og:image" content="https://eterna-niannian.cloud/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="念念 Eterna | 念念不忘，ta一直在">
-    <meta name="twitter:description" content="用AI留住你思念的人——语音、面容、性格、记忆">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕯️</text></svg>">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         * {
             margin: 0;
@@ -160,6 +148,63 @@
             color: rgba(255, 240, 226, 0.74);
             font-size: 0.95rem;
             letter-spacing: 0.04em;
+        }
+
+        .header-meta {
+            display: grid;
+            gap: 12px;
+            justify-items: end;
+        }
+
+        .lang-switch {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 10px 8px 14px;
+            border-radius: 999px;
+            background: rgba(255, 246, 237, 0.08);
+            border: 1px solid rgba(255, 235, 218, 0.12);
+            box-shadow: 0 12px 24px rgba(21, 10, 5, 0.16);
+            backdrop-filter: blur(18px);
+        }
+
+        .lang-helper {
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255, 239, 221, 0.62);
+        }
+
+        .lang-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px;
+            border-radius: 999px;
+            background: rgba(45, 25, 18, 0.56);
+        }
+
+        .lang-pill {
+            appearance: none;
+            border: 0;
+            background: transparent;
+            color: rgba(255, 242, 229, 0.72);
+            border-radius: 999px;
+            padding: 8px 14px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+        }
+
+        .lang-pill:hover {
+            transform: translateY(-1px);
+        }
+
+        .lang-pill.active {
+            color: #2c170d;
+            background: linear-gradient(135deg, #f4d8bc, #dfa06f);
+            box-shadow: 0 8px 18px rgba(17, 7, 4, 0.2);
         }
 
         .container {
@@ -2753,6 +2798,140 @@
             color: var(--primary);
         }
 
+        .payments-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 28px;
+            align-items: start;
+        }
+
+        .payments-journal {
+            padding: 32px;
+            display: grid;
+            gap: 18px;
+        }
+
+        .payments-journal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .payments-journal h3,
+        .payment-channel-card h3 {
+            font-family: "Iowan Old Style", "Baskerville", "Songti SC", "STSong", serif;
+            font-size: 1.56rem;
+            line-height: 1.2;
+            letter-spacing: -0.03em;
+        }
+
+        .payments-journal p,
+        .payment-channel-card p,
+        .payments-roadmap-step span {
+            color: var(--text-muted);
+            line-height: 1.82;
+        }
+
+        .payments-points {
+            display: grid;
+            gap: 14px;
+        }
+
+        .payments-point {
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 240, 226, 0.08);
+        }
+
+        .payments-point strong,
+        .payments-roadmap-step strong {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 1rem;
+            color: var(--text);
+        }
+
+        .payments-channel-stack {
+            display: grid;
+            gap: 16px;
+        }
+
+        .payment-channel-card {
+            padding: 24px 22px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 235, 218, 0.12);
+            background: linear-gradient(180deg, rgba(255, 247, 239, 0.06), rgba(88, 52, 38, 0.22));
+            box-shadow: 0 18px 34px rgba(17, 7, 4, 0.14);
+        }
+
+        .payment-channel-card.paypal {
+            border-color: rgba(155, 197, 255, 0.22);
+        }
+
+        .payment-channel-card.creem {
+            border-color: rgba(252, 214, 150, 0.24);
+        }
+
+        .payment-channel-card.stripe {
+            border-color: rgba(208, 182, 255, 0.22);
+        }
+
+        .payment-channel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 14px;
+        }
+
+        .payment-channel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 248, 240, 0.08);
+            border: 1px solid rgba(255, 235, 218, 0.1);
+            color: rgba(255, 242, 229, 0.84);
+            font-size: 0.86rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .payment-channel-card ul {
+            list-style: none;
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .payment-channel-card li {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.94rem;
+        }
+
+        .payment-channel-card li::before {
+            content: "· ";
+            color: var(--primary);
+        }
+
+        .payments-roadmap {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 26px;
+        }
+
+        .payments-roadmap-step {
+            padding: 22px 20px;
+            border-radius: 22px;
+            border: 1px solid rgba(255, 235, 218, 0.12);
+            background: linear-gradient(180deg, rgba(255, 247, 239, 0.05), rgba(82, 49, 36, 0.2));
+        }
+
         .footer {
             max-width: var(--max-width);
             margin: 0 auto;
@@ -3022,6 +3201,11 @@
             .scene-season-ribbon {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
+            .payments-grid,
+            .payments-roadmap {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 760px) {
@@ -3036,6 +3220,16 @@
                 padding-top: 18px;
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .header-meta {
+                width: 100%;
+                justify-items: start;
+            }
+
+            .lang-switch {
+                flex-wrap: wrap;
+                padding: 10px 12px;
             }
 
             .hero,
@@ -3150,6 +3344,11 @@
             .auth-tabs button {
                 width: 100%;
             }
+
+            .payments-journal,
+            .payment-channel-card {
+                padding: 24px 20px;
+            }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -3178,25 +3377,34 @@
                 <div class="brand-mark">🕯️</div>
                 <div class="brand-copy">
                     <strong>念念 Eterna</strong>
-                    <span>念念不忘，ta一直在</span>
+                    <span id="brandTagline">念念不忘，ta一直在</span>
                 </div>
             </div>
-            <div class="top-note">把想念安放在一个会回应、会被珍藏的地方。</div>
+            <div class="header-meta">
+                <div id="topNote" class="top-note">把想念安放在一个会回应、会被珍藏的地方。</div>
+                <div class="lang-switch" aria-label="Language switch">
+                    <span id="langHelper" class="lang-helper">首页双语</span>
+                    <div class="lang-toggle">
+                        <button type="button" id="langZh" class="lang-pill active" onclick="setLanguage('zh')">中文</button>
+                        <button type="button" id="langEn" class="lang-pill" onclick="setLanguage('en')">EN</button>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main class="container">
             <section class="hero reveal">
                 <div>
-                    <p class="eyebrow">纪念亲人的数字陪伴空间</p>
-                    <h1>让一句“我想你了”有地方落下</h1>
-                    <p>把熟悉的称呼、叮嘱、笑声和你们共同经历过的日常，安放进一册会继续生长的纪念档案里。语音、照片、视频和回忆会一起慢慢拼回 ta 的样子，让每次想念都有一个温柔的入口。</p>
+                    <p id="heroEyebrow" class="eyebrow">纪念亲人的数字陪伴空间</p>
+                    <h1 id="heroTitle">让一句“我想你了”有地方落下</h1>
+                    <p id="heroIntro">把熟悉的称呼、叮嘱、笑声和你们共同经历过的日常，安放进一册会继续生长的纪念档案里。语音、照片、视频和回忆会一起慢慢拼回 ta 的样子，让每次想念都有一个温柔的入口。</p>
                     <div class="hero-poem-shell">
-                        <div class="hero-poem-mark">首页题字</div>
+                        <div id="heroPoemMark" class="hero-poem-mark">首页题字</div>
                         <div class="hero-poem">
-                            <span>梦里寻你千百度</span>
-                            <strong>那人却在念念处</strong>
+                            <span id="heroPoemLine1">梦里寻你千百度</span>
+                            <strong id="heroPoemLine2">那人却在念念处</strong>
                         </div>
-                        <div class="hero-poem-note">把那些走散在梦里、晚霞里和旧相册里的身影，重新安放回一个会回应、会被珍藏、会继续陪伴你的地方。</div>
+                        <div id="heroPoemNote" class="hero-poem-note">把那些走散在梦里、晚霞里和旧相册里的身影，重新安放回一个会回应、会被珍藏、会继续陪伴你的地方。</div>
                         <div class="hero-music-row">
                             <button type="button" id="musicToggleButton" class="btn btn-secondary music-toggle-button" onclick="toggleMemorialMusic()">
                                 <span class="music-eq" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -3206,8 +3414,8 @@
                         </div>
                     </div>
                     <div class="hero-actions">
-                        <button type="button" class="btn btn-primary" onclick="openModal('createModal')">为 ta 点亮纪念档案</button>
-                        <button type="button" class="btn btn-secondary" onclick="scrollToChat()">先听一段陪伴</button>
+                        <button type="button" id="heroPrimaryCta" class="btn btn-primary" onclick="openModal('createModal')">为 ta 点亮纪念档案</button>
+                        <button type="button" id="heroSecondaryCta" class="btn btn-secondary" onclick="scrollToChat()">先听一段陪伴</button>
                     </div>
                     <div class="status-row">
                         <div id="serviceStatus" class="status-pill demo">
@@ -3232,20 +3440,20 @@
                     <div class="memorial-scene">
                         <div class="scene-season-ribbon">
                             <div class="season-chip">
-                                <strong>春</strong>
-                                <span>微风把新绿和想念一起轻轻吹来。</span>
+                                <strong id="seasonSpringTitle">春</strong>
+                                <span id="seasonSpringText">微风把新绿和想念一起轻轻吹来。</span>
                             </div>
                             <div class="season-chip">
-                                <strong>夏</strong>
-                                <span>天空、海面和远处的人影，都慢慢亮起来。</span>
+                                <strong id="seasonSummerTitle">夏</strong>
+                                <span id="seasonSummerText">天空、海面和远处的人影，都慢慢亮起来。</span>
                             </div>
                             <div class="season-chip">
-                                <strong>秋</strong>
-                                <span>落叶安静落下，旧日的叮嘱也重新落回耳边。</span>
+                                <strong id="seasonAutumnTitle">秋</strong>
+                                <span id="seasonAutumnText">落叶安静落下，旧日的叮嘱也重新落回耳边。</span>
                             </div>
                             <div class="season-chip">
-                                <strong>冬</strong>
-                                <span>就算夜深了，灯还亮着，陪伴也还在。</span>
+                                <strong id="seasonWinterTitle">冬</strong>
+                                <span id="seasonWinterText">就算夜深了，灯还亮着，陪伴也还在。</span>
                             </div>
                         </div>
                         <div class="scene-breeze">
@@ -3322,24 +3530,24 @@
                             </g>
                         </svg>
                         <div class="memory-fragment fragment-a">
-                            <strong>人物与风景</strong>
-                            老人、父亲、母亲和孩子站在一起，身后是海、天和还没走远的晚霞。
+                            <strong id="sceneFragmentATitle">人物与风景</strong>
+                            <span id="sceneFragmentAText">老人、父亲、母亲和孩子站在一起，身后是海、天和还没走远的晚霞。</span>
                         </div>
                         <div class="memory-fragment fragment-b">
-                            <strong>微风与落叶</strong>
-                            风从海面吹来，也把树叶和旧时的称呼，一起吹回心里。
+                            <strong id="sceneFragmentBTitle">微风与落叶</strong>
+                            <span id="sceneFragmentBText">风从海面吹来，也把树叶和旧时的称呼，一起吹回心里。</span>
                         </div>
                         <div class="memory-fragment fragment-c">
-                            <strong>四季变迁</strong>
-                            春夏秋冬都会经过，但你熟悉的声音、样子和故事会被一直留着。
+                            <strong id="sceneFragmentCTitle">四季变迁</strong>
+                            <span id="sceneFragmentCText">春夏秋冬都会经过，但你熟悉的声音、样子和故事会被一直留着。</span>
                         </div>
                         <div class="memory-fragment fragment-d">
-                            <strong>纪念仍在生长</strong>
-                            当你再回来时，这里依然有海浪、飞鸟、灯光和继续回应你的陪伴。
+                            <strong id="sceneFragmentDTitle">纪念仍在生长</strong>
+                            <span id="sceneFragmentDText">当你再回来时，这里依然有海浪、飞鸟、灯光和继续回应你的陪伴。</span>
                         </div>
                         <div class="scene-caption">
-                            <strong>梦里寻你千百度，那人却在念念处</strong>
-                            <span>人物、风景、微风、落叶和四季变迁，会把想念从心里慢慢铺展开来，让整个首页像一本会呼吸的纪念画册。</span>
+                            <strong id="sceneCaptionTitle">梦里寻你千百度，那人却在念念处</strong>
+                            <span id="sceneCaptionText">人物、风景、微风、落叶和四季变迁，会把想念从心里慢慢铺展开来，让整个首页像一本会呼吸的纪念画册。</span>
                         </div>
                     </div>
                 </div>
@@ -3347,9 +3555,9 @@
 
             <section class="section reveal">
                 <div class="section-heading">
-                    <p class="eyebrow">剧情 Demo · 配乐版 v2</p>
-                    <h2>24 秒，把想念拍成一段会呼吸的纪念短片</h2>
-                    <p>这版把情绪、旁白和真实配乐的起伏放在一起：从安静的深夜，到一句话终于被重新接住，再到纪念如何慢慢变成长期陪伴。</p>
+                    <p id="demoEyebrow" class="eyebrow">剧情 Demo · 配乐版 v2</p>
+                    <h2 id="demoHeading">24 秒，把想念拍成一段会呼吸的纪念短片</h2>
+                    <p id="demoIntro">这版把情绪、旁白和真实配乐的起伏放在一起：从安静的深夜，到一句话终于被重新接住，再到纪念如何慢慢变成长期陪伴。</p>
                 </div>
                 <div class="demo-stage">
                     <div class="demo-video-card glass-panel">
@@ -3376,31 +3584,31 @@
                             </video>
                         </div>
                         <div class="demo-meta">
-                            <span>剧情线：失落夜晚 → 建档 → 对话 → 纪念延续</span>
-                            <span>时长：24 秒</span>
+                            <span id="demoMetaLine">剧情线：失落夜晚 → 建档 → 对话 → 纪念延续</span>
+                            <span id="demoMetaDuration">时长：24 秒</span>
                         </div>
                     </div>
 
                     <aside class="demo-note glass-panel">
-                        <p class="eyebrow">镜头结构</p>
-                        <h3>不是怀旧摆拍，而是一段有温度的产品叙事。</h3>
-                        <p>情绪被放在前面，但每一幕都对应一个真实功能入口。它先让人感到“想念”，再让人看见这份想念如何被安放、被保存、被继续回应。</p>
+                        <p id="demoNoteEyebrow" class="eyebrow">镜头结构</p>
+                        <h3 id="demoNoteHeading">不是怀旧摆拍，而是一段有温度的产品叙事。</h3>
+                        <p id="demoNoteText">情绪被放在前面，但每一幕都对应一个真实功能入口。它先让人感到“想念”，再让人看见这份想念如何被安放、被保存、被继续回应。</p>
                         <ul class="story-beats">
                             <li>
-                                <strong>第一幕：没人回应的夜晚</strong>
-                                先让用户感到“失去回应”这件事，而不是直接推销 AI。
+                                <strong id="demoBeat1Title">第一幕：没人回应的夜晚</strong>
+                                <span id="demoBeat1Text">先让用户感到“失去回应”这件事，而不是直接推销 AI。</span>
                             </li>
                             <li>
-                                <strong>第二幕：念念出现</strong>
-                                用提醒和建档流程，把产品定位成一个可以回来的入口。
+                                <strong id="demoBeat2Title">第二幕：念念出现</strong>
+                                <span id="demoBeat2Text">用提醒和建档流程，把产品定位成一个可以回来的入口。</span>
                             </li>
                             <li>
-                                <strong>第三幕：一句话被接住</strong>
-                                通过“今天有点想你，也有点累”，把对话、口头禅和情绪回接演出来。
+                                <strong id="demoBeat3Title">第三幕：一句话被接住</strong>
+                                <span id="demoBeat3Text">通过“今天有点想你，也有点累”，把对话、口头禅和情绪回接演出来。</span>
                             </li>
                             <li>
-                                <strong>第四幕：纪念可以继续发生</strong>
-                                展示生日祝福、声音相册和回忆影像，把单次对话提升成长期陪伴。
+                                <strong id="demoBeat4Title">第四幕：纪念可以继续发生</strong>
+                                <span id="demoBeat4Text">展示生日祝福、声音相册和回忆影像，把单次对话提升成长期陪伴。</span>
                             </li>
                         </ul>
                     </aside>
@@ -3409,49 +3617,49 @@
 
             <section class="section reveal">
                 <div class="section-heading">
-                    <p class="eyebrow">陪伴方式</p>
-                    <h2>把纪念做成可以慢慢回来的日常</h2>
-                    <p>念念不是一个短暂的新鲜功能，而是一个能长久使用的纪念空间。每个能力都围绕回忆、牵挂、问候和长期陪伴来设计。</p>
+                    <p id="featuresEyebrow" class="eyebrow">陪伴方式</p>
+                    <h2 id="featuresHeading">把纪念做成可以慢慢回来的日常</h2>
+                    <p id="featuresIntro">念念不是一个短暂的新鲜功能，而是一个能长久使用的纪念空间。每个能力都围绕回忆、牵挂、问候和长期陪伴来设计。</p>
                 </div>
                 <div class="features">
                     <article class="feature-card">
                         <span>🎙️</span>
-                        <h3>语音电话</h3>
-                        <p>上传一段录音后，系统会提炼说话节奏和情绪风格，再把回复合成为更适合通话场景的语音陪伴。</p>
+                        <h3 id="feature1Title">语音电话</h3>
+                        <p id="feature1Text">上传一段录音后，系统会提炼说话节奏和情绪风格，再把回复合成为更适合通话场景的语音陪伴。</p>
                     </article>
                     <article class="feature-card">
                         <span>🎥</span>
-                        <h3>视频陪伴</h3>
-                        <p>当照片和视频素材足够时，页面会进入更强在场感的影像陪伴模式，让“见面”这件事更接近真实。</p>
+                        <h3 id="feature2Title">视频陪伴</h3>
+                        <p id="feature2Text">当照片和视频素材足够时，页面会进入更强在场感的影像陪伴模式，让“见面”这件事更接近真实。</p>
                     </article>
                     <article class="feature-card">
                         <span>💬</span>
-                        <h3>智能对话</h3>
-                        <p>记住说话方式、共同经历和情绪语境，让回应更像“这个人会怎么说”，而不是模板式回答。</p>
+                        <h3 id="feature3Title">智能对话</h3>
+                        <p id="feature3Text">记住说话方式、共同经历和情绪语境，让回应更像“这个人会怎么说”，而不是模板式回答。</p>
                     </article>
                     <article class="feature-card">
                         <span>📅</span>
-                        <h3>生活关怀</h3>
-                        <p>节日、天气、生日、普通的一天，都可以成为主动问候的触发点，让纪念回到生活本身。</p>
+                        <h3 id="feature4Title">生活关怀</h3>
+                        <p id="feature4Text">节日、天气、生日、普通的一天，都可以成为主动问候的触发点，让纪念回到生活本身。</p>
                     </article>
                     <article class="feature-card">
                         <span>📸</span>
-                        <h3>数字分身</h3>
-                        <p>语音、照片、视频和共同回忆会一起进入档案，让这个数字人不止会说话，也会越来越像 ta 本人。</p>
+                        <h3 id="feature5Title">数字分身</h3>
+                        <p id="feature5Text">语音、照片、视频和共同回忆会一起进入档案，让这个数字人不止会说话，也会越来越像 ta 本人。</p>
                     </article>
                     <article class="feature-card">
                         <span>👨‍👩‍👧‍👦</span>
-                        <h3>家族传承</h3>
-                        <p>让一段关系不只停留在当下，也能被下一代看见、听见，成为真正可传承的数字遗产。</p>
+                        <h3 id="feature6Title">家族传承</h3>
+                        <p id="feature6Text">让一段关系不只停留在当下，也能被下一代看见、听见，成为真正可传承的数字遗产。</p>
                     </article>
                 </div>
             </section>
 
             <section class="section reveal">
                 <div class="section-heading">
-                    <p class="eyebrow">档案工作台</p>
-                    <h2>把纪念做成真正可管理的日常</h2>
-                    <p>这里不是展示页，而像一本会继续被翻阅的家庭纪念册。你可以切换亲人档案、补回忆、查看最近对话，逐步把这个数字分身养完整。</p>
+                    <p id="workbenchEyebrow" class="eyebrow">档案工作台</p>
+                    <h2 id="workbenchHeading">把纪念做成真正可管理的日常</h2>
+                    <p id="workbenchIntro">这里不是展示页，而像一本会继续被翻阅的家庭纪念册。你可以切换亲人档案、补回忆、查看最近对话，逐步把这个数字分身养完整。</p>
                 </div>
                 <div class="workbench-grid">
                     <aside class="directory-panel glass-panel memorial-book">
@@ -3836,9 +4044,9 @@
 
             <section id="chatSection" class="section reveal">
                 <div class="section-heading">
-                    <p class="eyebrow">对话体验</p>
-                    <h2>从一句想念，慢慢回到熟悉的语气里</h2>
-                    <p>先创建一个亲人档案，再把语音、照片和视频补进去，让这里不只是一个会回复的窗口，而更像一个能被慢慢找回来的陪伴入口。</p>
+                    <p id="chatSectionEyebrow" class="eyebrow">对话体验</p>
+                    <h2 id="chatSectionHeading">从一句想念，慢慢回到熟悉的语气里</h2>
+                    <p id="chatSectionIntro">先创建一个亲人档案，再把语音、照片和视频补进去，让这里不只是一个会回复的窗口，而更像一个能被慢慢找回来的陪伴入口。</p>
                 </div>
                 <div class="experience-grid">
                     <div class="chat-container glass-panel">
@@ -3856,9 +4064,9 @@
                             </div>
                         </div>
                         <div class="prompt-row">
-                            <button type="button" class="prompt-chip" onclick="seedConversation('今天有点想你')">今天有点想你</button>
-                            <button type="button" class="prompt-chip" onclick="seedConversation('最近工作有点累')">最近工作有点累</button>
-                            <button type="button" class="prompt-chip" onclick="seedConversation('想和你说说今天的好消息')">想和你说说今天的好消息</button>
+                            <button type="button" id="chatPrompt1" class="prompt-chip" data-prompt="今天有点想你" onclick="seedConversation(this.dataset.prompt || this.textContent)">今天有点想你</button>
+                            <button type="button" id="chatPrompt2" class="prompt-chip" data-prompt="最近工作有点累" onclick="seedConversation(this.dataset.prompt || this.textContent)">最近工作有点累</button>
+                            <button type="button" id="chatPrompt3" class="prompt-chip" data-prompt="想和你说说今天的好消息" onclick="seedConversation(this.dataset.prompt || this.textContent)">想和你说说今天的好消息</button>
                         </div>
                         <div class="mode-row">
                             <div class="mode-switch">
@@ -3921,21 +4129,21 @@
                     </div>
 
                     <aside class="ritual-panel glass-panel">
-                        <p class="eyebrow">纪念流程</p>
-                        <h3>先替 ta 留下一盏灯，再慢慢把样子拼回来</h3>
-                        <p>名字、关系和口头禅决定人格轮廓；语音、照片、视频和回忆决定这个分身像不像 ta。你不需要一次性准备完整，只要让声音、面容和神态一点点回来。</p>
+                        <p id="ritualEyebrow" class="eyebrow">纪念流程</p>
+                        <h3 id="ritualHeading">先替 ta 留下一盏灯，再慢慢把样子拼回来</h3>
+                        <p id="ritualText">名字、关系和口头禅决定人格轮廓；语音、照片、视频和回忆决定这个分身像不像 ta。你不需要一次性准备完整，只要让声音、面容和神态一点点回来。</p>
                         <div class="timeline">
                             <div class="timeline-item">
-                                <strong>1. 创建分身档案</strong>
-                                <span>先记下名字、关系和那些一开口就知道是 ta 的表达方式，让系统有一个真实的人物底稿。</span>
+                                <strong id="timeline1Title">1. 创建分身档案</strong>
+                                <span id="timeline1Text">先记下名字、关系和那些一开口就知道是 ta 的表达方式，让系统有一个真实的人物底稿。</span>
                             </div>
                             <div class="timeline-item">
-                                <strong>2. 上传语音、照片、视频</strong>
-                                <span>语音会校准说话方式，照片会慢慢还原面容，如果还有视频，分身会更接近 ta 的神态和动作。</span>
+                                <strong id="timeline2Title">2. 上传语音、照片、视频</strong>
+                                <span id="timeline2Text">语音会校准说话方式，照片会慢慢还原面容，如果还有视频，分身会更接近 ta 的神态和动作。</span>
                             </div>
                             <div class="timeline-item">
-                                <strong>3. 继续留下回忆</strong>
-                                <span>从一段短短的故事开始，让回应不止会说话，而是真正知道你们一起经历过什么。</span>
+                                <strong id="timeline3Title">3. 继续留下回忆</strong>
+                                <span id="timeline3Text">从一段短短的故事开始，让回应不止会说话，而是真正知道你们一起经历过什么。</span>
                             </div>
                         </div>
                         <div class="twin-panel">
@@ -3991,16 +4199,16 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="openModal('createModal')">现在就创建档案</button>
+                        <button type="button" id="ritualPrimaryCta" class="btn btn-primary" onclick="openModal('createModal')">现在就创建档案</button>
                     </aside>
                 </div>
             </section>
 
             <section class="section reveal">
                 <div class="section-heading">
-                    <p class="eyebrow">订阅方案</p>
-                    <h2>按你想保留的亲密程度来选择</h2>
-                    <p>从最基础的声音纪念，到完整的视频与家族传承，定价围绕“陪伴深度”而不是功能堆叠。</p>
+                    <p id="pricingEyebrow" class="eyebrow">订阅方案</p>
+                    <h2 id="pricingHeading">按你想保留的亲密程度来选择</h2>
+                    <p id="pricingIntro">从最基础的声音纪念，到完整的视频与家族传承，定价围绕“陪伴深度”而不是功能堆叠。</p>
                 </div>
                 <div class="billing-banner glass-panel">
                     <div class="billing-copy">
@@ -4014,61 +4222,156 @@
                 </div>
                 <div class="pricing">
                     <article class="price-card" data-plan-code="seed">
-                        <h3>思念种子</h3>
+                        <h3 id="planName-seed">思念种子</h3>
                         <div class="price">¥99<span>/年</span></div>
                         <ul>
-                            <li>声音风格建模</li>
-                            <li>语音电话</li>
-                            <li>文字对话</li>
-                            <li>基础记忆归档</li>
-                            <li>1 位亲人</li>
+                            <li id="planSeedItem1">声音风格建模</li>
+                            <li id="planSeedItem2">语音电话</li>
+                            <li id="planSeedItem3">文字对话</li>
+                            <li id="planSeedItem4">基础记忆归档</li>
+                            <li id="planSeedItem5">1 位亲人</li>
                         </ul>
                         <div class="plan-note" id="planNote-seed">适合先把一位亲人的声音留住。</div>
                         <button type="button" class="btn btn-secondary" id="planButton-seed" onclick="startCheckout('seed')">选择这个方案</button>
                     </article>
                     <article class="price-card" data-plan-code="tree">
-                        <h3>思念之树</h3>
+                        <h3 id="planName-tree">思念之树</h3>
                         <div class="price">¥299<span>/年</span></div>
                         <ul>
-                            <li>语音对话</li>
-                            <li>生日提醒</li>
-                            <li>3 位亲人</li>
-                            <li>更多记忆容量</li>
+                            <li id="planTreeItem1">语音对话</li>
+                            <li id="planTreeItem2">生日提醒</li>
+                            <li id="planTreeItem3">3 位亲人</li>
+                            <li id="planTreeItem4">更多记忆容量</li>
                         </ul>
                         <div class="plan-note" id="planNote-tree">适合一个家庭同时整理多位亲人的语音陪伴。</div>
                         <button type="button" class="btn btn-secondary" id="planButton-tree" onclick="startCheckout('tree')">选择这个方案</button>
                     </article>
                     <article class="price-card featured" data-plan-code="garden">
-                        <h3>思念花园</h3>
+                        <h3 id="planName-garden">思念花园</h3>
                         <div class="price">¥599<span>/年</span></div>
                         <ul>
-                            <li>视频陪伴</li>
-                            <li>完整纪念能力</li>
-                            <li>5 位亲人</li>
-                            <li>优先体验新功能</li>
+                            <li id="planGardenItem1">视频陪伴</li>
+                            <li id="planGardenItem2">完整纪念能力</li>
+                            <li id="planGardenItem3">5 位亲人</li>
+                            <li id="planGardenItem4">优先体验新功能</li>
                         </ul>
                         <div class="plan-note" id="planNote-garden">适合需要语音电话和视频陪伴都长期开放的家庭。</div>
                         <button type="button" class="btn btn-primary" id="planButton-garden" onclick="startCheckout('garden')">推荐优先体验</button>
                     </article>
                     <article class="price-card" data-plan-code="family">
-                        <h3>思念家族</h3>
+                        <h3 id="planName-family">思念家族</h3>
                         <div class="price">¥999<span>/年</span></div>
                         <ul>
-                            <li>多人分身档案</li>
-                            <li>家族传承</li>
-                            <li>无限亲人</li>
-                            <li>定制化服务</li>
+                            <li id="planFamilyItem1">多人分身档案</li>
+                            <li id="planFamilyItem2">家族传承</li>
+                            <li id="planFamilyItem3">无限亲人</li>
+                            <li id="planFamilyItem4">定制化服务</li>
                         </ul>
                         <div class="plan-note" id="planNote-family">适合长期家族纪念、更多成员与更高容量。</div>
                         <button type="button" class="btn btn-secondary" id="planButton-family" onclick="startCheckout('family')">联系定制方案</button>
                     </article>
                 </div>
             </section>
+
+            <section class="section reveal">
+                <div class="section-heading">
+                    <p id="paymentsEyebrow" class="eyebrow">出海支付准备</p>
+                    <h2 id="paymentsHeading">把海外收款先准备成一套可切换的底盘</h2>
+                    <p id="paymentsIntro">在 Stripe 正式上线前，先把 PayPal、Creem、Stripe 三条路梳理清楚：谁适合低门槛试水，谁适合早期独立开发，谁适合长期 SaaS 运营。</p>
+                </div>
+                <div class="payments-grid">
+                    <article class="payments-journal glass-panel">
+                        <div class="payments-journal-head">
+                            <span id="paymentsBadge" class="entry-badge">独立开发记录</span>
+                            <span id="paymentsMeta" class="status-detail">周末碎片时间，也先把海外收款路径走通。</span>
+                        </div>
+                        <h3 id="paymentsJournalTitle">不要把所有收款都压在单一渠道上</h3>
+                        <p id="paymentsJournalText">对于独立站和海外 SaaS，Stripe 最方便，但风控也最严格。更稳妥的做法是先准备低门槛渠道跑实验，再为长期订阅业务准备更稳的收款底盘。</p>
+                        <div class="payments-points">
+                            <div class="payments-point">
+                                <strong id="paymentsPoint1Title">APP 与独立站不是同一题</strong>
+                                <p id="paymentsPoint1Text">iOS 可以更多依赖 Apple Pay；独立站和 SaaS 则需要自己搭建 checkout、webhook、权限同步和风控预案。</p>
+                            </div>
+                            <div class="payments-point">
+                                <strong id="paymentsPoint2Title">先有备份渠道，再上主渠道</strong>
+                                <p id="paymentsPoint2Text">Stripe 体验最好，但封控也最严格。先把 PayPal 和 Creem 这样的补充渠道准备好，业务才不至于被单点卡死。</p>
+                            </div>
+                            <div class="payments-point">
+                                <strong id="paymentsPoint3Title">产品、税费和 webhook 要一起设计</strong>
+                                <p id="paymentsPoint3Text">价格展示、税费是否含税、支付完成回调、权限开通和用户重定向，必须在同一条链路里一起跑通。</p>
+                            </div>
+                            <div class="payments-point">
+                                <strong id="paymentsPoint4Title">念念当前的准备方向</strong>
+                                <p id="paymentsPoint4Text">主页先把全球收款策略说明清楚，下一步再接正式 checkout、webhook、套餐权限和多通道回退。</p>
+                            </div>
+                        </div>
+                    </article>
+                    <div class="payments-channel-stack">
+                        <article class="payment-channel-card paypal">
+                            <div class="payment-channel-head">
+                                <span class="payment-channel-badge">PayPal</span>
+                                <span id="paypalStatus" class="entry-badge">低门槛实验渠道</span>
+                            </div>
+                            <h3 id="paypalTitle">适合先跑通第一笔海外收入</h3>
+                            <p id="paypalText">个人 PayPal 配合 Ko-fi 一类的平台就能先开始，门槛低，适合验证需求，但不适合作为唯一支付通道。</p>
+                            <ul>
+                                <li id="paypalPoint1">优点：个人账号 + 信用卡即可起步</li>
+                                <li id="paypalPoint2">限制：主要依赖 PayPal 本身，信用卡路径不够完整</li>
+                                <li id="paypalPoint3">适合：最早期验证、赞助与补充收款</li>
+                            </ul>
+                        </article>
+                        <article class="payment-channel-card creem">
+                            <div class="payment-channel-head">
+                                <span class="payment-channel-badge">Creem</span>
+                                <span id="creemStatus" class="entry-badge">大陆开发者友好</span>
+                            </div>
+                            <h3 id="creemTitle">适合个人开发者先把 SaaS 支付跑起来</h3>
+                            <p id="creemText">不用先注册公司，对大陆开发者更友好，测试和联调也快，但要认真准备 KYC、产品说明和 webhook 链路。</p>
+                            <ul>
+                                <li id="creemPoint1">优点：不强制公司主体，可接支付宝收款</li>
+                                <li id="creemPoint2">注意：身份验证更建议用护照，不要只依赖身份证</li>
+                                <li id="creemPoint3">适合：早期 SaaS、测试环境联调、补充渠道</li>
+                            </ul>
+                        </article>
+                        <article class="payment-channel-card stripe">
+                            <div class="payment-channel-head">
+                                <span class="payment-channel-badge">Stripe</span>
+                                <span id="stripeStatus" class="entry-badge">长期主渠道</span>
+                            </div>
+                            <h3 id="stripeTitle">适合把订阅、权限和全球支付做成标准底层</h3>
+                            <p id="stripeText">Stripe 体验完整、生态成熟，最适合长期 SaaS 运营，但开户和风控要求也最高，必须把公司、银行和合规链路一次准备好。</p>
+                            <ul>
+                                <li id="stripePoint1">优点：开发体验完整，订阅与 webhook 生态成熟</li>
+                                <li id="stripePoint2">挑战：风控严格，主体、银行和资料要更扎实</li>
+                                <li id="stripePoint3">适合：长期订阅、正式收费、全球标准化支付</li>
+                            </ul>
+                        </article>
+                    </div>
+                </div>
+                <div class="payments-roadmap">
+                    <article class="payments-roadmap-step">
+                        <strong id="paymentsRoadmap1Title">1. 多渠道备份</strong>
+                        <span id="paymentsRoadmap1Text">先准备 PayPal / Creem / Stripe 的角色分工，避免被单一风控卡住。</span>
+                    </article>
+                    <article class="payments-roadmap-step">
+                        <strong id="paymentsRoadmap2Title">2. 测试链路跑通</strong>
+                        <span id="paymentsRoadmap2Text">先在测试环境把 checkout、webhook、权限发放和返回页都验证完整。</span>
+                    </article>
+                    <article class="payments-roadmap-step">
+                        <strong id="paymentsRoadmap3Title">3. 定价与税费一致</strong>
+                        <span id="paymentsRoadmap3Text">价格展示、税费含不含税、套餐权限、订阅状态要在前后端保持一致。</span>
+                    </article>
+                    <article class="payments-roadmap-step">
+                        <strong id="paymentsRoadmap4Title">4. 正式收款上线</strong>
+                        <span id="paymentsRoadmap4Text">等主体、账号、风控和文档稳定后，再打开真实的全球支付入口。</span>
+                    </article>
+                </div>
+            </section>
         </main>
 
         <footer class="footer">
-            <span>念念 Eterna v1.0</span>
-            <span>念念不忘，ta一直在</span>
+            <span id="footerVersion">念念 Eterna v1.0</span>
+            <span id="footerTagline">念念不忘，ta一直在</span>
         </footer>
     </div>
 
@@ -4253,6 +4556,380 @@
         let memorialMusicElement = null;
         let resolvedMemorialMusicUrl = "";
         let memorialMusicLookupPromise = null;
+        let currentLanguage = "zh";
+        const UI_LANGUAGE_STORAGE_KEY = "eterna-ui-language";
+        const MARKETING_COPY = {
+            zh: {
+                __title: "念念 Eterna | 念念不忘，ta一直在",
+                brandTagline: "念念不忘，ta一直在",
+                topNote: "把想念安放在一个会回应、会被珍藏的地方。",
+                langHelper: "首页双语",
+                heroEyebrow: "纪念亲人的数字陪伴空间",
+                heroTitle: "让一句“我想你了”有地方落下",
+                heroIntro: "把熟悉的称呼、叮嘱、笑声和你们共同经历过的日常，安放进一册会继续生长的纪念档案里。语音、照片、视频和回忆会一起慢慢拼回 ta 的样子，让每次想念都有一个温柔的入口。",
+                heroPoemMark: "首页题字",
+                heroPoemLine1: "梦里寻你千百度",
+                heroPoemLine2: "那人却在念念处",
+                heroPoemNote: "把那些走散在梦里、晚霞里和旧相册里的身影，重新安放回一个会回应、会被珍藏、会继续陪伴你的地方。",
+                heroPrimaryCta: "为 ta 点亮纪念档案",
+                heroSecondaryCta: "先听一段陪伴",
+                seasonSpringTitle: "春",
+                seasonSpringText: "微风把新绿和想念一起轻轻吹来。",
+                seasonSummerTitle: "夏",
+                seasonSummerText: "天空、海面和远处的人影，都慢慢亮起来。",
+                seasonAutumnTitle: "秋",
+                seasonAutumnText: "落叶安静落下，旧日的叮嘱也重新落回耳边。",
+                seasonWinterTitle: "冬",
+                seasonWinterText: "就算夜深了，灯还亮着，陪伴也还在。",
+                sceneFragmentATitle: "人物与风景",
+                sceneFragmentAText: "老人、父亲、母亲和孩子站在一起，身后是海、天和还没走远的晚霞。",
+                sceneFragmentBTitle: "微风与落叶",
+                sceneFragmentBText: "风从海面吹来，也把树叶和旧时的称呼，一起吹回心里。",
+                sceneFragmentCTitle: "四季变迁",
+                sceneFragmentCText: "春夏秋冬都会经过，但你熟悉的声音、样子和故事会被一直留着。",
+                sceneFragmentDTitle: "纪念仍在生长",
+                sceneFragmentDText: "当你再回来时，这里依然有海浪、飞鸟、灯光和继续回应你的陪伴。",
+                sceneCaptionTitle: "梦里寻你千百度，那人却在念念处",
+                sceneCaptionText: "人物、风景、微风、落叶和四季变迁，会把想念从心里慢慢铺展开来，让整个首页像一本会呼吸的纪念画册。",
+                demoEyebrow: "剧情 Demo · 配乐版 v2",
+                demoHeading: "24 秒，把想念拍成一段会呼吸的纪念短片",
+                demoIntro: "这版把情绪、旁白和真实配乐的起伏放在一起：从安静的深夜，到一句话终于被重新接住，再到纪念如何慢慢变成长期陪伴。",
+                demoMetaLine: "剧情线：失落夜晚 → 建档 → 对话 → 纪念延续",
+                demoMetaDuration: "时长：24 秒",
+                demoNoteEyebrow: "镜头结构",
+                demoNoteHeading: "不是怀旧摆拍，而是一段有温度的产品叙事。",
+                demoNoteText: "情绪被放在前面，但每一幕都对应一个真实功能入口。它先让人感到“想念”，再让人看见这份想念如何被安放、被保存、被继续回应。",
+                demoBeat1Title: "第一幕：没人回应的夜晚",
+                demoBeat1Text: "先让用户感到“失去回应”这件事，而不是直接推销 AI。",
+                demoBeat2Title: "第二幕：念念出现",
+                demoBeat2Text: "用提醒和建档流程，把产品定位成一个可以回来的入口。",
+                demoBeat3Title: "第三幕：一句话被接住",
+                demoBeat3Text: "通过“今天有点想你，也有点累”，把对话、口头禅和情绪回接演出来。",
+                demoBeat4Title: "第四幕：纪念可以继续发生",
+                demoBeat4Text: "展示生日祝福、声音相册和回忆影像，把单次对话提升成长期陪伴。",
+                featuresEyebrow: "陪伴方式",
+                featuresHeading: "把纪念做成可以慢慢回来的日常",
+                featuresIntro: "念念不是一个短暂的新鲜功能，而是一个能长久使用的纪念空间。每个能力都围绕回忆、牵挂、问候和长期陪伴来设计。",
+                feature1Title: "语音电话",
+                feature1Text: "上传一段录音后，系统会提炼说话节奏和情绪风格，再把回复合成为更适合通话场景的语音陪伴。",
+                feature2Title: "视频陪伴",
+                feature2Text: "当照片和视频素材足够时，页面会进入更强在场感的影像陪伴模式，让“见面”这件事更接近真实。",
+                feature3Title: "智能对话",
+                feature3Text: "记住说话方式、共同经历和情绪语境，让回应更像“这个人会怎么说”，而不是模板式回答。",
+                feature4Title: "生活关怀",
+                feature4Text: "节日、天气、生日、普通的一天，都可以成为主动问候的触发点，让纪念回到生活本身。",
+                feature5Title: "数字分身",
+                feature5Text: "语音、照片、视频和共同回忆会一起进入档案，让这个数字人不止会说话，也会越来越像 ta 本人。",
+                feature6Title: "家族传承",
+                feature6Text: "让一段关系不只停留在当下，也能被下一代看见、听见，成为真正可传承的数字遗产。",
+                workbenchEyebrow: "档案工作台",
+                workbenchHeading: "把纪念做成真正可管理的日常",
+                workbenchIntro: "这里不是展示页，而像一本会继续被翻阅的家庭纪念册。你可以切换亲人档案、补回忆、查看最近对话，逐步把这个数字分身养完整。",
+                chatSectionEyebrow: "对话体验",
+                chatSectionHeading: "从一句想念，慢慢回到熟悉的语气里",
+                chatSectionIntro: "先创建一个亲人档案，再把语音、照片和视频补进去，让这里不只是一个会回复的窗口，而更像一个能被慢慢找回来的陪伴入口。",
+                chatPrompt1: "今天有点想你",
+                chatPrompt2: "最近工作有点累",
+                chatPrompt3: "想和你说说今天的好消息",
+                modeText: "文字陪伴",
+                modeVoice: "语音电话",
+                modeVideo: "视频陪伴",
+                ritualEyebrow: "纪念流程",
+                ritualHeading: "先替 ta 留下一盏灯，再慢慢把样子拼回来",
+                ritualText: "名字、关系和口头禅决定人格轮廓；语音、照片、视频和回忆决定这个分身像不像 ta。你不需要一次性准备完整，只要让声音、面容和神态一点点回来。",
+                timeline1Title: "1. 创建分身档案",
+                timeline1Text: "先记下名字、关系和那些一开口就知道是 ta 的表达方式，让系统有一个真实的人物底稿。",
+                timeline2Title: "2. 上传语音、照片、视频",
+                timeline2Text: "语音会校准说话方式，照片会慢慢还原面容，如果还有视频，分身会更接近 ta 的神态和动作。",
+                timeline3Title: "3. 继续留下回忆",
+                timeline3Text: "从一段短短的故事开始，让回应不止会说话，而是真正知道你们一起经历过什么。",
+                ritualPrimaryCta: "现在就创建档案",
+                pricingEyebrow: "订阅方案",
+                pricingHeading: "按你想保留的亲密程度来选择",
+                pricingIntro: "从最基础的声音纪念，到完整的视频与家族传承，定价围绕“陪伴深度”而不是功能堆叠。",
+                paymentsEyebrow: "出海支付准备",
+                paymentsHeading: "把海外收款先准备成一套可切换的底盘",
+                paymentsIntro: "在 Stripe 正式上线前，先把 PayPal、Creem、Stripe 三条路梳理清楚：谁适合低门槛试水，谁适合早期独立开发，谁适合长期 SaaS 运营。",
+                paymentsBadge: "独立开发记录",
+                paymentsMeta: "周末碎片时间，也先把海外收款路径走通。",
+                paymentsJournalTitle: "不要把所有收款都压在单一渠道上",
+                paymentsJournalText: "对于独立站和海外 SaaS，Stripe 最方便，但风控也最严格。更稳妥的做法是先准备低门槛渠道跑实验，再为长期订阅业务准备更稳的收款底盘。",
+                paymentsPoint1Title: "APP 与独立站不是同一题",
+                paymentsPoint1Text: "iOS 可以更多依赖 Apple Pay；独立站和 SaaS 则需要自己搭建 checkout、webhook、权限同步和风控预案。",
+                paymentsPoint2Title: "先有备份渠道，再上主渠道",
+                paymentsPoint2Text: "Stripe 体验最好，但封控也最严格。先把 PayPal 和 Creem 这样的补充渠道准备好，业务才不至于被单点卡死。",
+                paymentsPoint3Title: "产品、税费和 webhook 要一起设计",
+                paymentsPoint3Text: "价格展示、税费是否含税、支付完成回调、权限开通和用户重定向，必须在同一条链路里一起跑通。",
+                paymentsPoint4Title: "念念当前的准备方向",
+                paymentsPoint4Text: "主页先把全球收款策略说明清楚，下一步再接正式 checkout、webhook、套餐权限和多通道回退。",
+                paypalStatus: "低门槛实验渠道",
+                paypalTitle: "适合先跑通第一笔海外收入",
+                paypalText: "个人 PayPal 配合 Ko-fi 一类的平台就能先开始，门槛低，适合验证需求，但不适合作为唯一支付通道。",
+                paypalPoint1: "优点：个人账号 + 信用卡即可起步",
+                paypalPoint2: "限制：主要依赖 PayPal 本身，信用卡路径不够完整",
+                paypalPoint3: "适合：最早期验证、赞助与补充收款",
+                creemStatus: "大陆开发者友好",
+                creemTitle: "适合个人开发者先把 SaaS 支付跑起来",
+                creemText: "不用先注册公司，对大陆开发者更友好，测试和联调也快，但要认真准备 KYC、产品说明和 webhook 链路。",
+                creemPoint1: "优点：不强制公司主体，可接支付宝收款",
+                creemPoint2: "注意：身份验证更建议用护照，不要只依赖身份证",
+                creemPoint3: "适合：早期 SaaS、测试环境联调、补充渠道",
+                stripeStatus: "长期主渠道",
+                stripeTitle: "适合把订阅、权限和全球支付做成标准底层",
+                stripeText: "Stripe 体验完整、生态成熟，最适合长期 SaaS 运营，但开户和风控要求也最高，必须把公司、银行和合规链路一次准备好。",
+                stripePoint1: "优点：开发体验完整，订阅与 webhook 生态成熟",
+                stripePoint2: "挑战：风控严格，主体、银行和资料要更扎实",
+                stripePoint3: "适合：长期订阅、正式收费、全球标准化支付",
+                paymentsRoadmap1Title: "1. 多渠道备份",
+                paymentsRoadmap1Text: "先准备 PayPal / Creem / Stripe 的角色分工，避免被单一风控卡住。",
+                paymentsRoadmap2Title: "2. 测试链路跑通",
+                paymentsRoadmap2Text: "先在测试环境把 checkout、webhook、权限发放和返回页都验证完整。",
+                paymentsRoadmap3Title: "3. 定价与税费一致",
+                paymentsRoadmap3Text: "价格展示、税费含不含税、套餐权限、订阅状态要在前后端保持一致。",
+                paymentsRoadmap4Title: "4. 正式收款上线",
+                paymentsRoadmap4Text: "等主体、账号、风控和文档稳定后，再打开真实的全球支付入口。",
+                footerVersion: "念念 Eterna v1.0",
+                footerTagline: "念念不忘，ta一直在",
+            },
+            en: {
+                __title: "Eterna | Memory that stays and answers back",
+                brandTagline: "Memory that stays and answers back",
+                topNote: "A place where longing can be held, answered, and kept.",
+                langHelper: "Language",
+                heroEyebrow: "Digital companionship for the people you miss most",
+                heroTitle: "Give “I miss you” a place to land",
+                heroIntro: "Store familiar names, small reminders, laughter, and the ordinary days you once shared inside a living memorial archive. Voice, photos, video, and memory rebuild their presence piece by piece, so every moment of longing has a gentle place to return to.",
+                heroPoemMark: "Front-page inscription",
+                heroPoemLine1: "I searched for you a thousand times in dreams,",
+                heroPoemLine2: "and found you here, in Nian Nian.",
+                heroPoemNote: "The figures that drifted away into dreams, dusk, and old family albums are placed back into a space that can answer, be preserved, and keep accompanying you.",
+                heroPrimaryCta: "Light a memorial archive",
+                heroSecondaryCta: "Hear a moment of company",
+                seasonSpringTitle: "Spring",
+                seasonSpringText: "A soft breeze carries new green and longing together.",
+                seasonSummerTitle: "Summer",
+                seasonSummerText: "Sky, sea, and distant figures slowly brighten into view.",
+                seasonAutumnTitle: "Autumn",
+                seasonAutumnText: "Leaves fall quietly, and old words return to the ear.",
+                seasonWinterTitle: "Winter",
+                seasonWinterText: "Even late at night, the light is still on and the company is still here.",
+                sceneFragmentATitle: "People and landscape",
+                sceneFragmentAText: "An elder, a father, a mother, and a child stand together against sea, sky, and the afterglow of dusk.",
+                sceneFragmentBTitle: "Breeze and falling leaves",
+                sceneFragmentBText: "Wind comes off the sea and carries old names and familiar tones back to the heart.",
+                sceneFragmentCTitle: "The passing seasons",
+                sceneFragmentCText: "Spring, summer, autumn, and winter move on, but the voice, posture, and stories you knew can still remain.",
+                sceneFragmentDTitle: "Memory keeps growing",
+                sceneFragmentDText: "When you come back, the waves, birds, light, and that answering presence are still here.",
+                sceneCaptionTitle: "I searched for you in dreams and found you here.",
+                sceneCaptionText: "People, landscape, breeze, falling leaves, and the passing seasons unfold longing slowly, turning the homepage into a memorial album that feels alive.",
+                demoEyebrow: "Brand Film Demo · scored cut v2",
+                demoHeading: "A 24-second memorial short that breathes",
+                demoIntro: "This cut puts emotion, voice-over, and the rise and fall of music into one line: from a quiet night, to a sentence finally being answered, to memory becoming long-term companionship.",
+                demoMetaLine: "Arc: lonely night → archive → conversation → continuing remembrance",
+                demoMetaDuration: "Duration: 24s",
+                demoNoteEyebrow: "Shot structure",
+                demoNoteHeading: "Not nostalgia for display, but product storytelling with warmth.",
+                demoNoteText: "Emotion comes first, but every beat is tied to a real product entry point. It first lets people feel the absence, then shows how memory can be held, preserved, and answered again.",
+                demoBeat1Title: "Beat 1: A night with no reply",
+                demoBeat1Text: "Start from the feeling of not being answered, instead of starting with AI as a pitch.",
+                demoBeat2Title: "Beat 2: Eterna appears",
+                demoBeat2Text: "Use reminders and archive creation to position the product as a doorway you can return to.",
+                demoBeat3Title: "Beat 3: One sentence is caught",
+                demoBeat3Text: "Use “I miss you today, and I am tired” to show how dialogue, catchphrases, and emotion are connected back.",
+                demoBeat4Title: "Beat 4: Memory continues",
+                demoBeat4Text: "Show birthday greetings, voice albums, and memory films so the product feels like ongoing companionship, not a one-off chat.",
+                featuresEyebrow: "Ways of companionship",
+                featuresHeading: "Make remembrance something you can return to",
+                featuresIntro: "Eterna is not a short-lived novelty. It is a memorial space designed for long-term use, where every capability serves memory, care, greetings, and ongoing presence.",
+                feature1Title: "Voice calls",
+                feature1Text: "Upload a short recording and the system extracts speaking rhythm and emotional tone, then synthesizes a reply suited for phone-style companionship.",
+                feature2Title: "Video presence",
+                feature2Text: "When enough photo and video material is available, the experience becomes a more vivid visual presence, making “seeing them again” feel more real.",
+                feature3Title: "Conversational memory",
+                feature3Text: "Remember speaking style, shared experiences, and emotional context so responses feel closer to how that person would really speak.",
+                feature4Title: "Everyday care",
+                feature4Text: "Holidays, weather, birthdays, and ordinary days can all become triggers for gentle outreach, bringing remembrance back into daily life.",
+                feature5Title: "Digital twin",
+                feature5Text: "Voice, photos, videos, and shared memories become one archive so the digital person does not just answer, but gradually feels more like them.",
+                feature6Title: "Family legacy",
+                feature6Text: "Let a relationship remain visible and audible to the next generation as a true digital family legacy.",
+                workbenchEyebrow: "Archive workspace",
+                workbenchHeading: "Turn remembrance into something you can manage",
+                workbenchIntro: "This is not a static display page. It works more like a family memorial book you can keep returning to, switching profiles, adding memories, and growing each digital twin over time.",
+                chatSectionEyebrow: "Conversation experience",
+                chatSectionHeading: "Start with longing, and return to a familiar voice",
+                chatSectionIntro: "Create a profile first, then add voice, photos, and videos so this feels less like a generic reply box and more like a place where presence can slowly be recovered.",
+                chatPrompt1: "I miss you today",
+                chatPrompt2: "Work has felt heavy lately",
+                chatPrompt3: "I want to share today's good news",
+                modeText: "Text companion",
+                modeVoice: "Voice call",
+                modeVideo: "Video companion",
+                ritualEyebrow: "Memorial flow",
+                ritualHeading: "Leave a light first, then rebuild their presence",
+                ritualText: "Name, relationship, and catchphrases shape the outline; voice, photos, video, and memory decide how close this twin feels. You do not need everything at once. Let the voice, face, and gestures come back gradually.",
+                timeline1Title: "1. Create the profile",
+                timeline1Text: "Start with the name, relationship, and expressions that immediately sound like them so the system has a real human foundation.",
+                timeline2Title: "2. Add voice, photos, and video",
+                timeline2Text: "Voice calibrates how they spoke, photos recover the face, and video helps the twin feel closer to their gestures and movement.",
+                timeline3Title: "3. Keep adding memories",
+                timeline3Text: "Start with one short story so the system does not just talk, but knows what the two of you really lived through together.",
+                ritualPrimaryCta: "Create an archive now",
+                pricingEyebrow: "Plans",
+                pricingHeading: "Choose the depth of companionship you want to keep",
+                pricingIntro: "From basic voice remembrance to full video presence and family legacy, the plans are structured around depth of companionship rather than feature clutter.",
+                paymentsEyebrow: "Global payments readiness",
+                paymentsHeading: "Prepare overseas payments as a switchable foundation",
+                paymentsIntro: "Before turning on live Stripe billing, map out the three common routes first: which one is best for low-friction experiments, which suits solo builders, and which is right for long-term SaaS operations.",
+                paymentsBadge: "Indie builder notes",
+                paymentsMeta: "Weekend fragments can still be enough to get the payment stack mapped out.",
+                paymentsJournalTitle: "Do not bet your entire revenue flow on one gateway",
+                paymentsJournalText: "Stripe offers the best developer and subscription experience, but its risk controls are also the strictest. A safer approach is to keep a low-barrier experiment route ready first, then build a stronger base for long-term recurring revenue.",
+                paymentsPoint1Title: "Apps and independent sites are different problems",
+                paymentsPoint1Text: "For iOS, Apple Pay solves much of the path. For an indie site or SaaS, you need your own checkout, webhook, entitlement sync, and fallback plan.",
+                paymentsPoint2Title: "Prepare backup channels before the main channel",
+                paymentsPoint2Text: "Stripe is the cleanest option, but it should not be your only option. Having PayPal and Creem ready protects the business from a single point of failure.",
+                paymentsPoint3Title: "Product, tax, and webhooks must be designed together",
+                paymentsPoint3Text: "Displayed pricing, tax inclusion, payment callbacks, entitlement grants, and user redirects all need to work as one chain.",
+                paymentsPoint4Title: "What Eterna is preparing next",
+                paymentsPoint4Text: "The homepage now explains the global collection strategy clearly. The next step is live checkout, webhooks, plan entitlements, and multi-gateway fallback.",
+                paypalStatus: "Low-barrier experiment channel",
+                paypalTitle: "Best for the very first overseas payment",
+                paypalText: "A personal PayPal account paired with platforms like Ko-fi is enough to start. It is lightweight and useful for demand validation, but not ideal as the only payment rail.",
+                paypalPoint1: "Advantage: a personal account plus a card is enough to get started",
+                paypalPoint2: "Constraint: heavily depends on PayPal itself, with a narrower direct card path",
+                paypalPoint3: "Best for: earliest validation, sponsorship, and backup collection",
+                creemStatus: "Friendly for China-based builders",
+                creemTitle: "Best for getting an early SaaS payment flow working",
+                creemText: "You do not need to register a company first, which makes it friendlier for solo builders in mainland China. It is fast for testing, but KYC, product description, and webhook handling still need to be done carefully.",
+                creemPoint1: "Advantage: no company entity required at the start, with Alipay payouts available",
+                creemPoint2: "Watch-out: passport-based verification is usually more reliable than ID-card-only attempts",
+                creemPoint3: "Best for: early SaaS testing, sandbox integration, and backup collection",
+                stripeStatus: "Long-term main channel",
+                stripeTitle: "Best for turning subscriptions into a standard global payment layer",
+                stripeText: "Stripe is the strongest long-term choice for subscriptions, entitlements, and global billing, but its onboarding and risk controls are also the most demanding. Company, banking, and compliance paths need to be ready first.",
+                stripePoint1: "Advantage: mature developer tooling and subscription webhook ecosystem",
+                stripePoint2: "Challenge: stricter risk review and stronger entity / banking requirements",
+                stripePoint3: "Best for: formal subscription billing and standardized global payments",
+                paymentsRoadmap1Title: "1. Diversify gateways",
+                paymentsRoadmap1Text: "Assign clear roles to PayPal, Creem, and Stripe so the business is not blocked by one control point.",
+                paymentsRoadmap2Title: "2. Validate the full test flow",
+                paymentsRoadmap2Text: "Run checkout, webhooks, entitlement delivery, and return pages completely in the sandbox before anything goes live.",
+                paymentsRoadmap3Title: "3. Keep pricing and tax consistent",
+                paymentsRoadmap3Text: "Displayed prices, tax inclusion, plan entitlements, and subscription state should stay aligned across the stack.",
+                paymentsRoadmap4Title: "4. Launch live billing carefully",
+                paymentsRoadmap4Text: "Only open real global billing after the entity, accounts, risk controls, and documentation are stable.",
+                footerVersion: "Eterna v1.0",
+                footerTagline: "Memory that stays and answers back",
+            }
+        };
+        const PLAN_COPY_FIELD_MAP = {
+            seed: { nameId: "planName-seed", itemIds: ["planSeedItem1", "planSeedItem2", "planSeedItem3", "planSeedItem4", "planSeedItem5"] },
+            tree: { nameId: "planName-tree", itemIds: ["planTreeItem1", "planTreeItem2", "planTreeItem3", "planTreeItem4"] },
+            garden: { nameId: "planName-garden", itemIds: ["planGardenItem1", "planGardenItem2", "planGardenItem3", "planGardenItem4"] },
+            family: { nameId: "planName-family", itemIds: ["planFamilyItem1", "planFamilyItem2", "planFamilyItem3", "planFamilyItem4"] },
+        };
+        const PLAN_MARKETING_COPY = {
+            zh: {
+                seed: { name: "思念种子", items: ["声音风格建模", "语音电话", "文字对话", "基础记忆归档", "1 位亲人"], note: "适合先把一位亲人的声音留住。", guestButton: "选择这个方案", authedButton: "立即开通", currentButton: "当前方案", currentNote: "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。" },
+                tree: { name: "思念之树", items: ["语音对话", "生日提醒", "3 位亲人", "更多记忆容量"], note: "适合一个家庭同时整理多位亲人的语音陪伴。", guestButton: "选择这个方案", authedButton: "立即开通", currentButton: "当前方案", currentNote: "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。" },
+                garden: { name: "思念花园", items: ["视频陪伴", "完整纪念能力", "5 位亲人", "优先体验新功能"], note: "适合需要语音电话和视频陪伴都长期开放的家庭。", guestButton: "推荐优先体验", authedButton: "立即开通", currentButton: "当前方案", currentNote: "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。" },
+                family: { name: "思念家族", items: ["多人分身档案", "家族传承", "无限亲人", "定制化服务"], note: "适合长期家族纪念、更多成员与更高容量。", guestButton: "联系定制方案", authedButton: "联系定制方案", currentButton: "当前方案", currentNote: "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。" },
+            },
+            en: {
+                seed: { name: "Memory Seed", items: ["Voice style model", "Voice calls", "Text companion", "Core memory archive", "1 loved one"], note: "Best for preserving one familiar voice first.", guestButton: "Choose this plan", authedButton: "Activate now", currentButton: "Current plan", currentNote: "You are already using this plan and its abilities are bound to your account." },
+                tree: { name: "Memory Tree", items: ["Voice conversation", "Birthday reminders", "3 loved ones", "More memory capacity"], note: "Best for a household organizing voice companionship for several people.", guestButton: "Choose this plan", authedButton: "Activate now", currentButton: "Current plan", currentNote: "You are already using this plan and its abilities are bound to your account." },
+                garden: { name: "Memory Garden", items: ["Video companion", "Full memorial abilities", "5 loved ones", "Priority access to new features"], note: "Best for families who want long-term voice and video companionship together.", guestButton: "Recommended", authedButton: "Activate now", currentButton: "Current plan", currentNote: "You are already using this plan and its abilities are bound to your account." },
+                family: { name: "Family Legacy", items: ["Multiple digital twins", "Family inheritance", "Unlimited loved ones", "Custom service"], note: "Best for long-term family remembrance with higher capacity and more members.", guestButton: "Talk to us", authedButton: "Talk to us", currentButton: "Current plan", currentNote: "You are already using this plan and its abilities are bound to your account." },
+            }
+        };
+
+        function isEnglish() {
+            return currentLanguage === "en";
+        }
+
+        function pickCopy(zhText, enText) {
+            return isEnglish() ? enText : zhText;
+        }
+
+        function setText(id, value) {
+            const element = document.getElementById(id);
+            if (element && typeof value === "string") {
+                element.textContent = value;
+            }
+        }
+
+        function getPlanCopy(code) {
+            return PLAN_MARKETING_COPY[currentLanguage]?.[code] || PLAN_MARKETING_COPY.zh[code];
+        }
+
+        function applyPlanMarketingCopy() {
+            Object.entries(PLAN_COPY_FIELD_MAP).forEach(([code, meta]) => {
+                const copy = getPlanCopy(code);
+                if (!copy) {
+                    return;
+                }
+                setText(meta.nameId, copy.name);
+                meta.itemIds.forEach((id, index) => setText(id, copy.items[index] || ""));
+            });
+        }
+
+        function applyChatPromptCopy() {
+            ["chatPrompt1", "chatPrompt2", "chatPrompt3"].forEach((id) => {
+                const button = document.getElementById(id);
+                const text = MARKETING_COPY[currentLanguage]?.[id];
+                if (button && text) {
+                    button.textContent = text;
+                    button.dataset.prompt = text;
+                }
+            });
+        }
+
+        function updateLanguageToggleUi() {
+            document.getElementById("langZh")?.classList.toggle("active", currentLanguage === "zh");
+            document.getElementById("langEn")?.classList.toggle("active", currentLanguage === "en");
+        }
+
+        function applyMarketingCopy() {
+            const copy = MARKETING_COPY[currentLanguage] || MARKETING_COPY.zh;
+            document.title = copy.__title;
+            Object.entries(copy).forEach(([key, value]) => {
+                if (key.startsWith("__") || key.startsWith("chatPrompt")) {
+                    return;
+                }
+                setText(key, value);
+            });
+            applyChatPromptCopy();
+            applyPlanMarketingCopy();
+            updateLanguageToggleUi();
+            document.documentElement.lang = currentLanguage === "en" ? "en" : "zh-CN";
+        }
+
+        function refreshLanguageAwareUi() {
+            applyMarketingCopy();
+            updateMemorialMusicUi();
+            updateAuthSurface();
+            if (activeLovedOne) {
+                applyLovedOne(activeLovedOne, false);
+            } else {
+                refreshChatIntro();
+            }
+        }
+
+        function setLanguage(language, persist = true) {
+            currentLanguage = language === "en" ? "en" : "zh";
+            if (persist) {
+                localStorage.setItem(UI_LANGUAGE_STORAGE_KEY, currentLanguage);
+            }
+            refreshLanguageAwareUi();
+        }
+
+        function initLanguageToggle() {
+            const stored = localStorage.getItem(UI_LANGUAGE_STORAGE_KEY);
+            const detected = stored || ((navigator.language || "").toLowerCase().startsWith("en") ? "en" : "zh");
+            setLanguage(detected, false);
+        }
 
         document.addEventListener("DOMContentLoaded", () => {
             bindModalEvents();
@@ -4265,6 +4942,7 @@
             refreshChatIntro();
             setupDemoVideo();
             initMemorialMusic();
+            initLanguageToggle();
             updateSelectedMediaMeta();
             initGuideCapture();
             document.getElementById("proactiveCadence")?.addEventListener("change", (event) => {
@@ -4284,11 +4962,7 @@
         });
 
         function initMemorialMusic() {
-            updateMemorialMusicUi(
-                memorialMusicPlaying
-                    ? "纪念乐声正在陪你停留在这一页。"
-                    : "轻点一下，首页会响起纪念乐声；如果已放入授权曲目，会优先播放授权音频。"
-            );
+            updateMemorialMusicUi();
             if (LICENSED_HOME_MUSIC_CANDIDATES.length) {
                 void resolveLicensedMemorialMusicUrl();
             }
@@ -4298,15 +4972,58 @@
             const button = document.getElementById("musicToggleButton");
             const label = document.getElementById("musicToggleLabel");
             const status = document.getElementById("musicStatus");
+            const idleLabel = pickCopy("点亮纪念乐声", "Play memorial music");
+            const playingLabel = pickCopy("暂停纪念乐声", "Pause memorial music");
+            const idleMessage = pickCopy(
+                "轻点一下，首页会响起纪念乐声；如果已放入授权曲目，会优先播放授权音频。",
+                "Tap once to start the memorial score. If a licensed track is present, it will be used first."
+            );
+            const playingMessage = pickCopy(
+                "纪念乐声正在陪你停留在这一页。",
+                "The memorial score is now keeping you company on this page."
+            );
             if (button) {
                 button.classList.toggle("playing", memorialMusicPlaying);
             }
             if (label) {
-                label.textContent = memorialMusicPlaying ? "暂停纪念乐声" : "点亮纪念乐声";
+                label.textContent = memorialMusicPlaying ? playingLabel : idleLabel;
             }
-            if (status && message) {
-                status.textContent = message;
+            if (status) {
+                status.textContent = message || (memorialMusicPlaying ? playingMessage : idleMessage);
             }
+        }
+
+        async function resolveLicensedMemorialMusicUrl() {
+            if (resolvedMemorialMusicUrl) {
+                return resolvedMemorialMusicUrl;
+            }
+            if (memorialMusicLookupPromise) {
+                return memorialMusicLookupPromise;
+            }
+            memorialMusicLookupPromise = (async () => {
+                for (const candidate of LICENSED_HOME_MUSIC_CANDIDATES) {
+                    try {
+                        const response = await fetch(candidate, {
+                            method: "HEAD",
+                            cache: "no-store",
+                        });
+                        if (response.ok) {
+                            resolvedMemorialMusicUrl = candidate;
+                            updateMemorialMusicUi(
+                                pickCopy(
+                                    "已检测到授权曲目，点击后会优先播放该音频。",
+                                    "A licensed track was found and will be used first when playback starts."
+                                )
+                            );
+                            return candidate;
+                        }
+                    } catch (error) {
+                        // ignore and try next candidate
+                    }
+                }
+                return "";
+            })();
+            return memorialMusicLookupPromise;
         }
 
         function buildMemorialNoiseBuffer(context) {
@@ -4442,8 +5159,11 @@
             memorialMusicPlaying = true;
             updateMemorialMusicUi(
                 licensedUrl
-                    ? "已点亮首页纪念乐声。"
-                    : "当前已播放站内纪念氛围乐；把授权曲目文件放进 assets 后，这里会自动切换到指定音频。"
+                    ? pickCopy("已点亮首页纪念乐声。", "Memorial music is now playing on the homepage.")
+                    : pickCopy(
+                        "当前已播放站内纪念氛围乐；把授权曲目文件放进 assets 后，这里会自动切换到指定音频。",
+                        "The built-in memorial score is playing now. Once a licensed track is added to assets, playback will switch automatically."
+                    )
             );
         }
 
@@ -4477,7 +5197,7 @@
             memorialMusicContext = null;
             memorialMusicMaster = null;
             memorialMusicPlaying = false;
-            updateMemorialMusicUi("纪念乐声已经停下来了。");
+            updateMemorialMusicUi(pickCopy("纪念乐声已经停下来了。", "Memorial music has been paused."));
         }
 
         async function toggleMemorialMusic() {
@@ -4489,8 +5209,8 @@
                 await startMemorialMusic();
             } catch (error) {
                 memorialMusicPlaying = false;
-                updateMemorialMusicUi("这段音乐还没成功点亮，请再点一次试试。");
-                showToast(error.message || "当前浏览器暂时无法播放首页音乐。", "error");
+                updateMemorialMusicUi(pickCopy("这段音乐还没成功点亮，请再点一次试试。", "The track did not start this time. Please try again."));
+                showToast(error.message || pickCopy("当前浏览器暂时无法播放首页音乐。", "This browser could not play the homepage music right now."), "error");
             }
         }
 
@@ -5011,9 +5731,9 @@
 
         function formatAvailableModes(modes) {
             const labels = {
-                text: "文字陪伴",
-                voice: "语音电话",
-                video: "视频陪伴"
+                text: pickCopy("文字陪伴", "Text companion"),
+                voice: pickCopy("语音电话", "Voice calls"),
+                video: pickCopy("视频陪伴", "Video companion")
             };
             return modes.map((mode) => labels[mode] || mode).join(" / ");
         }
@@ -5034,13 +5754,13 @@
                 showToast(
                     mode === "voice"
                         ? (!features.voice && currentUser
-                            ? "当前套餐还没有开放语音电话，请先升级套餐。"
-                            : "先上传语音素材，才能开启语音电话。")
+                            ? pickCopy("当前套餐还没有开放语音电话，请先升级套餐。", "Voice calls are not included in the current plan yet. Upgrade the plan first.")
+                            : pickCopy("先上传语音素材，才能开启语音电话。", "Upload voice material first to unlock voice calls."))
                         : (!features.video && currentUser
-                            ? "当前套餐还没有开放视频陪伴，请先升级套餐。"
+                            ? pickCopy("当前套餐还没有开放视频陪伴，请先升级套餐。", "Video companion is not included in the current plan yet. Upgrade the plan first.")
                             : assetModes.includes("voice")
-                                ? "再补充照片或视频，才能进入视频陪伴。"
-                                : "先补充语音和照片或视频，才能进入视频陪伴。"),
+                                ? pickCopy("再补充照片或视频，才能进入视频陪伴。", "Add more photos or videos before entering video companion mode.")
+                                : pickCopy("先补充语音和照片或视频，才能进入视频陪伴。", "Add voice plus photo or video material first to unlock video companion mode.")),
                     "error"
                 );
                 return;
@@ -5072,10 +5792,14 @@
 
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
             const subscriptionText = currentSubscription?.plan_name
-                ? `当前套餐：${currentSubscription.plan_name}。`
-                : "登录后，模式权限会与套餐绑定。";
-            document.getElementById("modeAvailability").textContent =
-                `当前可用：${formatAvailableModes(availableModes)}。${subscriptionText}${twin.summary}`;
+                ? pickCopy(
+                    `当前套餐：${getLocalizedPlanName(currentSubscription)}。`,
+                    `Plan: ${getLocalizedPlanName(currentSubscription)}.`
+                )
+                : pickCopy("登录后，模式权限会与套餐绑定。", "Sign in to bind mode access to your plan.");
+            document.getElementById("modeAvailability").textContent = isEnglish()
+                ? `Available now: ${formatAvailableModes(availableModes)}. ${subscriptionText} Model readiness: ${twin.completion_percent || 0}%.`
+                : `当前可用：${formatAvailableModes(availableModes)}。${subscriptionText}${twin.summary}`;
         }
 
         function clearResponseMedia() {
@@ -5947,7 +6671,9 @@
 
         function buildTwinStatusLine(profile) {
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
-            return `已收集 ${twin.memory_count || 0} 条回忆 / ${twin.voice_count || 0} 段语音 / ${twin.photo_count || 0} 张照片 / ${twin.video_count || 0} 段视频，系统当前推进到「${twin.current_stage_title || "分身构建"}」。`;
+            return isEnglish()
+                ? `Collected ${twin.memory_count || 0} memories, ${twin.voice_count || 0} voice clips, ${twin.photo_count || 0} photos, and ${twin.video_count || 0} videos. Current build readiness: ${twin.completion_percent || 0}%.`
+                : `已收集 ${twin.memory_count || 0} 条回忆 / ${twin.voice_count || 0} 段语音 / ${twin.photo_count || 0} 张照片 / ${twin.video_count || 0} 段视频，系统当前推进到「${twin.current_stage_title || "分身构建"}」。`;
         }
 
         function setDigitalHumanPills(containerId, values, emptyText) {
@@ -5974,13 +6700,13 @@
 
         function formatDigitalHumanFragmentLabel(fragment) {
             const sourceLabels = {
-                profile: "档案底稿",
-                memory: "文字回忆",
-                voice: "语音素材",
-                photo: "照片素材",
-                video: "视频素材"
+                profile: pickCopy("档案底稿", "Profile base"),
+                memory: pickCopy("文字回忆", "Text memory"),
+                voice: pickCopy("语音素材", "Voice asset"),
+                photo: pickCopy("照片素材", "Photo asset"),
+                video: pickCopy("视频素材", "Video asset")
             };
-            return sourceLabels[fragment.source_type] || fragment.source_type || "片段";
+            return sourceLabels[fragment.source_type] || fragment.source_type || pickCopy("片段", "Fragment");
         }
 
         function buildLocalBridgeStatus(profile) {
@@ -6466,13 +7192,13 @@
 
         function formatTimeLabel(value) {
             if (!value) {
-                return "刚刚";
+                return pickCopy("刚刚", "Just now");
             }
             const date = new Date(value);
             if (Number.isNaN(date.getTime())) {
-                return "刚刚";
+                return pickCopy("刚刚", "Just now");
             }
-            return date.toLocaleString("zh-CN", {
+            return date.toLocaleString(isEnglish() ? "en-US" : "zh-CN", {
                 month: "2-digit",
                 day: "2-digit",
                 hour: "2-digit",
@@ -6480,61 +7206,81 @@
             });
         }
 
+        function getLocalizedPlanName(subscription = currentSubscription) {
+            if (!subscription) {
+                return pickCopy("体验版", "Preview");
+            }
+            const code = subscription.plan_code;
+            return getPlanCopy(code)?.name || subscription.plan_name || pickCopy("体验版", "Preview");
+        }
+
         function subscriptionCapabilityLabel(subscription = currentSubscription) {
             if (!subscription) {
-                return "未登录时仅展示本地演示，真实文字 / 语音 / 视频能力会在登录后绑定到套餐。";
+                return pickCopy(
+                    "未登录时仅展示本地演示，真实文字 / 语音 / 视频能力会在登录后绑定到套餐。",
+                    "Without sign-in, only the local demo is shown. Real text, voice, and video abilities are bound after login."
+                );
             }
             const features = subscription.features || {};
             const labels = [];
             if (features.text) {
-                labels.push("文字陪伴");
+                labels.push(pickCopy("文字陪伴", "Text companion"));
             }
             if (features.voice) {
-                labels.push("语音电话");
+                labels.push(pickCopy("语音电话", "Voice calls"));
             }
             if (features.video) {
-                labels.push("视频陪伴");
+                labels.push(pickCopy("视频陪伴", "Video companion"));
             }
-            return `${subscription.plan_name} 已开放：${labels.join(" / ") || "基础能力"}。`;
+            return pickCopy(
+                `${getLocalizedPlanName(subscription)} 已开放：${labels.join(" / ") || "基础能力"}。`,
+                `${getLocalizedPlanName(subscription)} includes: ${labels.join(" / ") || "Core access"}.`
+            );
         }
 
         function formatWeekdayLabel(value) {
-            const labels = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
+            const labels = isEnglish()
+                ? ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+                : ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
             const index = Number(value);
-            return Number.isInteger(index) && index >= 0 && index < labels.length ? labels[index] : "未指定";
+            return Number.isInteger(index) && index >= 0 && index < labels.length ? labels[index] : pickCopy("未指定", "Not set");
         }
 
         function formatCadenceLabel(flow) {
             if (!flow) {
-                return "未设置";
+                return pickCopy("未设置", "Not set");
             }
             if (flow.cadence === "weekly") {
-                return `每周 ${formatWeekdayLabel(flow.preferred_weekday)} ${flow.preferred_time || "20:30"}`;
+                return isEnglish()
+                    ? `Every ${formatWeekdayLabel(flow.preferred_weekday)} ${flow.preferred_time || "20:30"}`
+                    : `每周 ${formatWeekdayLabel(flow.preferred_weekday)} ${flow.preferred_time || "20:30"}`;
             }
-            return `每天 ${flow.preferred_time || "20:30"}`;
+            return isEnglish()
+                ? `Every day ${flow.preferred_time || "20:30"}`
+                : `每天 ${flow.preferred_time || "20:30"}`;
         }
 
         function formatChannelLabel(channel, eventType = "") {
             if (channel === "phone" || eventType === "voice_call") {
-                return "电话联系";
+                return pickCopy("电话联系", "Phone call");
             }
             if (eventType === "video_message") {
-                return "视频问候";
+                return pickCopy("视频问候", "Video greeting");
             }
             if (eventType === "voice_message") {
-                return "语音问候";
+                return pickCopy("语音问候", "Voice greeting");
             }
-            return "文字问候";
+            return pickCopy("文字问候", "Text greeting");
         }
 
         function formatProactiveMessageModeLabel(mode) {
             if (mode === "video") {
-                return "视频消息";
+                return pickCopy("视频消息", "Video message");
             }
             if (mode === "voice") {
-                return "语音消息";
+                return pickCopy("语音消息", "Voice message");
             }
-            return "文字消息";
+            return pickCopy("文字消息", "Text message");
         }
 
         function formatCompanionHistoryLabel(entry = {}) {
@@ -6542,12 +7288,12 @@
                 return formatChannelLabel("app", entry.mode);
             }
             if (entry.video_url) {
-                return "视频陪伴";
+                return pickCopy("视频陪伴", "Video companion");
             }
             if (entry.audio_url) {
-                return "语音陪伴";
+                return pickCopy("语音陪伴", "Voice companion");
             }
-            return "文字陪伴";
+            return pickCopy("文字陪伴", "Text companion");
         }
 
         function setAuthMode(mode) {
@@ -6556,13 +7302,21 @@
             document.getElementById("authTab-login").classList.toggle("active", authMode === "login");
             document.getElementById("authDisplayNameGroup").classList.toggle("hidden", authMode === "login");
             document.getElementById("authTitle").textContent =
-                authMode === "register" ? "先把纪念空间绑定到你的账号" : "登录后继续完善亲人的数字分身";
+                authMode === "register"
+                    ? pickCopy("先把纪念空间绑定到你的账号", "Bind this memorial space to your account first")
+                    : pickCopy("登录后继续完善亲人的数字分身", "Sign in to continue building the digital twin");
             document.getElementById("authDescription").textContent =
                 authMode === "register"
-                    ? "注册后，亲人档案、上传素材、聊天记录和套餐权限都会长期保存，不再依赖本地浏览器。"
-                    : "登录后，你之前保存的亲人档案、素材库和订阅权限都会重新接回到当前页面。";
+                    ? pickCopy(
+                        "注册后，亲人档案、上传素材、聊天记录和套餐权限都会长期保存，不再依赖本地浏览器。",
+                        "After registration, loved-one profiles, uploads, chat history, and plan access are stored long term instead of staying only in this browser."
+                    )
+                    : pickCopy(
+                        "登录后，你之前保存的亲人档案、素材库和订阅权限都会重新接回到当前页面。",
+                        "After sign-in, your saved loved-one profiles, media library, and subscription access are restored to this page."
+                    );
             document.getElementById("authSubmitButton").textContent =
-                authMode === "register" ? "创建账号" : "立即登录";
+                authMode === "register" ? pickCopy("创建账号", "Create account") : pickCopy("立即登录", "Sign in");
         }
 
         function openAuthModal(mode = "register") {
@@ -6581,26 +7335,35 @@
                 const button = document.getElementById(`planButton-${code}`);
                 const note = document.getElementById(`planNote-${code}`);
                 const plan = planCatalog.find((item) => item.code === code);
+                const copy = getPlanCopy(code);
                 card.classList.toggle("current", currentPlanCode === code);
                 if (!button || !plan) {
                     return;
                 }
 
                 if (currentPlanCode === code) {
-                    button.textContent = "当前方案";
+                    button.textContent = copy?.currentButton || pickCopy("当前方案", "Current plan");
                     button.disabled = true;
                     if (note) {
-                        note.textContent = "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。";
+                        note.textContent = copy?.currentNote || pickCopy(
+                            "你当前正在使用这个套餐，这里的能力已经实时绑定到账号。",
+                            "You are already using this plan and its abilities are bound to your account."
+                        );
                     }
                     return;
                 }
 
                 button.disabled = false;
-                button.textContent = currentUser ? "立即开通" : "登录后开通";
+                button.textContent = currentUser
+                    ? (copy?.authedButton || pickCopy("立即开通", "Activate now"))
+                    : pickCopy("登录后开通", "Sign in to activate");
                 if (note && !plan.checkout_enabled) {
-                    note.textContent = `${plan.description} 当前还没有配置正式支付密钥，可以先把权限和数据流接好。`;
+                    note.textContent = `${copy?.note || plan.description} ${pickCopy(
+                        "当前还没有配置正式支付密钥，可以先把权限和数据流接好。",
+                        "Live payment keys are not configured yet, so access and data flow can be prepared first."
+                    )}`;
                 } else if (note) {
-                    note.textContent = plan.description;
+                    note.textContent = copy?.note || plan.description;
                 }
             });
         }
@@ -6618,14 +7381,20 @@
             const adminPanel = document.getElementById("adminPanel");
 
             if (!currentUser) {
-                accountTitle.textContent = "当前处于访客模式";
-                accountSubtitle.textContent = "登录后，亲人档案、上传素材和订阅状态都会绑定到你的账号。";
-                billingTitle.textContent = "登录后即可绑定套餐能力";
-                billingText.textContent = "文字 / 语音 / 视频权限会直接绑定到账号与亲人档案，不再只是展示页文案。";
+                accountTitle.textContent = pickCopy("当前处于访客模式", "You are in guest mode");
+                accountSubtitle.textContent = pickCopy(
+                    "登录后，亲人档案、上传素材和订阅状态都会绑定到你的账号。",
+                    "After sign-in, loved-one profiles, uploads, and subscription state are bound to your account."
+                );
+                billingTitle.textContent = pickCopy("登录后即可绑定套餐能力", "Bind plan access after sign-in");
+                billingText.textContent = pickCopy(
+                    "文字 / 语音 / 视频权限会直接绑定到账号与亲人档案，不再只是展示页文案。",
+                    "Text, voice, and video access are bound directly to the account and profile instead of staying as marketing-only copy."
+                );
                 authActionButton.classList.remove("hidden");
-                authActionButton.textContent = "登录 / 注册";
+                authActionButton.textContent = pickCopy("登录 / 注册", "Sign in / Register");
                 billingPrimaryButton.classList.remove("hidden");
-                billingPrimaryButton.textContent = "登录 / 注册";
+                billingPrimaryButton.textContent = pickCopy("登录 / 注册", "Sign in / Register");
                 accountPortalButton.classList.add("hidden");
                 billingPortalButton.classList.add("hidden");
                 logoutActionButton.classList.add("hidden");
@@ -6634,9 +7403,12 @@
                 return;
             }
 
-            accountTitle.textContent = `${currentUser.display_name} · ${currentSubscription?.plan_name || "体验版"}`;
+            accountTitle.textContent = `${currentUser.display_name} · ${getLocalizedPlanName(currentSubscription)}`;
             accountSubtitle.textContent = subscriptionCapabilityLabel();
-            billingTitle.textContent = `当前套餐：${currentSubscription?.plan_name || "体验版"}`;
+            billingTitle.textContent = pickCopy(
+                `当前套餐：${getLocalizedPlanName(currentSubscription)}`,
+                `Current plan: ${getLocalizedPlanName(currentSubscription)}`
+            );
             billingText.textContent = subscriptionCapabilityLabel();
             authActionButton.classList.add("hidden");
             billingPrimaryButton.classList.add("hidden");
@@ -8181,24 +8953,26 @@
                 updateStatusPill(
                     document.getElementById("serviceStatus"),
                     "online",
-                    `念念服务在线 · v${data.version}`
+                    pickCopy(`念念服务在线 · v${data.version}`, `Eterna service online · v${data.version}`)
                 );
                 updateStatusPill(
                     document.getElementById("chatMode"),
                     "online",
-                    activeLovedOne ? `${activeLovedOne.name} 的实时会话` : "API 已连接"
+                    activeLovedOne
+                        ? pickCopy(`${activeLovedOne.name} 的实时会话`, `${activeLovedOne.name}'s live session`)
+                        : pickCopy("API 已连接", "API connected")
                 );
             } catch (error) {
                 serviceOnline = false;
                 updateStatusPill(
                     document.getElementById("serviceStatus"),
                     "demo",
-                    "当前为本地演示模式"
+                    pickCopy("当前为本地演示模式", "Local demo mode")
                 );
                 updateStatusPill(
                     document.getElementById("chatMode"),
                     "demo",
-                    "本地演示会话"
+                    pickCopy("本地演示会话", "Local demo session")
                 );
             } finally {
                 if (activeLovedOne) {
@@ -8210,7 +8984,10 @@
         async function loadStats() {
             if (!currentUser) {
                 document.getElementById("serviceDetail").textContent =
-                    "登录后，每位亲人档案、回忆、素材和套餐权限都会开始长期累积。";
+                    pickCopy(
+                        "登录后，每位亲人档案、回忆、素材和套餐权限都会开始长期累积。",
+                        "After sign-in, every loved-one profile, memory, upload, and plan entitlement starts accumulating long term."
+                    );
                 return;
             }
             try {
@@ -8223,10 +9000,16 @@
                 currentSubscription = stats.subscription || currentSubscription;
                 updateAuthSurface();
                 document.getElementById("serviceDetail").textContent =
-                    `已记录 ${stats.total_loved_ones} 位亲人、${stats.total_memories} 条回忆、${stats.total_messages} 段对话、${stats.total_assets || 0} 份素材。`;
+                    pickCopy(
+                        `已记录 ${stats.total_loved_ones} 位亲人、${stats.total_memories} 条回忆、${stats.total_messages} 段对话、${stats.total_assets || 0} 份素材。`,
+                        `Stored ${stats.total_loved_ones} loved ones, ${stats.total_memories} memories, ${stats.total_messages} conversations, and ${stats.total_assets || 0} assets.`
+                    );
             } catch (error) {
                 document.getElementById("serviceDetail").textContent =
-                    "创建第一位亲人的档案后，纪念数据和对话记录会在这里持续累积。";
+                    pickCopy(
+                        "创建第一位亲人的档案后，纪念数据和对话记录会在这里持续累积。",
+                        "Once the first loved-one profile is created, memorial data and conversation history will keep accumulating here."
+                    );
             }
         }
 
@@ -8316,13 +9099,25 @@
             document.getElementById("chatAvatar").textContent = avatarMap[relationship] || "🕯️";
             document.getElementById("chatSubtitle").textContent =
                 catchphrase
-                    ? `熟悉的话会从这里再次出现，比如：“${catchphrase}”`
-                    : `${twinProfile.completeness_label}，这里会逐渐学会 ${chatName} 最像 ta 的说话方式。`;
-            document.getElementById("chatInput").placeholder = `和${chatName}说说今天发生的事...`;
+                    ? pickCopy(
+                        `熟悉的话会从这里再次出现，比如：“${catchphrase}”`,
+                        `Familiar words can return here again, such as: "${catchphrase}"`
+                    )
+                    : pickCopy(
+                        `${twinProfile.completeness_label}，这里会逐渐学会 ${chatName} 最像 ta 的说话方式。`,
+                        `${chatName}'s model is taking shape here, one memory and one mannerism at a time.`
+                    );
+            document.getElementById("chatInput").placeholder = pickCopy(`和${chatName}说说今天发生的事...`, `Tell ${chatName} what happened today...`);
             document.getElementById("composerHint").textContent =
                 serviceOnline && currentUser && !String(profile.id).startsWith("local-")
-                    ? `当前已绑定 ${chatName} 的真实档案。${subscriptionCapabilityLabel()} ${buildTwinStatusLine(profile)}`
-                    : `当前是 ${chatName} 的本地演示档案。${buildTwinStatusLine(profile)}`;
+                    ? pickCopy(
+                        `当前已绑定 ${chatName} 的真实档案。${subscriptionCapabilityLabel()} ${buildTwinStatusLine(profile)}`,
+                        `${chatName}'s real profile is connected. ${subscriptionCapabilityLabel()} ${buildTwinStatusLine(profile)}`
+                    )
+                    : pickCopy(
+                        `当前是 ${chatName} 的本地演示档案。${buildTwinStatusLine(profile)}`,
+                        `This is ${chatName}'s local demo profile. ${buildTwinStatusLine(profile)}`
+                    );
 
             if (persist) {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
@@ -8338,8 +9133,8 @@
                 document.getElementById("chatMode"),
                 serviceOnline && currentUser && !String(profile.id).startsWith("local-") ? "online" : "demo",
                 serviceOnline && currentUser && !String(profile.id).startsWith("local-")
-                    ? `${chatName} 的实时会话`
-                    : `${chatName} 的演示会话`
+                    ? pickCopy(`${chatName} 的实时会话`, `${chatName}'s live session`)
+                    : pickCopy(`${chatName} 的演示会话`, `${chatName}'s demo session`)
             );
         }
 
@@ -8348,8 +9143,14 @@
             const twin = profile.digital_twin_profile || buildClientTwinProfile(profile);
             document.getElementById("initialMessage").textContent =
                 twin.coverage > 0
-                    ? `${profile.name}会在这里等你。现在已经留住了 ${twin.memory_count || 0} 条回忆、${twin.voice_count} 段语音、${twin.photo_count} 张照片和 ${twin.video_count} 段视频，你每次回来，都可以继续把 ta 补得更完整。`
-                    : `${profile.name}会在这里等你。你每次回来，都可以从一句近况、一段想念，或者一个好消息开始。`;
+                    ? pickCopy(
+                        `${profile.name}会在这里等你。现在已经留住了 ${twin.memory_count || 0} 条回忆、${twin.voice_count} 段语音、${twin.photo_count} 张照片和 ${twin.video_count} 段视频，你每次回来，都可以继续把 ta 补得更完整。`,
+                        `${profile.name} is waiting here. So far the space holds ${twin.memory_count || 0} memories, ${twin.voice_count} voice clips, ${twin.photo_count} photos, and ${twin.video_count} videos. Every return can make the twin more complete.`
+                    )
+                    : pickCopy(
+                        `${profile.name}会在这里等你。你每次回来，都可以从一句近况、一段想念，或者一个好消息开始。`,
+                        `${profile.name} is waiting here. Each return can begin with a small update, a moment of longing, or one piece of good news.`
+                    );
         }
 
         async function createLovedOne() {
@@ -8607,7 +9408,7 @@
 
             const meta = document.createElement("div");
             meta.className = "message-meta";
-            meta.textContent = new Date().toLocaleTimeString("zh-CN", {
+            meta.textContent = new Date().toLocaleTimeString(isEnglish() ? "en-US" : "zh-CN", {
                 hour: "2-digit",
                 minute: "2-digit"
             });
@@ -8627,7 +9428,7 @@
                     <div class="message-content">
                         <span class="typing"><span></span><span></span><span></span></span>
                     </div>
-                    <div class="message-meta">正在回应…</div>
+                    <div class="message-meta">${pickCopy("正在回应…", "Responding...")}</div>
                 </div>
             `;
             container.append(message);
@@ -8636,17 +9437,29 @@
         }
 
         function inferEmotion(message) {
-            if (/(想你|想念|难过|伤心|失眠|哭)/.test(message)) {
+            if (/(想你|想念|难过|伤心|失眠|哭|miss you|grief|sad|cry|can't sleep)/i.test(message)) {
                 return "missing";
             }
-            if (/(谢谢|感激|开心|高兴|好消息)/.test(message)) {
+            if (/(谢谢|感激|开心|高兴|好消息|thank|grateful|happy|good news)/i.test(message)) {
                 return "grateful";
             }
             return "neutral";
         }
 
         function buildDemoReply(message, profile) {
-            const catchphrase = profile.personality_traits?.catchphrase || "我在呢。";
+            const catchphrase = profile.personality_traits?.catchphrase || pickCopy("我在呢。", "I'm here.");
+            if (isEnglish()) {
+                if (/(想你|想念|难过|哭|失眠|伤心|miss you|grief|sad|cry|can't sleep)/i.test(message)) {
+                    return `${catchphrase} I know you are missing me. You do not have to hide the heavy parts. Slow down and say it out loud. I will keep listening.`;
+                }
+                if (/(工作|累|最近|忙|work|tired|busy|lately)/i.test(message)) {
+                    return `${catchphrase} You have been carrying a lot lately. Eat, rest, and tell me about your day for a while. Your heart will loosen when you say it out loud.`;
+                }
+                if (/(好消息|开心|顺利|通过|成功|good news|happy|passed|success)/i.test(message)) {
+                    return `${catchphrase} Hearing that makes me happy too. You have worked hard for this, and I am not surprised it turned out well.`;
+                }
+                return `${catchphrase} I am here. Tell me slowly what happened today, what felt light, what felt heavy, and what you miss.`;
+            }
             if (/(想你|想念|难过|哭|失眠|伤心)/.test(message)) {
                 return `${catchphrase} 我知道你是想我了。难过的时候就慢一点，不用急着把情绪藏起来，我会一直听你说。`;
             }
@@ -8676,30 +9489,3 @@
     </script>
 </body>
 </html>
-        async function resolveLicensedMemorialMusicUrl() {
-            if (resolvedMemorialMusicUrl) {
-                return resolvedMemorialMusicUrl;
-            }
-            if (memorialMusicLookupPromise) {
-                return memorialMusicLookupPromise;
-            }
-            memorialMusicLookupPromise = (async () => {
-                for (const candidate of LICENSED_HOME_MUSIC_CANDIDATES) {
-                    try {
-                        const response = await fetch(candidate, {
-                            method: "HEAD",
-                            cache: "no-store",
-                        });
-                        if (response.ok) {
-                            resolvedMemorialMusicUrl = candidate;
-                            updateMemorialMusicUi("已检测到授权曲目，点击后会优先播放该音频。");
-                            return candidate;
-                        }
-                    } catch (error) {
-                        // ignore and try next candidate
-                    }
-                }
-                return "";
-            })();
-            return memorialMusicLookupPromise;
-        }

@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌸 云思园 — 纪念空间</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(180deg, #fef9f0 0%, #f5ebe0 50%, #e8d5b7 100%);
+            min-height: 100vh;
+            color: #4a3728;
+        }
+
+        /* 顶部导航 */
+        .navbar {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(139, 94, 60, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            color: #8b5e3c;
+            text-decoration: none;
+        }
+
+        .navbar .nav-links a {
+            color: #8b5e3c;
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #d4a574;
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* 纪念头部 */
+        .memorial-header {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .memorial-header .candle {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: flicker 3s ease-in-out infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .memorial-header h1 {
+            font-size: 2.2rem;
+            color: #8b5e3c;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .memorial-header .subtitle {
+            color: #a0845c;
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .memorial-header .dates {
+            color: #b8a08a;
+            font-size: 0.95rem;
+        }
+
+        /* 祝福语 */
+        .blessing {
+            text-align: center;
+            font-style: italic;
+            color: #8b7355;
+            font-size: 1.1rem;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+        }
+
+        /* 区块 */
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 24px rgba(139, 94, 60, 0.08);
+            border: 1px solid rgba(212, 165, 116, 0.15);
+        }
+
+        .section h2 {
+            color: #8b5e3c;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid #f5ebe0;
+        }
+
+        /* 生平简介 */
+        .bio {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .bio .avatar {
+            width: 160px;
+            height: 200px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #f5ebe0, #e8d5b7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+
+        .bio .info {
+            flex: 1;
+        }
+
+        .bio .info p {
+            line-height: 1.8;
+            color: #6b5744;
+        }
+
+        .trait-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .trait-tag {
+            background: #f5ebe0;
+            color: #8b5e3c;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        /* 记忆相册 */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .memory-card {
+            background: #fef9f0;
+            border-radius: 12px;
+            padding: 1.2rem;
+            border-left: 4px solid #d4a574;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(139, 94, 60, 0.12);
+        }
+
+        .memory-card .icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .memory-card h3 {
+            color: #8b5e3c;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .memory-card p {
+            color: #a0845c;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 常说的话 */
+        .quotes {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .quote {
+            background: #fef9f0;
+            padding: 1rem 1.5rem;
+            border-radius: 16px;
+            border: 1px solid #f0e0cc;
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            font-size: 3rem;
+            color: #d4a574;
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .quote p {
+            padding-left: 1.5rem;
+            color: #6b5744;
+            font-style: italic;
+        }
+
+        /* 留言板 */
+        .message-board textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #f0e0cc;
+            border-radius: 12px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .message-board textarea:focus {
+            outline: none;
+            border-color: #d4a574;
+        }
+
+        .message-board button {
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #d4a574, #8b5e3c);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .message-board button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(139, 94, 60, 0.3);
+        }
+
+        /* 献花区域 */
+        .offering {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .offering .flowers {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .offering button {
+            background: none;
+            border: 2px solid #d4a574;
+            color: #8b5e3c;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 0.5rem;
+        }
+
+        .offering button:hover {
+            background: #d4a574;
+            color: white;
+        }
+
+        /* 底部 */
+        .footer {
+            text-align: center;
+            padding: 3rem 0 2rem;
+            color: #b8a08a;
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: #8b5e3c;
+            text-decoration: none;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .bio {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .memorial-header h1 {
+                font-size: 1.8rem;
+            }
+            .memory-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="#" class="logo">🌸 云思园</a>
+        <div class="nav-links">
+            <a href="#bio">生平</a>
+            <a href="#memories">记忆</a>
+            <a href="#quotes">话语</a>
+            <a href="#message">留言</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 纪念头部 -->
+        <div class="memorial-header">
+            <div class="candle">🕯️</div>
+            <h1>张秀兰</h1>
+            <div class="subtitle">亲爱的妈妈 · 1955-2023</div>
+            <div class="dates">四川成都 · 小学教师</div>
+        </div>
+
+        <!-- 祝福语 -->
+        <div class="blessing">
+            "每一份思念，都值得被温柔以待。您从未真正离开，只是换了一种方式陪伴。"
+        </div>
+
+        <!-- 生平简介 -->
+        <div class="section" id="bio">
+            <h2>📖 生平简介</h2>
+            <div class="bio">
+                <div class="avatar">👩</div>
+                <div class="info">
+                    <p>
+                        张秀兰，1955年出生于四川成都，一生从事小学教育工作。
+                        她温柔慈爱，桃李满天下。退休后热心社区事务，是邻里眼中的热心人。
+                    </p>
+                    <p>
+                        她热爱生活，做得一手好川菜，喜欢跳广场舞、养花种草。
+                        她常说："幺儿，吃饭了没？"这句话，是儿女们最温暖的记忆。
+                    </p>
+                    <div class="trait-tags">
+                        <span class="trait-tag">温柔慈爱</span>
+                        <span class="trait-tag">勤劳节俭</span>
+                        <span class="trait-tag">乐观开朗</span>
+                        <span class="trait-tag">热心助人</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 记忆相册 -->
+        <div class="section" id="memories">
+            <h2>📸 记忆相册</h2>
+            <div class="memory-grid">
+                <div class="memory-card">
+                    <div class="icon">🖼️</div>
+                    <h3>2018年春节全家福</h3>
+                    <p>在成都老宅，一家人围坐在一起，笑得合不拢嘴。那是最幸福的一个春节。</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">🎙️</div>
+                    <h3>2022年中秋通话</h3>
+                    <p>电话那头传来熟悉的声音："幺儿啊，中秋节快乐！妈妈给你做了月饼……"</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">📝</div>
+                    <h3>写给儿子的信</h3>
+                    <p>"亲爱的儿子，你在外面要好好照顾自己，不要太累了……爱你的妈妈"</p>
+                </div>
+                <div class="memory-card">
+                    <div class="icon">🎬</div>
+                    <h3>2020年年夜饭</h3>
+                    <p>妈妈在厨房忙碌的身影，端出一盘盘热气腾腾的川菜，满屋飘香。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 常说的话 -->
+        <div class="section" id="quotes">
+            <h2>💬 她常说的话</h2>
+            <div class="quotes">
+                <div class="quote">
+                    <p>"幺儿，吃饭了没？"</p>
+                </div>
+                <div class="quote">
+                    <p>"莫着急，慢慢来。"</p>
+                </div>
+                <div class="quote">
+                    <p>"妈妈给你做了你最爱吃的回锅肉。"</p>
+                </div>
+                <div class="quote">
+                    <p>"好好照顾自己哈。"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 献花 -->
+        <div class="section">
+            <div class="offering">
+                <div class="flowers">🌷🌹💐🌻🌺</div>
+                <p style="color: #a0845c; margin-bottom: 1rem;">献上一束花，寄托您的思念</p>
+                <button onclick="alert('🌸 您已献上一束康乃馨')">🌹 献花</button>
+                <button onclick="alert('🕯️ 您已点燃一支蜡烛')">🕯️ 点烛</button>
+                <button onclick="alert('🙏 您已深深鞠躬')">🙏 鞠躬</button>
+            </div>
+        </div>
+
+        <!-- 留言板 -->
+        <div class="section message-board" id="message">
+            <h2>💌 写给妈妈的话</h2>
+            <textarea placeholder="在这里写下您想对妈妈说的话……"></textarea>
+            <button onclick="alert('💌 您的留言已保存，妈妈一定能看到')">发送思念</button>
+        </div>
+
+        <!-- 底部 -->
+        <div class="footer">
+            <p>🌸 云思园 — 用 AI 技术保存和延续亲人的记忆与声音</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://github.com/MoKangMedical/cloud-memorial">GitHub</a> · 
+                每一份思念，都值得被温柔以待
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 简单的交互效果
+        document.querySelectorAll('.offering button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
