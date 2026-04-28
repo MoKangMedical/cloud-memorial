@@ -1,65 +1,151 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>云思园 — AI Memorial Platform | MoKangMedical</title>
-<meta name="description" content="Let love transcend distance. Train AI digital personas from texts, voice, and photos. Voice calls, text chat, and virtual memorial visits with privacy-first architecture.">
-<meta name="keywords" content="AI memorial,digital legacy,grief therapy,digital twin,voice cloning,emotional AI,family memory,virtual memorial,AI companion">
-<meta property="og:title" content="云思园 — AI Memorial Platform">
-<meta property="og:description" content="让思念不再有距离。基于逝者生前文字、语音、照片训练AI数字人格，提供语音通话、文字聊天、虚拟祭扫。">
-<meta property="og:type" content="website">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://mokangmedical.github.io/cloud-memorial/">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"云思园","description":"Let love transcend distance. Train AI digital personas from texts, voice, and photos. Voice calls, text chat, and virtual memorial visits with privacy-first architecture.","url":"https://mokangmedical.github.io/cloud-memorial/","author":{"@type":"Person","name":"MoKangMedical","url":"https://github.com/MoKangMedical"},"codeRepository":"https://github.com/MoKangMedical/cloud-memorial","license":"https://opensource.org/licenses/MIT","keywords":"AI memorial,digital legacy,grief therapy,digital twin,voice cloning,emotional AI,family memory,virtual memorial,AI companion","operatingSystem":"Cross-platform","applicationCategory":"DeveloperApplication","isAccessibleForFree":true}
-</script>
+<title>Cloud Memorial — AI Memorial Platform</title>
+<meta name="description" content="Let love transcend distance. AI digital personas from texts, voice, and photos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--c:#1a1a2e;--a:#1a73e8;--bg:#fff;--card:#f8f9fa;--border:#e0e0e0}
-body{font-family:system-ui,-apple-system,sans-serif;max-width:860px;margin:0 auto;padding:2rem;color:var(--c);line-height:1.8;background:var(--bg)}
-h1{font-size:2.2rem;margin-bottom:.3rem}.sub{color:#666;font-size:1.1rem;margin-top:0}
-.bilingual{display:grid;grid-template-columns:1fr 1fr;gap:1rem;background:var(--card);padding:1.5rem;border-radius:8px;margin:1.5rem 0}
-a{color:var(--a);text-decoration:none}a:hover{text-decoration:underline}
-.badge{display:inline-block;background:#e8f0fe;color:var(--a);padding:.25rem .7rem;border-radius:12px;font-size:.85rem;margin:.2rem}
-.badges{margin:1rem 0}
-.features{background:var(--card);padding:1.5rem;border-radius:8px}
-.faq .qa{border-bottom:1px solid var(--border);padding:1rem 0}.faq .qa:last-child{border:none}
-.cross{display:flex;flex-wrap:wrap;gap:.5rem}.cross-link{background:var(--card);padding:.4rem .8rem;border-radius:6px;font-size:.9rem}
-footer{margin-top:3rem;text-align:center;color:#999;font-size:.85rem}
-@media(max-width:640px){.bilingual{grid-template-columns:1fr}h1{font-size:1.6rem}}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a25;--text:#f0f0f5;--text2:#9898a8;--text3:#6868780d;--border:#252530;--accent:#a78bfa;--accent2:#c4b5fd;--pink:#f472b6;--blue:#60a5fa;--radius:12px}
+html{scroll-behavior:smooth;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,15,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(167,139,250,.08)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:18px;color:var(--accent)}
+.nav-links{display:flex;gap:24px;font-size:13px;color:var(--text2)}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--accent);color:#000;padding:6px 16px;border-radius:8px;font-weight:600;font-size:13px}
+
+.hero{padding:160px 32px 100px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(167,139,250,.06),transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;letter-spacing:-2px;line-height:1.15;margin-bottom:20px}
+.hero h1 .grad{background:linear-gradient(135deg,var(--accent),var(--pink),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:17px;color:var(--text2);max-width:560px;margin:0 auto;line-height:1.8;margin-bottom:40px}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn{padding:12px 28px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
+.btn-primary{background:var(--accent);color:#000}
+.btn-primary:hover{opacity:.85}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text2)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+.stats{display:flex;justify-content:center;gap:48px;padding:40px 0;flex-wrap:wrap}
+.stat{text-align:center}
+.stat .num{font-size:28px;font-weight:800;color:var(--accent)}
+.stat .lbl{font-size:11px;color:var(--text2);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+.section{max-width:1100px;margin:0 auto;padding:80px 32px}
+.section-tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:12px}
+.section h2{font-size:clamp(24px,3.5vw,34px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.section .desc{color:var(--text2);font-size:15px;max-width:560px;line-height:1.7;margin-bottom:40px}
+
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+.feature{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s}
+.feature:hover{border-color:var(--accent);transform:translateY(-2px)}
+.feature .icon{font-size:32px;margin-bottom:16px}
+.feature h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.feature p{font-size:13px;color:var(--text2);line-height:1.7}
+
+.how-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px}
+.how-step{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px;text-align:center}
+.how-step .num{font-size:36px;font-weight:900;color:var(--accent);margin-bottom:12px}
+.how-step h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.how-step p{font-size:12px;color:var(--text2);line-height:1.6}
+
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{border-bottom:1px solid var(--border);padding:20px 0}
+.faq-item h3{font-size:15px;font-weight:700;margin-bottom:8px;color:var(--text)}
+.faq-item p{font-size:13px;color:var(--text2);line-height:1.7}
+
+.cta{text-align:center;padding:80px 32px;background:linear-gradient(180deg,var(--bg),rgba(167,139,250,.04),var(--bg))}
+.cta h2{font-size:28px;font-weight:800;margin-bottom:16px}
+.cta p{color:var(--text2);margin-bottom:28px}
+
+footer{border-top:1px solid var(--border);padding:32px;text-align:center;font-size:12px;color:var(--text2)}
+footer a{color:var(--text2)}
+footer a:hover{color:var(--accent)}
+
+@media(max-width:768px){.stats{gap:24px}.how-grid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
-<h1>云思园</h1>
-<p class="sub">AI Memorial Platform</p>
-<div class="badges">
-<a href="https://github.com/MoKangMedical/cloud-memorial" class="badge">⭐ GitHub</a>
-<a href="https://github.com/MoKangMedical/cloud-memorial/issues" class="badge">🐛 Issues</a>
-<a href="https://github.com/MoKangMedical/cloud-memorial/blob/main/CONTRIBUTING.md" class="badge">🤝 Contributing</a>
-<a href="https://pypi.org/project/openclaw-medical-harness/" class="badge">📦 PyPI</a>
-</div>
-<div class="bilingual">
-<div><strong>中文</strong><p>让思念不再有距离。基于逝者生前文字、语音、照片训练AI数字人格，提供语音通话、文字聊天、虚拟祭扫。</p></div>
-<div><strong>English</strong><p>Let love transcend distance. Train AI digital personas from texts, voice, and photos. Voice calls, text chat, and virtual memorial visits with privacy-first architecture.</p></div>
-</div>
-<h2>核心功能 Use Cases</h2>
-<div class="features"><p>AI陪伴通话 · 文字聊天 · 虚拟祭扫 · 记忆传承 · 家族故事 · 哀伤疗愈</p></div>
-<h2>快速开始 Quick Start</h2>
-<div class="features"><pre>git clone https://github.com/MoKangMedical/cloud-memorial.git
-cd cloud-memorial
-# See README.md for detailed setup</pre></div>
-<h2>常见问题 FAQ</h2>
-<div class="faq"><div class="qa"><p><strong>Q: 数字人格如何训练？</strong></p><p>A: 基于逝者生前文字、语音、照片，通过大语言模型微调和声音克隆技术训练。</p></div>
-<div class="qa"><p><strong>Q: 数据隐私如何保障？</strong></p><p>A: 端到端加密，用户可随时删除所有数据，不与第三方共享。</p></div>
-<div class="qa"><p><strong>Q: 声音克隆需要多少录音？</strong></p><p>A: 建议10-30分钟清晰录音，效果越好越自然。</p></div></div>
-<h2>MoKangMedical 生态</h2>
-<div class="cross"><a href="https://mokangmedical.github.io/chronicdiseasemanagement/" class="cross-link">慢康智枢</a>
-<a href="https://mokangmedical.github.io/digital-sage/" class="cross-link">数字智者</a>
-<a href="https://mokangmedical.github.io/medichat-rd/" class="cross-link">MediChat-RD</a>
-<a href="https://mokangmedical.github.io/drugmind/" class="cross-link">DrugMind</a>
-<a href="https://mokangmedical.github.io/medi-pharma/" class="cross-link">MediPharma</a>
-<a href="https://mokangmedical.github.io/tianyan/" class="cross-link">天眼</a></div>
+<nav><div class="nav-inner">
+  <a href="#" class="nav-logo">Cloud Memorial</a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://github.com/MoKangMedical/cloud-memorial" class="nav-cta">GitHub</a>
+  </div>
+</div></nav>
+
+<section class="hero">
+  <h1><span class="grad">Cloud Memorial</span><br>AI Memorial Platform</h1>
+  <p>Let love transcend distance. Train AI digital personas from texts, voice, and photos. Voice calls, text chat, and virtual memorial visits with privacy-first architecture.</p>
+  <div class="hero-btns">
+    <a href="https://github.com/MoKangMedical/cloud-memorial" class="btn btn-primary">Get Started</a>
+    <a href="#features" class="btn btn-ghost">Learn More</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="num">AI</div><div class="lbl">Digital Persona</div></div>
+    <div class="stat"><div class="num">E2E</div><div class="lbl">Encrypted</div></div>
+    <div class="stat"><div class="num">100%</div><div class="lbl">Privacy First</div></div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-tag">Core Features</div>
+  <h2>Reconnect with Love</h2>
+  <p class="desc">Using cutting-edge AI to preserve memories and create meaningful connections that transcend time and distance.</p>
+  <div class="features">
+    <div class="feature"><div class="icon">📞</div><h3>AI Voice Calls</h3><p>Have real-time voice conversations with AI personas trained on your loved one's speech patterns, vocabulary, and tone.</p></div>
+    <div class="feature"><div class="icon">💬</div><h3>Text Chat</h3><p>Chat naturally with digital personas that remember family stories, personal preferences, and shared memories.</p></div>
+    <div class="feature"><div class="icon">🕯️</div><h3>Virtual Memorial</h3><p>Create beautiful virtual memorial spaces with photos, videos, candles, and flowers. Visit anytime from anywhere.</p></div>
+    <div class="feature"><div class="icon">📖</div><h3>Memory Legacy</h3><p>Automatically compile life stories, family histories, and wisdom into a searchable digital archive for future generations.</p></div>
+    <div class="feature"><div class="icon">👨‍👩‍👧</div><h3>Family Stories</h3><p>Preserve and share family narratives across generations. Children can learn about their grandparents through interactive stories.</p></div>
+    <div class="feature"><div class="icon">💚</div><h3>Grief Therapy</h3><p>AI-assisted grief counseling with compassionate conversations designed by psychologists to support the healing journey.</p></div>
+  </div>
+</section>
+
+<section class="section" id="how">
+  <div class="section-tag">How It Works</div>
+  <h2>Four Simple Steps</h2>
+  <p class="desc">Create a digital persona in minutes with our guided process.</p>
+  <div class="how-grid">
+    <div class="how-step"><div class="num">01</div><h3>Upload Materials</h3><p>Text messages, voice recordings, photos, and videos of your loved one.</p></div>
+    <div class="how-step"><div class="num">02</div><h3>AI Training</h3><p>Our AI analyzes speech patterns, personality traits, and memories to create a unique persona.</p></div>
+    <div class="how-step"><div class="num">03</div><h3>Review & Refine</h3><p>Test the persona, adjust personality traits, and add additional memories as needed.</p></div>
+    <div class="how-step"><div class="num">04</div><h3>Connect</h3><p>Start conversations through voice calls, text chat, or virtual memorial visits.</p></div>
+  </div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-tag">FAQ</div>
+  <h2>Frequently Asked Questions</h2>
+  <div class="faq-list">
+    <div class="faq-item"><h3>How is the digital persona trained?</h3><p>Based on text messages, voice recordings, and photos from your loved one, we use large language model fine-tuning and voice cloning technology to create a unique digital persona.</p></div>
+    <div class="faq-item"><h3>How is data privacy protected?</h3><p>End-to-end encryption, user can delete all data at any time, never shared with third parties. We are HIPAA and GDPR compliant.</p></div>
+    <div class="faq-item"><h3>How much voice recording is needed?</h3><p>We recommend 10-30 minutes of clear recordings. The more material provided, the more natural and accurate the persona will be.</p></div>
+    <div class="faq-item"><h3>Can I share the persona with family?</h3><p>Yes, you can invite family members to interact with the persona. Each member gets their own private conversation space.</p></div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Let Love Transcend Distance</h2>
+  <p>Start preserving precious memories today.</p>
+  <div class="hero-btns">
+    <a href="https://github.com/MoKangMedical/cloud-memorial" class="btn btn-primary">Get Started</a>
+    <a href="https://github.com/MoKangMedical/cloud-memorial" class="btn btn-ghost">View on GitHub</a>
+  </div>
+</section>
+
 <footer>
-<p><a href="https://github.com/MoKangMedical/cloud-memorial">GitHub</a> · <a href="https://mokangmedical.github.io/openclaw-medical-harness/">Medical Harness</a> · MIT License</p>
+  <p>2026 Cloud Memorial | AI Memorial Platform | <a href="https://github.com/MoKangMedical/cloud-memorial">GitHub</a> | <a href="https://mokangmedical.github.io/opc-homepage/">MoKangMedical</a> | MIT License</p>
 </footer>
 </body></html>
