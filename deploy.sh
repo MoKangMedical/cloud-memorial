@@ -1,8 +1,19 @@
-#!/bin/bash
-# 念念 Eterna 一键部署脚本
-PORT=${1:-8097}
-echo "💭 念念 Eterna 部署中..."
-cd "$(dirname "$0")"
-python3 -c "import fastapi" 2>/dev/null || pip3 install fastapi uvicorn
-echo "✅ 念念已启动: http://localhost:$PORT"
-echo "   用你的原始启动命令替换此脚本的实际启动部分"
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "========================================="
+echo "  念念 Eterna - 部署脚本"
+echo "========================================="
+
+# Build Docker image
+echo "Building Docker image..."
+docker build -t eterna-cloud-memorial .
+
+# Run with docker-compose
+echo "Starting services..."
+docker-compose up -d
+
+echo ""
+echo "Deployed! Open http://localhost:8102"
+echo "Check logs: docker-compose logs -f"
+echo "Stop: docker-compose down"
