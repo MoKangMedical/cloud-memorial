@@ -1,0 +1,104 @@
+{
+  "flower_types": [
+    {
+      "id": "chrysanthemum_white",
+      "name": "白菊花",
+      "symbol": "🌼",
+      "color": "white",
+      "description": "高洁、哀悼，表达深深的敬意",
+      "meaning": "高洁、哀悼、思念",
+      "wither_days": 7,
+      "price": 0
+    },
+    {
+      "id": "chrysanthemum_yellow",
+      "name": "黄菊花",
+      "symbol": "🌻",
+      "color": "yellow",
+      "description": "思念与怀念，温暖的纪念",
+      "meaning": "思念、怀念、感恩",
+      "wither_days": 7,
+      "price": 0
+    },
+    {
+      "id": "lily_white",
+      "name": "白百合",
+      "symbol": "🤍",
+      "color": "white",
+      "description": "纯洁庄严，象征灵魂的纯净",
+      "meaning": "纯洁、庄严、神圣",
+      "wither_days": 10,
+      "price": 0
+    },
+    {
+      "id": "rose_white",
+      "name": "白玫瑰",
+      "symbol": "🌹",
+      "color": "white",
+      "description": "尊敬与纯洁的爱",
+      "meaning": "尊敬、纯洁、真爱",
+      "wither_days": 7,
+      "price": 0
+    },
+    {
+      "id": "carnation_pink",
+      "name": "粉色康乃馨",
+      "symbol": "🌸",
+      "color": "pink",
+      "description": "母爱与感恩的象征",
+      "meaning": "母爱、感恩、温暖",
+      "wither_days": 10,
+      "price": 0
+    },
+    {
+      "id": "forgetmenot",
+      "name": "勿忘我",
+      "symbol": "💜",
+      "color": "blue",
+      "description": "永恒的记忆，永不忘记",
+      "meaning": "永恒的记忆、真挚的爱",
+      "wither_days": 14,
+      "price": 0
+    },
+    {
+      "id": "babybreath",
+      "name": "满天星",
+      "symbol": "🤍",
+      "color": "white",
+      "description": "思念与关怀，默默的陪伴",
+      "meaning": "思念、关怀、纯洁",
+      "wither_days": 14,
+      "price": 0
+    },
+    {
+      "id": "calla_lily",
+      "name": "马蹄莲",
+      "symbol": "🤍",
+      "color": "white",
+      "description": "永恒与优雅",
+      "meaning": "永恒、优雅、尊贵",
+      "wither_days": 10,
+      "price": 0
+    },
+    {
+      "id": "orchid",
+      "name": "兰花",
+      "symbol": "🪻",
+      "color": "purple",
+      "description": "高雅脱俗，品格高尚",
+      "meaning": "高雅、淡泊、君子",
+      "wither_days": 14,
+      "price": 0
+    },
+    {
+      "id": "artificial_lotus",
+      "name": "仿真莲花",
+      "symbol": "🪷",
+      "color": "pink",
+      "description": "永不凋谢的莲花，永恒的祝福",
+      "meaning": "永恒、祝福、安宁",
+      "wither_days": 0,
+      "price": 0
+    }
+  ]
+}

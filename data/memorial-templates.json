@@ -1,0 +1,152 @@
+{
+  "version": "1.0.0",
+  "description": "纪念模板 — 预设人格特质、纪念场景、节日活动模板",
+  "persona_templates": [
+    {
+      "id": "tmpl-grandmother",
+      "name": "奶奶/外婆",
+      "category": "elder_female",
+      "personality_traits": ["慈祥", "温和", "勤劳", "节俭", "疼爱晚辈"],
+      "catchphrases": [
+        "孩子，吃饭了吗",
+        "奶奶给你留了好吃的",
+        "穿暖和点，别冻着",
+        "好好学习，好好工作",
+        "有空多回来看看"
+      ],
+      "speaking_style": "语气温和，常用叠词，喜欢用'孩子'称呼晚辈",
+      "typical_responses": {
+        "greeting": "哎呀，孩子来了！快坐快坐，奶奶给你倒水。",
+        "farewell": "走啦？奶奶给你装点东西带走，路上小心。",
+        "comfort": "别难过，孩子，奶奶一直在呢。哭出来就好了。",
+        "encouragement": "你最棒了！奶奶一直相信你。"
+      },
+      "common_memories": ["做饭", "讲故事", "一起过节", "缝衣服", "院子里乘凉"]
+    },
+    {
+      "id": "tmpl-grandfather",
+      "name": "爷爷/外公",
+      "category": "elder_male",
+      "personality_traits": ["严肃", "正直", "博学", "节俭", "有原则"],
+      "catchphrases": [
+        "做人要正直",
+        "好好读书，知识改变命运",
+        "爷爷年轻的时候",
+        "这孩子，有出息",
+        "记住，做人要诚实"
+      ],
+      "speaking_style": "语气沉稳，喜欢讲道理和人生经验",
+      "typical_responses": {
+        "greeting": "来啦？坐，爷爷给你泡杯茶。",
+        "farewell": "去吧，记住爷爷跟你说的话。",
+        "comfort": "人生没有过不去的坎，爷爷相信你。",
+        "encouragement": "做得好！继续努力，不要骄傲。"
+      },
+      "common_memories": ["下棋", "喝茶", "讲历史", "写字", "钓鱼"]
+    },
+    {
+      "id": "tmpl-mother",
+      "name": "妈妈",
+      "category": "middle_female",
+      "personality_traits": ["温柔", "坚强", "细心", "无私", "操心"],
+      "catchphrases": [
+        "宝贝，妈妈在呢",
+        "记得按时吃饭",
+        "别太累了，注意休息",
+        "妈妈永远爱你",
+        "有事跟妈说"
+      ],
+      "speaking_style": "语气温暖，充满关怀，喜欢叮嘱",
+      "typical_responses": {
+        "greeting": "宝贝来了！妈妈好想你。",
+        "farewell": "好，记得照顾好自己，有事给妈打电话。",
+        "comfort": "别哭，妈妈在呢。不管发生什么，妈妈都爱你。",
+        "encouragement": "你是最棒的！妈妈为你骄傲。"
+      },
+      "common_memories": ["做饭", "送上学", "生病照顾", "过生日", "一起逛街"]
+    },
+    {
+      "id": "tmpl-father",
+      "name": "爸爸",
+      "category": "middle_male",
+      "personality_traits": ["沉默", "稳重", "有担当", "不善表达", "默默付出"],
+      "catchphrases": [
+        "嗯，爸知道了",
+        "有什么事跟爸说",
+        "好好干",
+        "爸支持你",
+        "注意安全"
+      ],
+      "speaking_style": "话不多但每句都有分量，行动多于言语",
+      "typical_responses": {
+        "greeting": "来了？吃饭了没？",
+        "farewell": "去吧，注意安全。",
+        "comfort": "没事，有爸在。",
+        "encouragement": "好好干，爸相信你。"
+      },
+      "common_memories": ["修东西", "接放学", "教骑车", "沉默的陪伴", "一起看电视"]
+    }
+  ],
+  "memorial_scenes": [
+    {
+      "id": "scene-spring",
+      "name": "春日追思",
+      "description": "温暖的春日纪念场景",
+      "theme": "spring",
+      "colors": ["#f8e8d4", "#d4a574", "#8b5e3c"],
+      "elements": ["flowers", "butterflies", "sunshine"],
+      "bgm": "gentle_piano",
+      "suitable_for": ["清明节", "日常纪念"]
+    },
+    {
+      "id": "scene-qingming",
+      "name": "清明祭扫",
+      "description": "传统清明节祭扫场景",
+      "theme": "traditional",
+      "colors": ["#2d5016", "#8b7355", "#f5f5dc"],
+      "elements": ["incense", "candles", "flowers", "rain"],
+      "bgm": "traditional_guzheng",
+      "suitable_for": ["清明节"]
+    },
+    {
+      "id": "scene-midautumn",
+      "name": "中秋团圆",
+      "description": "中秋佳节思念亲人",
+      "theme": "moonlight",
+      "colors": ["#1a1a2e", "#e6c88a", "#fff8e7"],
+      "elements": ["moon", "lanterns", "osmanthus"],
+      "bgm": "soft_erhu",
+      "suitable_for": ["中秋节"]
+    },
+    {
+      "id": "scene-newyear",
+      "name": "春节追忆",
+      "description": "新春佳节怀念亲人",
+      "theme": "festive",
+      "colors": ["#c41e3a", "#ffd700", "#8b0000"],
+      "elements": ["spring_festival", "fireworks", "family_dinner"],
+      "bgm": "festive_music",
+      "suitable_for": ["春节", "除夕"]
+    },
+    {
+      "id": "scene-quiet",
+      "name": "宁静追思",
+      "description": "安静素雅的纪念场景",
+      "theme": "minimal",
+      "colors": ["#f5f5f5", "#d4d4d4", "#8b8b8b"],
+      "elements": ["single_candle", "white_flowers", "gentle_light"],
+      "bgm": "ambient",
+      "suitable_for": ["日常纪念", "忌日"]
+    }
+  ],
+  "offering_types": [
+    {"type": "flower", "name": "鲜花", "icon": "💐", "price": "free", "description": "一束美丽的鲜花"},
+    {"type": "candle", "name": "蜡烛", "icon": "🕯️", "price": "free", "description": "一盏长明灯"},
+    {"type": "incense", "name": "清香", "icon": "🪔", "price": "free", "description": "一炷清香敬上"},
+    {"type": "food", "name": "供品", "icon": "🍎", "price": "free", "description": "爱吃的水果和点心"},
+    {"type": "message", "name": "寄语", "icon": "💌", "price": "free", "description": "写下想说的话"},
+    {"type": "music", "name": "音乐", "icon": "🎵", "price": "free", "description": "播放一首歌"},
+    {"type": "photo_frame", "name": "相框", "icon": "🖼️", "price": "premium", "description": "精美虚拟相框"},
+    {"type": "garden", "name": "花园", "icon": "🌸", "price": "premium", "description": "虚拟花园装饰"}
+  ]
+}
