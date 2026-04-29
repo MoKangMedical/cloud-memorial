@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eterna -- AI Memorial Platform</title>
+<meta name="description" content="Eterna is an AI-driven platform for preserving and continuing the memories of loved ones. Digital memorials, voice cloning, and AI conversations.">
+<meta name="keywords" content="Eterna, AI memorial, digital memorial, memory preservation, voice cloning, remembrance">
+<meta name="author" content="MoKangMedical">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mokangmedical.github.io/cloud-memorial/">
+<meta property="og:title" content="Eterna -- AI Memorial Platform">
+<meta property="og:description" content="Preserve the memories and voices of loved ones with AI. Let love transcend time.">
+<meta name="theme-color" content="#050508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050508;--bg2:#0c0c14;--bg3:#13131e;--bg4:#1a1a2a;--text:#e8e6f0;--text2:#9896a8;--text3:#5c5a6e;--border:#1e1e30;--accent:#6366f1;--accent2:#818cf8;--accent3:#4f46e5;--warm:#a78bfa;--soft:#c4b5fd;--radius:12px}
+html{scroll-behavior:smooth;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+
+/* Nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,.08)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:18px;letter-spacing:1px;color:var(--soft)}
+.nav-links{display:flex;gap:28px;font-size:13px;font-weight:500;color:var(--text3)}
+.nav-links a:hover,.nav-links a.active{color:var(--accent2)}
+.nav-cta{background:var(--accent);color:#fff;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;transition:all .2s}
+.nav-cta:hover{background:var(--accent3)}
+.mobile-menu{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.mobile-menu span{width:20px;height:2px;background:var(--text);transition:.2s}
+
+/* Hero */
+.hero{padding:140px 32px 80px;text-align:center;position:relative;overflow:hidden;min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(99,102,241,.05) 0%,transparent 60%);pointer-events:none}
+.hero-particles{position:absolute;inset:0;pointer-events:none}
+.particle{position:absolute;width:2px;height:2px;background:var(--accent);border-radius:50%;opacity:.25;animation:float 8s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) translateX(0);opacity:.25}50%{transform:translateY(-80px) translateX(20px);opacity:.5}}
+.hero>*{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;padding:6px 18px;border-radius:20px;background:rgba(99,102,241,.08);color:var(--accent2);border:1px solid rgba(99,102,241,.12);margin-bottom:28px}
+.hero h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-1px;line-height:1.15;max-width:640px;margin:0 auto 24px}
+.hero h1 .accent{background:linear-gradient(135deg,var(--accent),var(--warm));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:17px;color:var(--text2);max-width:500px;margin:0 auto 16px;line-height:1.7}
+.hero-sub{font-size:13px;color:var(--text3);max-width:420px;margin:0 auto 40px;line-height:1.6}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+
+/* Buttons */
+.btn-primary{background:var(--accent);color:#fff;padding:14px 32px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.btn-primary:hover{background:var(--accent3);transform:translateY(-1px);box-shadow:0 8px 30px rgba(99,102,241,.25)}
+.btn-secondary{background:var(--bg3);border:1px solid var(--border);color:var(--text);padding:14px 32px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s;cursor:pointer;font-family:inherit}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent2)}
+
+/* Stats */
+.stats-bar{display:flex;justify-content:center;gap:56px;flex-wrap:wrap;padding:32px 0;border-top:1px solid var(--border);margin-top:32px}
+.stat{text-align:center}
+.stat .num{font-size:32px;font-weight:800;color:var(--accent2)}
+.stat .label{font-size:11px;color:var(--text3);margin-top:4px;letter-spacing:1px;text-transform:uppercase}
+
+/* Section */
+.section{max-width:1100px;margin:0 auto;padding:80px 32px}
+.section-header{text-align:center;margin-bottom:56px}
+.section-header .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;padding:5px 16px;border-radius:6px;margin-bottom:16px;background:rgba(99,102,241,.08);color:var(--accent2);border:1px solid rgba(99,102,241,.12)}
+.section-header h2{font-size:clamp(24px,3vw,36px);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+.section-header p{font-size:14px;color:var(--text2);max-width:460px;margin:0 auto;line-height:1.7}
+
+/* Features */
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;transition:all .35s;position:relative;overflow:hidden}
+.feature-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .35s}
+.feature-card:hover{border-color:rgba(99,102,241,.2);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.feature-card:hover::before{opacity:1}
+.feature-icon{width:44px;height:44px;border-radius:10px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.15);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.feature-icon svg{width:20px;height:20px;color:var(--accent2)}
+.feature-card h3{font-size:16px;font-weight:700;margin-bottom:10px}
+.feature-card p{font-size:13px;color:var(--text2);line-height:1.7}
+
+/* Workflow */
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step{text-align:center;padding:28px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);transition:all .3s}
+.step:hover{border-color:rgba(99,102,241,.2);transform:translateY(-2px)}
+.step-num{font-size:28px;font-weight:800;color:var(--accent2);opacity:.4;margin-bottom:12px}
+.step h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.step p{font-size:12px;color:var(--text3);line-height:1.6}
+
+/* Memorial Stats Chart */
+.stats-section{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px}
+.stats-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+.stats-header h3{font-size:18px;font-weight:700}
+.chart-wrap{position:relative;height:280px}
+
+/* Pricing */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.price-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;position:relative;transition:all .3s}
+.price-card:hover{border-color:rgba(99,102,241,.2);transform:translateY(-2px)}
+.price-card.featured{border-color:var(--accent);box-shadow:0 0 40px rgba(99,102,241,.08)}
+.price-card.featured::before{content:'RECOMMENDED';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;font-size:10px;font-weight:700;padding:3px 12px;border-radius:6px;letter-spacing:1px}
+.price-tier{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text3);margin-bottom:8px}
+.price-amount{font-size:40px;font-weight:800;margin-bottom:4px}
+.price-amount .currency{font-size:16px;font-weight:500;color:var(--text3)}
+.price-period{font-size:12px;color:var(--text3);margin-bottom:20px}
+.price-features{list-style:none;text-align:left;margin-bottom:24px}
+.price-features li{font-size:13px;color:var(--text2);padding:8px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.price-features li svg{width:14px;height:14px;color:var(--accent2);flex-shrink:0}
+.price-btn{display:block;width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:600;text-align:center;cursor:pointer;font-family:inherit;transition:all .2s}
+.price-btn.primary{background:var(--accent);color:#fff;border:none}
+.price-btn.primary:hover{background:var(--accent3)}
+.price-btn.secondary{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-btn.secondary:hover{border-color:var(--accent);color:var(--accent2)}
+
+/* Testimonial */
+.testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.testimonial{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;transition:all .3s}
+.testimonial:hover{border-color:rgba(99,102,241,.15)}
+.testimonial p{font-size:14px;color:var(--text2);line-height:1.8;font-style:italic;margin-bottom:16px}
+.testimonial .author{display:flex;align-items:center;gap:12px}
+.testimonial .avatar{width:36px;height:36px;border-radius:50%;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--accent2)}
+.testimonial .author-info h4{font-size:13px;font-weight:600}
+.testimonial .author-info span{font-size:11px;color:var(--text3)}
+
+/* CTA */
+.cta{text-align:center;padding:100px 32px;position:relative}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(99,102,241,.05) 0%,transparent 60%);pointer-events:none}
+.cta>*{position:relative;z-index:1}
+.cta h2{font-size:clamp(24px,3vw,36px);font-weight:800;margin-bottom:16px}
+.cta p{font-size:14px;color:var(--text2);max-width:420px;margin:0 auto 28px;line-height:1.7}
+
+/* Footer */
+footer{border-top:1px solid var(--border);padding:48px 32px;text-align:center}
+footer p{font-size:12px;color:var(--text3)}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:16px;font-size:12px;color:var(--text3)}
+.footer-links a:hover{color:var(--accent2)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mobile-menu{display:flex}
+  .hero{padding:100px 20px 60px;min-height:auto}
+  .stats-bar{gap:24px}
+  .workflow{grid-template-columns:1fr 1fr}
+  .features-grid{grid-template-columns:1fr}
+  .pricing-grid{grid-template-columns:1fr}
+  .testimonials{grid-template-columns:1fr}
+  .chart-wrap{height:220px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <a href="index.html" class="nav-logo">Eterna</a>
+  <div class="nav-links">
+    <a href="index.html" class="active">Home</a>
+    <a href="gallery.html">Gallery</a>
+  </div>
+  <div class="mobile-menu" onclick="document.querySelector('.nav-links').classList.toggle('show-mobile')">
+    <span></span><span></span><span></span>
+  </div>
+  <a href="#pricing" class="nav-cta">Get Started</a>
+</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-badge">AI-Powered Memorial Platform</div>
+  <h1>Let Love Transcend<br><span class="accent">Time and Space</span></h1>
+  <p>Preserve the memories, voices, and stories of your loved ones with AI. Create a living memorial that grows with each shared memory.</p>
+  <div class="hero-sub">Eterna uses advanced AI to learn from photos, voice recordings, and written memories to create a warm digital companion.</div>
+  <div class="hero-actions">
+    <a href="#features" class="btn-primary">Learn More</a>
+    <a href="gallery.html" class="btn-secondary">View Gallery</a>
+  </div>
+  <div class="stats-bar">
+    <div class="stat"><div class="num">AI</div><div class="label">Digital Companion</div></div>
+    <div class="stat"><div class="num">Voice</div><div class="label">Voice Cloning</div></div>
+    <div class="stat"><div class="num">Chat</div><div class="label">Smart Dialogue</div></div>
+    <div class="stat"><div class="num">Forever</div><div class="label">Memory Storage</div></div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="section-header">
+    <div class="tag">Core Features</div>
+    <h2>Technology That Preserves Love</h2>
+    <p>From memory collection to AI companionship, we use the warmest approach to preserve the most precious things.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+      <h3>Memory Collection</h3>
+      <p>Upload text, photos, voice recordings, and videos. AI automatically organizes and analyzes them to build a complete digital memory archive.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
+      <h3>Voice Cloning</h3>
+      <p>With just a few voice samples, AI learns and clones your loved one's voice. Hear them speak again, reading words you want to hear.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <h3>AI Conversation</h3>
+      <p>Based on your loved one's language patterns and memories, we create a warm AI companion. Share your day, hear their response.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+      <h3>Virtual Memorial</h3>
+      <p>Create virtual memorial spaces with photos, candles, and flowers. On special days, come together to remember and honor.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+      <h3>Privacy Protection</h3>
+      <p>All data is end-to-end encrypted, strictly following GDPR and data protection laws. Your memories belong only to you.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <h3>Family Sharing</h3>
+      <p>Invite family members to contribute memories together. Support multi-role permission management for collaborative remembrance.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div class="tag">How It Works</div>
+    <h2>Four Steps to Lasting Memory</h2>
+  </div>
+  <div class="workflow">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Upload</h3>
+      <p>Text, photos, voice, video -- any format is welcome</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>AI Learning</h3>
+      <p>AI analyzes language style, voice features, and memories</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Create Companion</h3>
+      <p>Generate an AI companion with your loved one's traits</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Warm Companionship</h3>
+      <p>Converse anytime, bridging the distance of longing</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="stats-section">
+    <div class="stats-header">
+      <h3>Platform Growth</h3>
+      <div style="font-size:12px;color:var(--text3)">Data from the past 12 months</div>
+    </div>
+    <div class="chart-wrap"><canvas id="growthChart"></canvas></div>
+  </div>
+</section>
+
+<section class="section" id="testimonials">
+  <div class="section-header">
+    <div class="tag">Stories</div>
+    <h2>Every Memory Deserves to Live On</h2>
+    <p>How Eterna has helped families stay connected with those they love.</p>
+  </div>
+  <div class="testimonials">
+    <div class="testimonial">
+      <p>"I used Eterna to record my grandmother's stories. Now my children can hear her voice telling them bedtime stories. It brings tears of joy every time."</p>
+      <div class="author">
+        <div class="avatar">L</div>
+        <div class="author-info"><h4>L. Chen</h4><span>Granddaughter, Shanghai</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>"After my father passed, I came here every day to talk to him. The AI captured his way of speaking so accurately. It helped me through the hardest time."</p>
+      <div class="author">
+        <div class="avatar">M</div>
+        <div class="author-info"><h4>M. Wang</h4><span>Son, Beijing</span></div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p>"Living abroad, I uploaded my mother's voice messages. Now whenever I miss home, I can hear her reading my letters back to me. It means everything."</p>
+      <div class="author">
+        <div class="avatar">J</div>
+        <div class="author-info"><h4>J. Liu</h4><span>Daughter, Toronto</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pricing">
+  <div class="section-header">
+    <div class="tag">Pricing</div>
+    <h2>A Place for Every Memory</h2>
+    <p>We believe preserving memories should have no barriers.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-tier">Basic</div>
+      <div class="price-amount"><span class="currency">$</span>0</div>
+      <div class="price-period">Forever Free</div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 1 Digital Companion</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 100MB Memory Storage</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Basic Conversation</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Text Memorial Space</li>
+      </ul>
+      <a href="#" class="price-btn secondary">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tier">Warmth</div>
+      <div class="price-amount"><span class="currency">$</span>9</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3 Digital Companions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 10GB Memory Storage</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Voice Cloning</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Virtual Memorial Space</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Family Sharing (5)</li>
+      </ul>
+      <a href="#" class="price-btn primary">Subscribe</a>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Eternal</div>
+      <div class="price-amount"><span class="currency">$</span>29</div>
+      <div class="price-period">per month</div>
+      <ul class="price-features">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited Companions</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 100GB Memory Storage</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Advanced Voice Cloning</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3D Memorial Space</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Unlimited Family Members</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Priority Support</li>
+      </ul>
+      <a href="#" class="price-btn secondary">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Let Love Endure Beyond Time</h2>
+  <p>Every memory deserves to be preserved with care. Begin saving your precious memories today.</p>
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+    <a href="#" class="btn-primary">Get Started Free</a>
+    <a href="gallery.html" class="btn-secondary">View Gallery</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="https://github.com/MoKangMedical/cloud-memorial" target="_blank">GitHub</a>
+  </div>
+  <p>2026 MoKangMedical. Eterna -- AI Memorial Platform.</p>
+</footer>
+
+<style>
+@media(max-width:768px){.nav-links.show-mobile{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:rgba(5,5,8,.98);padding:20px 32px;gap:16px;border-bottom:1px solid var(--border)}}
+</style>
+
+<script>
+// Particles
+const container=document.getElementById('particles');
+for(let i=0;i<25;i++){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.style.left=Math.random()*100+'%';
+  p.style.top=Math.random()*100+'%';
+  p.style.animationDelay=Math.random()*8+'s';
+  p.style.animationDuration=(6+Math.random()*6)+'s';
+  container.appendChild(p);
+}
+
+// Growth Chart
+const gCtx=document.getElementById('growthChart').getContext('2d');
+new Chart(gCtx,{
+  type:'line',
+  data:{
+    labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    datasets:[
+      {
+        label:'Memories Preserved',
+        data:[120,210,380,520,710,950,1200,1580,1920,2400,2850,3400],
+        borderColor:'#6366f1',
+        backgroundColor:'rgba(99,102,241,.08)',
+        fill:true,
+        tension:.4,
+        pointRadius:4,
+        pointBackgroundColor:'#6366f1',
+        pointBorderColor:'#050508',
+        pointBorderWidth:2
+      },
+      {
+        label:'Active Families',
+        data:[50,95,160,280,420,580,750,920,1100,1350,1620,1900],
+        borderColor:'#a78bfa',
+        backgroundColor:'rgba(167,139,250,.06)',
+        fill:true,
+        tension:.4,
+        pointRadius:4,
+        pointBackgroundColor:'#a78bfa',
+        pointBorderColor:'#050508',
+        pointBorderWidth:2
+      }
+    ]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    plugins:{
+      legend:{display:true,position:'top',labels:{color:'#9896a8',font:{size:11,family:'Inter'},boxWidth:12,padding:16}},
+      tooltip:{backgroundColor:'#13131e',borderColor:'#1e1e30',borderWidth:1,titleColor:'#e8e6f0',bodyColor:'#9896a8',padding:12,cornerRadius:8}
+    },
+    scales:{
+      x:{grid:{color:'rgba(30,30,48,.4)'},ticks:{color:'#5c5a6e',font:{size:11}}},
+      y:{grid:{color:'rgba(30,30,48,.4)'},ticks:{color:'#5c5a6e',font:{size:11}}}
+    }
+  }
+});
+</script>
+
+</body>
+</html>

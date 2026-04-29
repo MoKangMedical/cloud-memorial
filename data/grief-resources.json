@@ -1,0 +1,134 @@
+{
+  "resources": [
+    {
+      "id": "article_1",
+      "category": "文章",
+      "title": "如何面对亲人的离世",
+      "description": "理解哀伤的五个阶段，学会与失去共处",
+      "url": "https://example.com/grief-stages",
+      "tags": ["哀伤", "心理", "入门"]
+    },
+    {
+      "id": "article_2",
+      "category": "文章",
+      "title": "孩子如何理解死亡",
+      "description": "帮助不同年龄段的孩子理解亲人离世",
+      "url": "https://example.com/children-grief",
+      "tags": ["儿童", "家庭", "教育"]
+    },
+    {
+      "id": "article_3",
+      "category": "文章",
+      "title": "丧亲后的第一年",
+      "description": "如何度过丧亲后的第一个年头",
+      "url": "https://example.com/first-year",
+      "tags": ["哀伤", "时间", "恢复"]
+    },
+    {
+      "id": "book_1",
+      "category": "书籍",
+      "title": "《最好的告别》",
+      "author": "阿图·葛文德",
+      "description": "关于衰老与死亡的深刻思考",
+      "tags": ["书籍", "生死", "思考"]
+    },
+    {
+      "id": "book_2",
+      "category": "书籍",
+      "title": "《当呼吸化为空气》",
+      "author": "保罗·卡拉尼什",
+      "description": "一位医生面对自己死亡的生命记录",
+      "tags": ["书籍", "生命", "感悟"]
+    },
+    {
+      "id": "hotline_1",
+      "category": "热线",
+      "title": "全国心理援助热线",
+      "phone": "400-161-9995",
+      "description": "24小时心理危机干预热线",
+      "tags": ["热线", "危机", "24小时"]
+    },
+    {
+      "id": "hotline_2",
+      "category": "热线",
+      "title": "北京心理危机研究与干预中心",
+      "phone": "010-82951332",
+      "description": "专业心理危机干预",
+      "tags": ["热线", "专业", "北京"]
+    },
+    {
+      "id": "hotline_3",
+      "category": "热线",
+      "title": "希望24热线",
+      "phone": "400-161-9995",
+      "description": "生命热线，倾听你的声音",
+      "tags": ["热线", "倾听", "希望"]
+    },
+    {
+      "id": "video_1",
+      "category": "视频",
+      "title": "TED: 如何帮助丧亲的朋友",
+      "description": "学会用正确的方式陪伴悲伤的人",
+      "url": "https://example.com/ted-grief",
+      "tags": ["视频", "TED", "陪伴"]
+    },
+    {
+      "id": "exercise_1",
+      "category": "练习",
+      "title": "写一封告别信",
+      "description": "通过书写表达未说出口的话，完成心理告别",
+      "tags": ["练习", "书写", "告别"]
+    },
+    {
+      "id": "exercise_2",
+      "category": "练习",
+      "title": "记忆盒子",
+      "description": "收集逝者的物品和回忆，创建一个纪念盒",
+      "tags": ["练习", "纪念", "回忆"]
+    },
+    {
+      "id": "exercise_3",
+      "category": "练习",
+      "title": "正念冥想",
+      "description": "通过冥想练习，学会与悲伤和平共处",
+      "tags": ["练习", "冥想", "正念"]
+    }
+  ],
+  "grief_stages": [
+    {
+      "stage": "denial",
+      "name": "否认",
+      "description": "这不是真的，不可能发生",
+      "duration": "数天至数周",
+      "tips": ["允许自己慢慢接受", "不必强迫自己立刻面对"]
+    },
+    {
+      "stage": "anger",
+      "name": "愤怒",
+      "description": "为什么是我？这不公平！",
+      "duration": "数周至数月",
+      "tips": ["找到安全的方式表达", "运动可以帮助释放"]
+    },
+    {
+      "stage": "bargaining",
+      "name": "讨价还价",
+      "description": "如果当时...就好了",
+      "duration": "数周至数月",
+      "tips": ["不要过度自责", "接受无法改变的事实"]
+    },
+    {
+      "stage": "depression",
+      "name": "抑郁",
+      "description": "深深的悲伤和空虚",
+      "duration": "数月至更久",
+      "tips": ["允许自己悲伤", "保持日常作息", "必要时寻求专业帮助"]
+    },
+    {
+      "stage": "acceptance",
+      "name": "接受",
+      "description": "学会与失去共处",
+      "duration": "持续过程",
+      "tips": ["接受不等于遗忘", "找到纪念的新方式"]
+    }
+  ]
+}
