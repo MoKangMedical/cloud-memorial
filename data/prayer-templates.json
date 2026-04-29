@@ -1,0 +1,84 @@
+{
+  "prayer_templates": [
+    {
+      "id": "blessing",
+      "name": "祈福",
+      "category": "blessing",
+      "content": "愿{name}在天堂安好，一切平安喜乐。🙏",
+      "placeholders": ["name"],
+      "icon": "🙏"
+    },
+    {
+      "id": "peace",
+      "name": "安息",
+      "category": "blessing",
+      "content": "愿{name}的灵魂得到永恒的安息，不再有痛苦与烦恼。",
+      "placeholders": ["name"],
+      "icon": "🕊️"
+    },
+    {
+      "id": "reunion",
+      "name": "来世再聚",
+      "category": "wish",
+      "content": "愿来世我们还能再相见，再续今生未了的缘分。{name}，等我。",
+      "placeholders": ["name"],
+      "icon": "💫"
+    },
+    {
+      "id": "gratitude",
+      "name": "感恩",
+      "category": "gratitude",
+      "content": "感谢{name}曾给予的一切爱与温暖，我们会永远铭记。",
+      "placeholders": ["name"],
+      "icon": "❤️"
+    },
+    {
+      "id": "miss_you",
+      "name": "思念",
+      "category": "remembrance",
+      "content": "{name}，我们想你了。每一天，每一刻，你都在我们心里。",
+      "placeholders": ["name"],
+      "icon": "💭"
+    },
+    {
+      "id": "birthday",
+      "name": "生日祝福",
+      "category": "remembrance",
+      "content": "今天是{name}的生日，愿天堂也有生日蛋糕🎂。生日快乐，永远爱你。",
+      "placeholders": ["name"],
+      "icon": "🎂"
+    },
+    {
+      "id": "festival",
+      "name": "节日思念",
+      "category": "remembrance",
+      "content": "{festival}到了，{name}，你在天堂还好吗？我们一切都好，勿念。",
+      "placeholders": ["name", "festival"],
+      "icon": "🏮"
+    },
+    {
+      "id": "spring",
+      "name": "春暖花开",
+      "category": "blessing",
+      "content": "春天来了，花儿都开了。{name}，愿你在另一个世界也能看到这美丽的春天。🌸",
+      "placeholders": ["name"],
+      "icon": "🌸"
+    },
+    {
+      "id": "moon",
+      "name": "月圆思念",
+      "category": "remembrance",
+      "content": "月亮圆了，{name}。千里共婵娟，我们望着同一轮明月想你。",
+      "placeholders": ["name"],
+      "icon": "🌙"
+    },
+    {
+      "id": "protect",
+      "name": "守护",
+      "category": "wish",
+      "content": "愿{name}在天之灵保佑家人平安健康，一切顺遂。",
+      "placeholders": ["name"],
+      "icon": "🛡️"
+    }
+  ]
+}
