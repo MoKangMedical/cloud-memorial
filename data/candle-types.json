@@ -1,0 +1,70 @@
+{
+  "candle_types": [
+    {
+      "id": "white",
+      "name": "白蜡烛",
+      "symbol": "🕯️",
+      "description": "纯洁的白色蜡烛，象征永恒的思念",
+      "color": "#FFFFFF",
+      "glow_color": "#FFF8DC",
+      "duration_hours": 24,
+      "meaning": "纯洁、庄严、永恒",
+      "is_eternal": false
+    },
+    {
+      "id": "red",
+      "name": "红蜡烛",
+      "symbol": "🕯️",
+      "description": "温暖的红色蜡烛，象征深深的爱",
+      "color": "#DC143C",
+      "glow_color": "#FFB6C1",
+      "duration_hours": 24,
+      "meaning": "爱、热情、思念",
+      "is_eternal": false
+    },
+    {
+      "id": "eternal",
+      "name": "长明灯",
+      "symbol": "🪔",
+      "description": "永不熄灭的长明灯，象征永恒的纪念",
+      "color": "#FFD700",
+      "glow_color": "#FFFACD",
+      "duration_hours": 0,
+      "meaning": "永恒、不灭、守望",
+      "is_eternal": true
+    },
+    {
+      "id": "lotus",
+      "name": "莲花灯",
+      "symbol": "🪷",
+      "description": "莲花造型的灯，象征超度与安宁",
+      "color": "#FFB7C5",
+      "glow_color": "#FFF0F5",
+      "duration_hours": 48,
+      "meaning": "安宁、超度、净土",
+      "is_eternal": false
+    },
+    {
+      "id": "star",
+      "name": "星光烛",
+      "symbol": "✨",
+      "description": "星星形状的蜡烛，象征天堂的光芒",
+      "color": "#87CEEB",
+      "glow_color": "#E0FFFF",
+      "duration_hours": 24,
+      "meaning": "天堂、希望、指引",
+      "is_eternal": false
+    },
+    {
+      "id": "butterfly",
+      "name": "蝴蝶灯",
+      "symbol": "🦋",
+      "description": "蝴蝶造型的灯，象征灵魂的自由",
+      "color": "#DDA0DD",
+      "glow_color": "#EE82EE",
+      "duration_hours": 24,
+      "meaning": "自由、灵魂、重生",
+      "is_eternal": false
+    }
+  ]
+}

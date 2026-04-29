@@ -1,0 +1,76 @@
+{
+  "memorial_scenes": [
+    {
+      "id": "garden",
+      "name": "宁静花园",
+      "description": "阳光洒满的花园，鸟语花香",
+      "background": "garden_bg.jpg",
+      "mood": "温馨",
+      "elements": ["鲜花", "长椅", "蝴蝶", "阳光"],
+      "bgm": "peaceful_garden.mp3"
+    },
+    {
+      "id": "lake",
+      "name": "湖畔夕阳",
+      "description": "宁静的湖面映照着金色的夕阳",
+      "background": "lake_sunset_bg.jpg",
+      "mood": "宁静",
+      "elements": ["湖水", "夕阳", "小船", "垂柳"],
+      "bgm": "lake_waves.mp3"
+    },
+    {
+      "id": "stars",
+      "name": "星空守望",
+      "description": "繁星点点的夜空，温暖而深邃",
+      "background": "starry_sky_bg.jpg",
+      "mood": "思念",
+      "elements": ["星空", "月亮", "流星", "萤火虫"],
+      "bgm": "night_sky.mp3"
+    },
+    {
+      "id": "temple",
+      "name": "古寺禅音",
+      "description": "古朴的寺庙，钟声悠扬",
+      "background": "temple_bg.jpg",
+      "mood": "庄严",
+      "elements": ["寺庙", "香炉", "松树", "钟声"],
+      "bgm": "temple_bell.mp3"
+    },
+    {
+      "id": "meadow",
+      "name": "花海原野",
+      "description": "一望无际的花海，春风拂面",
+      "background": "meadow_bg.jpg",
+      "mood": "自由",
+      "elements": ["花海", "蓝天", "白云", "微风"],
+      "bgm": "meadow_wind.mp3"
+    },
+    {
+      "id": "home",
+      "name": "温暖老家",
+      "description": "熟悉的家，充满回忆的角落",
+      "background": "home_bg.jpg",
+      "mood": "怀旧",
+      "elements": ["老照片", "摇椅", "茶杯", "窗花"],
+      "bgm": "home_fireplace.mp3"
+    },
+    {
+      "id": "mountain",
+      "name": "云海山巅",
+      "description": "巍峨的山峰，云海翻涌",
+      "background": "mountain_bg.jpg",
+      "mood": "敬畏",
+      "elements": ["山峰", "云海", "松柏", "飞鸟"],
+      "bgm": "mountain_wind.mp3"
+    },
+    {
+      "id": "rain",
+      "name": "细雨绵绵",
+      "description": "轻柔的雨丝，洗涤心灵",
+      "background": "rain_bg.jpg",
+      "mood": "忧伤",
+      "elements": ["雨滴", "窗棂", "青石板", "纸伞"],
+      "bgm": "gentle_rain.mp3"
+    }
+  ]
+}

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery -- Eterna Memorial</title>
+<meta name="description" content="Browse memorial gallery demonstrations. See how Eterna preserves memories through photos, stories, and digital tributes.">
+<meta name="theme-color" content="#050508">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#050508;--bg2:#0c0c14;--bg3:#13131e;--bg4:#1a1a2a;--text:#e8e6f0;--text2:#9896a8;--text3:#5c5a6e;--border:#1e1e30;--accent:#6366f1;--accent2:#818cf8;--accent3:#4f46e5;--warm:#a78bfa;--soft:#c4b5fd;--radius:12px}
+html{scroll-behavior:smooth;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif}
+body{background:var(--bg);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:#fff}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(99,102,241,.08)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-weight:800;font-size:18px;letter-spacing:1px;color:var(--soft)}
+.nav-links{display:flex;gap:28px;font-size:13px;font-weight:500;color:var(--text3)}
+.nav-links a:hover,.nav-links a.active{color:var(--accent2)}
+.nav-cta{background:var(--accent);color:#fff;padding:8px 20px;border-radius:8px;font-size:13px;font-weight:600;transition:all .2s}
+.nav-cta:hover{background:var(--accent3)}
+.mobile-menu{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.mobile-menu span{width:20px;height:2px;background:var(--text);transition:.2s}
+
+.page-header{padding:120px 32px 48px;text-align:center;position:relative}
+.page-header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(99,102,241,.05) 0%,transparent 60%);pointer-events:none}
+.page-header>*{position:relative;z-index:1}
+.page-header .tag{display:inline-block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:2px;padding:5px 16px;border-radius:6px;margin-bottom:16px;background:rgba(99,102,241,.08);color:var(--accent2);border:1px solid rgba(99,102,241,.12)}
+.page-header h1{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-1px;margin-bottom:12px}
+.page-header p{font-size:15px;color:var(--text2);max-width:500px;margin:0 auto;line-height:1.7}
+
+.section{max-width:1100px;margin:0 auto;padding:20px 32px 80px}
+
+/* Tab Navigation */
+.tabs{display:flex;gap:4px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:4px;margin-bottom:40px;max-width:400px;margin-left:auto;margin-right:auto}
+.tab-btn{flex:1;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:500;background:transparent;border:none;color:var(--text3);cursor:pointer;transition:all .2s;font-family:inherit}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{background:var(--accent);color:#fff}
+
+/* Memorial Cards */
+.memorial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px}
+.memorial-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:all .35s;cursor:pointer}
+.memorial-card:hover{border-color:rgba(99,102,241,.2);transform:translateY(-3px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.memorial-cover{height:180px;position:relative;overflow:hidden}
+.memorial-cover .gradient{position:absolute;inset:0}
+.memorial-cover .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,8,.8),transparent 60%)}
+.memorial-cover .candle-wrap{position:absolute;bottom:16px;left:20px;display:flex;gap:6px;align-items:center}
+.candle{width:4px;height:20px;background:linear-gradient(to top,#f59e0b,#fbbf24);border-radius:2px 2px 0 0;position:relative}
+.candle::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:8px;height:8px;background:radial-gradient(circle,#fbbf24,#f59e0b,transparent);border-radius:50%;animation:flicker 1.5s ease infinite alternate}
+@keyframes flicker{0%{opacity:.6;transform:translateX(-50%) scale(1)}100%{opacity:1;transform:translateX(-50%) scale(1.2)}}
+.memorial-cover .photo-count{position:absolute;bottom:16px;right:20px;font-size:11px;color:var(--text2);background:rgba(0,0,0,.5);padding:4px 10px;border-radius:6px;backdrop-filter:blur(4px)}
+.memorial-body{padding:24px}
+.memorial-body h3{font-size:17px;font-weight:700;margin-bottom:4px}
+.memorial-body .dates{font-size:12px;color:var(--text3);margin-bottom:12px}
+.memorial-body .excerpt{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:16px}
+.memorial-body .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tag-sm{display:inline-block;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:4px;background:rgba(99,102,241,.1);color:var(--accent2);border:1px solid rgba(99,102,241,.1)}
+.memorial-footer{display:flex;justify-content:space-between;align-items:center;padding-top:14px;border-top:1px solid var(--border)}
+.memorial-footer .visitors{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:6px}
+.memorial-footer .visitors svg{width:14px;height:14px}
+.memorial-footer .action-btn{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.15);color:var(--accent2);cursor:pointer;transition:all .2s;font-family:inherit}
+.memorial-footer .action-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+/* Timeline */
+.timeline-section{display:none}
+.timeline-section.active{display:block}
+.memorial-grid-section.active{display:grid}
+.memorial-grid-section{display:none}
+
+.timeline{position:relative;padding-left:32px}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:var(--border)}
+.timeline-item{position:relative;margin-bottom:32px}
+.timeline-item::before{content:'';position:absolute;left:-28px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--bg2);border:2px solid var(--accent);z-index:1}
+.timeline-item .timeline-date{font-size:11px;color:var(--accent2);font-weight:600;margin-bottom:6px;letter-spacing:1px}
+.timeline-item .timeline-content{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.timeline-item .timeline-content h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.timeline-item .timeline-content p{font-size:13px;color:var(--text2);line-height:1.7}
+.timeline-item .timeline-content .memory-photos{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.timeline-item .timeline-content .memory-photo{width:64px;height:64px;border-radius:8px;overflow:hidden;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.timeline-item .timeline-content .memory-photo svg{width:20px;height:20px;color:var(--text3)}
+
+/* Stats */
+.gallery-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-bottom:40px}
+.gallery-stat-panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.gallery-stat-panel h3{font-size:15px;font-weight:700;margin-bottom:16px}
+.chart-wrap{position:relative;height:220px}
+
+/* Create Memorial CTA */
+.create-cta{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:48px;text-align:center;margin-top:40px;position:relative;overflow:hidden}
+.create-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(99,102,241,.04) 0%,transparent 60%);pointer-events:none}
+.create-cta>*{position:relative;z-index:1}
+.create-cta h3{font-size:22px;font-weight:800;margin-bottom:10px}
+.create-cta p{font-size:14px;color:var(--text2);max-width:400px;margin:0 auto 24px;line-height:1.7}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 32px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;transition:all .2s;border:none;cursor:pointer;font-family:inherit}
+.btn-primary:hover{background:var(--accent3);transform:translateY(-1px);box-shadow:0 8px 30px rgba(99,102,241,.25)}
+
+/* Lightbox */
+.lightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.9);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px}
+.lightbox.show{display:flex}
+.lightbox-inner{max-width:600px;width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;position:relative}
+.lightbox-close{position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:8px;background:rgba(0,0,0,.5);border:1px solid var(--border);color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;z-index:1;transition:all .2s;font-family:inherit}
+.lightbox-close:hover{border-color:var(--accent);color:var(--accent2)}
+.lightbox-cover{height:200px;position:relative}
+.lightbox-cover .gradient{position:absolute;inset:0}
+.lightbox-cover .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,8,.9),transparent 60%)}
+.lightbox-body{padding:28px}
+.lightbox-body h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.lightbox-body .dates{font-size:13px;color:var(--text3);margin-bottom:16px}
+.lightbox-body .story{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:20px}
+.lightbox-body .memory-gallery{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.memory-thumb{width:72px;height:72px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s}
+.memory-thumb:hover{border-color:var(--accent);transform:scale(1.05)}
+.memory-thumb svg{width:24px;height:24px;color:var(--text3)}
+.lightbox-actions{display:flex;gap:10px}
+.lightbox-actions .btn-action{flex:1;padding:10px;border-radius:8px;font-size:13px;font-weight:600;text-align:center;cursor:pointer;font-family:inherit;transition:all .2s;border:1px solid var(--border);background:var(--bg3);color:var(--text)}
+.lightbox-actions .btn-action:hover{border-color:var(--accent);color:var(--accent2)}
+.lightbox-actions .btn-action.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.lightbox-actions .btn-action.primary:hover{background:var(--accent3)}
+
+footer{border-top:1px solid var(--border);padding:48px 32px;text-align:center}
+footer p{font-size:12px;color:var(--text3)}
+.footer-links{display:flex;justify-content:center;gap:24px;margin-bottom:16px;font-size:12px;color:var(--text3)}
+.footer-links a:hover{color:var(--accent2)}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .mobile-menu{display:flex}
+  .memorial-grid{grid-template-columns:1fr}
+  .gallery-stats{grid-template-columns:1fr}
+  .tabs{max-width:100%}
+  .lightbox-inner{max-height:90vh;overflow-y:auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+<div class="nav-inner">
+  <a href="index.html" class="nav-logo">Eterna</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="gallery.html" class="active">Gallery</a>
+  </div>
+  <div class="mobile-menu" onclick="document.querySelector('.nav-links').classList.toggle('show-mobile')">
+    <span></span><span></span><span></span>
+  </div>
+  <a href="index.html" class="nav-cta">Get Started</a>
+</div>
+</nav>
+
+<div class="page-header">
+  <div class="tag">Memorial Gallery</div>
+  <h1>Memories That Live On</h1>
+  <p>Browse demo memorials created with Eterna. Each one tells a story of love preserved through technology.</p>
+</div>
+
+<section class="section">
+  <!-- Stats -->
+  <div class="gallery-stats">
+    <div class="gallery-stat-panel">
+      <h3>Memories by Type</h3>
+      <div class="chart-wrap"><canvas id="typeChart"></canvas></div>
+    </div>
+    <div class="gallery-stat-panel">
+      <h3>Monthly Contributions</h3>
+      <div class="chart-wrap"><canvas id="monthChart"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="gallery" onclick="switchTab(this)">Gallery</button>
+    <button class="tab-btn" data-tab="timeline" onclick="switchTab(this)">Timeline</button>
+  </div>
+
+  <!-- Gallery View -->
+  <div class="memorial-grid-section active" id="galleryTab">
+    <div class="memorial-grid" id="memorialGrid"></div>
+  </div>
+
+  <!-- Timeline View -->
+  <div class="timeline-section" id="timelineTab">
+    <div class="timeline" id="timeline"></div>
+  </div>
+
+  <!-- Create CTA -->
+  <div class="create-cta">
+    <h3>Create Your Memorial</h3>
+    <p>Honor your loved one with a digital memorial that preserves their story for generations to come.</p>
+    <a href="index.html" class="btn-primary">Start Creating</a>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner" id="lightboxContent"></div>
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="https://github.com/MoKangMedical/cloud-memorial" target="_blank">GitHub</a>
+  </div>
+  <p>2026 MoKangMedical. Eterna -- AI Memorial Platform.</p>
+</footer>
+
+<style>
+@media(max-width:768px){.nav-links.show-mobile{display:flex;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:rgba(5,5,8,.98);padding:20px 32px;gap:16px;border-bottom:1px solid var(--border)}}
+</style>
+
+<script>
+// --- DATA ---
+const memorials=[
+  {
+    id:1,name:'Grandmother Li',dates:'1935 - 2024',
+    excerpt:'A woman of infinite warmth who taught three generations the meaning of unconditional love through her stories and her cooking.',
+    story:'Grandmother Li was born in a small village in Sichuan province. She survived the hardships of war and famine, yet her spirit remained unbroken. She raised four children, each of whom went on to build successful lives. Her greatest joy was telling stories to her grandchildren, tales of resilience and hope that she wove from her own experiences. Even in her final years, her laughter filled the room. This memorial preserves her voice, her stories, and the recipes that brought our family together every Lunar New Year.',
+    tags:['Family Elder','Storyteller','Chef'],
+    photos:24,visitors:156,
+    gradient:'linear-gradient(135deg,#4f46e5,#7c3aed)',candles:3,
+    timelineEntries:[
+      {date:'March 2024',title:'First Memory Uploaded',desc:'Uploaded grandmother\'s handwritten recipe book with 47 traditional dishes.'},
+      {date:'April 2024',title:'Voice Samples Collected',desc:'Recorded 3 hours of grandmother telling childhood stories.'},
+      {date:'June 2024',title:'AI Companion Created',desc:'The AI learned her speech patterns, favorite phrases, and storytelling style.'},
+      {date:'August 2024',title:'Family Gathering',desc:'12 family members contributed photos spanning 60 years.'},
+      {date:'October 2024',title:'First AI Conversation',desc:'Family members began having conversations with the AI companion.'}
+    ]
+  },
+  {
+    id:2,name:'Father Chen',dates:'1958 - 2025',
+    excerpt:'A devoted father and amateur photographer whose lens captured not just images, but the essence of every moment he shared with his family.',
+    story:'Father Chen was an engineer by profession but a photographer at heart. His camera was always present at family gatherings, school events, and quiet Sunday afternoons. He believed that every moment was worth remembering. His photo collection, spanning over 40 years, tells the story of a family growing, changing, and always staying connected. This memorial brings his photographs to life with AI-generated narratives that capture his perspective and humor.',
+    tags:['Photographer','Engineer','Father'],
+    photos:187,visitors:89,
+    gradient:'linear-gradient(135deg,#059669,#10b981)',candles:5,
+    timelineEntries:[
+      {date:'January 2025',title:'Photo Archive Digitized',desc:'Scanned and uploaded 2,400 photographs from 1980 to 2024.'},
+      {date:'February 2025',title:'Voice Cloning Complete',desc:'AI learned father\'s voice from video recordings of family dinners.'},
+      {date:'March 2025',title:'Photo Narratives Generated',desc:'AI created stories for each photograph based on family context.'},
+      {date:'April 2025',title:'Memorial Space Opened',desc:'Virtual memorial opened with digital candles and flowers.'}
+    ]
+  },
+  {
+    id:3,name:'Auntie Mei',dates:'1950 - 2023',
+    excerpt:'The heart of her community, Auntie Mei organized every reunion, remembered every birthday, and never let anyone feel alone.',
+    story:'Auntie Mei was the connective tissue of our extended family. She kept meticulous records of birthdays, anniversaries, and milestones. Her phone calls were legendary -- she could spend two hours catching up with each family member. She organized annual reunions that brought together over 80 relatives. This memorial preserves her organizational spirit, with an AI that remembers the dates she kept and the connections she maintained.',
+    tags:['Community Leader','Organizer','Matriarch'],
+    photos:45,visitors:234,
+    gradient:'linear-gradient(135deg,#d97706,#f59e0b)',candles:4,
+    timelineEntries:[
+      {date:'September 2023',title:'Memorial Created',desc:'Initial memorial space established with family photos.'},
+      {date:'November 2023',title:'Community Contributions',desc:'Over 30 relatives shared their favorite memories of Auntie Mei.'},
+      {date:'January 2024',title:'Birthday Reminder System',desc:'AI recreated Auntie Mei\'s birthday reminder tradition for the family.'},
+      {date:'March 2024',title:'Reunion Planning',desc:'AI helped organize the first family reunion in Auntie Mei\'s honor.'}
+    ]
+  },
+  {
+    id:4,name:'Professor Wang',dates:'1945 - 2024',
+    excerpt:'A brilliant mind who dedicated his life to mathematics and education. His patience with students was legendary, his lectures unforgettable.',
+    story:'Professor Wang taught mathematics at Peking University for 42 years. His blackboard was his canvas, and he could make even the most abstract concepts feel tangible. He mentored hundreds of students, many of whom went on to become leaders in their fields. He recorded his lectures meticulously, believing knowledge should be accessible to all. This memorial preserves his teaching legacy with AI-curated lecture notes and his distinctive teaching voice.',
+    tags:['Educator','Mathematician','Mentor'],
+    photos:32,visitors:312,
+    gradient:'linear-gradient(135deg,#dc2626,#ef4444)',candles:2,
+    timelineEntries:[
+      {date:'May 2024',title:'Lecture Archive Uploaded',desc:'340 lecture recordings spanning 4 decades digitized.'},
+      {date:'July 2024',title:'Student Tributes',desc:'Over 100 former students contributed written memories.'},
+      {date:'September 2024',title:'Teaching AI Mode',desc:'AI learned professor\'s teaching style and favorite examples.'},
+      {date:'December 2024',title:'Virtual Classroom',desc:'Interactive memorial allowing visitors to "attend" a lecture.'}
+    ]
+  },
+  {
+    id:5,name:'Little Star',dates:'2018 - 2024',
+    excerpt:'A bright, curious child whose laughter could light up any room. Her drawings, stories, and boundless imagination live on here.',
+    story:'Little Star was only six when she left us, but in those six years she filled the world with more joy than most manage in a lifetime. She drew pictures every day -- flowers, animals, her family, and imaginary worlds. She told elaborate stories about her stuffed animals and their adventures. This memorial preserves her art, her voice, and the magical world she created. Every drawing tells a story of a child who saw beauty everywhere.',
+    tags:['Artist','Storyteller','Dreamer'],
+    photos:156,visitors:478,
+    gradient:'linear-gradient(135deg,#ec4899,#f472b6)',candles:6,
+    timelineEntries:[
+      {date:'June 2024',title:'Art Collection Preserved',desc:'All 200+ drawings digitized and organized by date.'},
+      {date:'July 2024',title:'Story Recordings',desc:'38 audio recordings of Little Star telling stories uploaded.'},
+      {date:'August 2024',title:'Interactive Gallery',desc:'AI-generated animations bring her drawings to life.'},
+      {date:'October 2024',title:'Dream World',desc:'Virtual space recreating the imaginary worlds from her stories.'}
+    ]
+  },
+  {
+    id:6,name:'Grandfather Zhang',dates:'1930 - 2023',
+    excerpt:'A veteran, farmer, and poet whose simple verses captured the beauty of rural China and the strength of an unbreakable spirit.',
+    story:'Grandfather Zhang served in the Korean War, then returned to his village to farm the land his ancestors had worked for generations. In the evenings, he wrote poetry -- simple, honest verses about the seasons, the harvest, and the people he loved. His poems were never published, but they were treasured by everyone who read them. This memorial presents his poetry alongside the landscapes that inspired them, with AI narration in his gentle, measured voice.',
+    tags:['Veteran','Poet','Farmer'],
+    photos:18,visitors:67,
+    gradient:'linear-gradient(135deg,#6366f1,#a78bfa)',candles:3,
+    timelineEntries:[
+      {date:'August 2023',title:'Poetry Collection Digitized',desc:'127 handwritten poems transcribed and uploaded.'},
+      {date:'October 2023',title:'Landscape Photography',desc:'Photographs of grandfather\'s village and farmland added.'},
+      {date:'January 2024',title:'Voice Recreation',desc:'AI learned grandfather\'s dialect and speaking rhythm.'},
+      {date:'March 2024',title:'Poetry Readings',desc:'AI reads poems in grandfather\'s voice with ambient farm sounds.'}
+    ]
+  }
+];
+
+// --- RENDER GALLERY ---
+function renderGallery(){
+  const grid=document.getElementById('memorialGrid');
+  grid.innerHTML='';
+  memorials.forEach(m=>{
+    const card=document.createElement('div');
+    card.className='memorial-card';
+    card.onclick=()=>openLightbox(m);
+    const candleHtml=Array(m.candles).fill('<div class="candle"></div>').join('');
+    card.innerHTML=`
+      <div class="memorial-cover">
+        <div class="gradient" style="background:${m.gradient}"></div>
+        <div class="overlay"></div>
+        <div class="candle-wrap">${candleHtml}</div>
+        <div class="photo-count">${m.photos} photos</div>
+      </div>
+      <div class="memorial-body">
+        <h3>${m.name}</h3>
+        <div class="dates">${m.dates}</div>
+        <div class="excerpt">${m.excerpt}</div>
+        <div class="tags">${m.tags.map(t=>`<span class="tag-sm">${t}</span>`).join('')}</div>
+        <div class="memorial-footer">
+          <div class="visitors"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> ${m.visitors} visitors</div>
+          <button class="action-btn">View Memorial</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// --- RENDER TIMELINE ---
+function renderTimeline(){
+  const tl=document.getElementById('timeline');
+  tl.innerHTML='';
+  memorials.forEach(m=>{
+    m.timelineEntries.forEach(entry=>{
+      const item=document.createElement('div');
+      item.className='timeline-item';
+      const photoIcons=Array(Math.floor(Math.random()*3)+1).fill('<div class="memory-photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>').join('');
+      item.innerHTML=`
+        <div class="timeline-date">${entry.date}</div>
+        <div class="timeline-content">
+          <h4>${m.name} -- ${entry.title}</h4>
+          <p>${entry.desc}</p>
+          <div class="memory-photos">${photoIcons}</div>
+        </div>
+      `;
+      tl.appendChild(item);
+    });
+  });
+}
+
+// --- LIGHTBOX ---
+function openLightbox(m){
+  const lb=document.getElementById('lightboxContent');
+  const photoGrid=Array(6).fill('<div class="memory-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>').join('');
+  lb.innerHTML=`
+    <button class="lightbox-close" onclick="closeLightbox()">X</button>
+    <div class="lightbox-cover">
+      <div class="gradient" style="background:${m.gradient}"></div>
+      <div class="overlay"></div>
+    </div>
+    <div class="lightbox-body">
+      <h2>${m.name}</h2>
+      <div class="dates">${m.dates}</div>
+      <div class="story">${m.story}</div>
+      <h4 style="font-size:13px;font-weight:700;margin-bottom:10px;color:var(--accent2)">Memory Collection</h4>
+      <div class="memory-gallery">${photoGrid}</div>
+      <div class="lightbox-actions">
+        <button class="btn-action primary">Light a Candle</button>
+        <button class="btn-action">Leave a Memory</button>
+        <button class="btn-action">Share</button>
+      </div>
+    </div>
+  `;
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow='';
+}
+
+document.getElementById('lightbox').addEventListener('click',e=>{if(e.target===e.currentTarget)closeLightbox()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox()});
+
+// --- TABS ---
+function switchTab(btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const tab=btn.dataset.tab;
+  document.getElementById('galleryTab').className=tab==='gallery'?'memorial-grid-section active':'memorial-grid-section';
+  document.getElementById('timelineTab').className=tab==='timeline'?'timeline-section active':'timeline-section';
+}
+
+// --- CHARTS ---
+new Chart(document.getElementById('typeChart'),{
+  type:'doughnut',
+  data:{
+    labels:['Photos','Voice','Text','Video'],
+    datasets:[{data:[45,25,20,10],backgroundColor:['#6366f1','#a78bfa','#818cf8','#4f46e5'],borderColor:'#0c0c14',borderWidth:3}]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:true,position:'right',labels:{color:'#9896a8',font:{size:11,family:'Inter'},boxWidth:10,padding:10}},tooltip:{backgroundColor:'#13131e',borderColor:'#1e1e30',borderWidth:1,titleColor:'#e8e6f0',bodyColor:'#9896a8',padding:10,cornerRadius:6}}
+  }
+});
+
+new Chart(document.getElementById('monthChart'),{
+  type:'bar',
+  data:{
+    labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    datasets:[{data:[320,280,410,390,520,480,610,580,450,380,420,560],backgroundColor:'rgba(99,102,241,.3)',borderColor:'#6366f1',borderWidth:1,borderRadius:4}]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'#13131e',borderColor:'#1e1e30',borderWidth:1,titleColor:'#e8e6f0',bodyColor:'#9896a8',padding:10,cornerRadius:6}},
+    scales:{
+      x:{grid:{display:false},ticks:{color:'#5c5a6e',font:{size:10}}},
+      y:{grid:{color:'rgba(30,30,48,.4)'},ticks:{color:'#5c5a6e',font:{size:10}}}
+    }
+  }
+});
+
+// Init
+renderGallery();
+renderTimeline();
+</script>
+
+</body>
+</html>
